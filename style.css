@@ -1,0 +1,227 @@
+/* Basic reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #fff;
+}
+
+/* Navigation */
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  position: fixed;
+  width: 100%;
+  background-color: #fff;
+  z-index: 100;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.name a, .projects a, .about a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-links {
+  display: flex;
+}
+
+.projects, .about {
+  margin-left: 30px;
+  cursor: pointer;
+}
+
+.projects a:hover, .about a:hover {
+  text-decoration: underline;
+}
+
+/* Grid container */
+.grid-container {
+  position: relative;
+  padding-top: 80px; /* Space for navigation */
+  min-height: 100vh;
+}
+
+/* Vertical grid lines */
+.grid-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.grid-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: #e0e0e0;
+}
+
+.line-1 { left: 8.33%; }
+.line-2 { left: 16.66%; }
+.line-3 { left: 25%; }
+.line-4 { left: 33.33%; }
+.line-5 { left: 41.66%; }
+.line-6 { left: 50%; }
+.line-7 { left: 58.33%; }
+.line-8 { left: 66.66%; }
+.line-9 { left: 75%; }
+.line-10 { left: 83.33%; }
+.line-11 { left: 91.66%; }
+.line-12 { right: 0; }
+
+/* Projects grid */
+.projects-grid {
+  position: relative;
+  z-index: 10;
+  height: 200vh; /* Tall enough for staggered layout */
+}
+
+.project {
+  position: absolute;
+  max-width: 400px;
+  transition: opacity 0.3s ease;
+}
+
+.project img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.project:hover {
+  opacity: 0.8;
+}
+
+/* Staggered positioning for projects */
+#project1 {
+  top: 100px;
+  left: 16.66%; /* At grid line 2 */
+  width: 25%;
+}
+
+#project2 {
+  top: 250px;
+  left: 50%; /* At grid line 6 */
+  width: 33.33%;
+}
+
+#project3 {
+  top: 500px;
+  left: 25%; /* At grid line 3 */
+  width: 25%;
+}
+
+#project4 {
+  top: 650px;
+  left: 58.33%; /* At grid line 7 */
+  width: 25%;
+}
+
+#project5 {
+  top: 900px;
+  left: 16.66%; /* At grid line 2 */
+  width: 33.33%;
+}
+
+#project6 {
+  top: 1050px;
+  left: 50%; /* At grid line 6 */
+  width: 25%;
+}
+
+/* Projects index page */
+.projects-index {
+  padding-top: 100px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.project-grid {
+  display: flex;
+}
+
+.years-column {
+  width: 10%;
+  color: #999;
+}
+
+.titles-column {
+  width: 50%;
+  padding: 0 20px;
+}
+
+.types-column {
+  width: 40%;
+  color: #999;
+}
+
+.year, .title, .type {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.title a {
+  text-decoration: none;
+  color: #333;
+}
+
+.title a:hover {
+  text-decoration: underline;
+}
+
+/* About page */
+.about-content {
+  padding-top: 100px;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .project {
+    position: relative;
+    width: 90% !important;
+    left: 5% !important;
+    top: auto !important;
+    margin-bottom: 20px;
+  }
+  
+  .projects-grid {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .project-grid {
+    flex-direction: column;
+  }
+  
+  .years-column, .titles-column, .types-column {
+    width: 100%;
+    padding: 0;
+  }
+  
+  .grid-line {
+    display: none;
+  }
+}
