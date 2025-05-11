@@ -1,74 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Julia Kwon</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Julia Kwon | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="green-circle-favicon.svg">
+    <link rel="alternate icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-  <!-- Navigation -->
-  <div class="navigation">
-    <div class="name"><a href="index.html">Julia Kwon</a></div>
-    <div class="nav-links">
-      <div class="projects"><a href="projects.html">Projects</a></div>
-      <div class="about"><a href="about.html">About</a></div>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    
+    <!-- Vertical Grid Lines -->
+    <div class="grid-lines" id="grid-lines">
+        <!-- Grid lines will be created by JavaScript -->
     </div>
-  </div>
-  
-  <!-- Grid with vertical lines -->
-  <div class="grid-container">
-    <!-- Vertical grid lines -->
-    <div class="grid-lines">
-      <div class="grid-line line-1"></div>
-      <div class="grid-line line-2"></div>
-      <div class="grid-line line-3"></div>
-      <div class="grid-line line-4"></div>
-      <div class="grid-line line-5"></div>
-      <div class="grid-line line-6"></div>
-      <div class="grid-line line-7"></div>
-      <div class="grid-line line-8"></div>
-      <div class="grid-line line-9"></div>
-      <div class="grid-line line-10"></div>
-      <div class="grid-line line-11"></div>
-      <div class="grid-line line-12"></div>
+
+    <header>
+        <a href="#" class="logo" id="logo-link">Julia Kwon</a>
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="nav-links">
+                    <a href="#" class="active" id="works-link">Works</a>
+                    <a href="#" id="projects-link">Projects</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="#">Info</a>
+                    <a href="#">Studio</a>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="language-toggle">EN</a>
+    </header>
+    
+    <!-- Gallery View (Home) -->
+    <div class="gallery-container" id="gallery">
+        <!-- Images will be added dynamically via JavaScript -->
     </div>
     
-    <!-- Project thumbnails in a staggered layout -->
-    <div class="projects-grid">
-      <div class="project" id="project1">
-        <a href="projects/project1.html">
-          <img src="images/placeholder1.jpg" alt="Project 1">
-        </a>
-      </div>
-      <div class="project" id="project2">
-        <a href="projects/project2.html">
-          <img src="images/placeholder2.jpg" alt="Project 2">
-        </a>
-      </div>
-      <div class="project" id="project3">
-        <a href="projects/project3.html">
-          <img src="images/placeholder3.jpg" alt="Project 3">
-        </a>
-      </div>
-      <div class="project" id="project4">
-        <a href="projects/project4.html">
-          <img src="images/placeholder4.jpg" alt="Project 4">
-        </a>
-      </div>
-      <div class="project" id="project5">
-        <a href="projects/project5.html">
-          <img src="images/placeholder5.jpg" alt="Project 5">
-        </a>
-      </div>
-      <div class="project" id="project6">
-        <a href="projects/project6.html">
-          <img src="images/placeholder6.jpg" alt="Project 6">
-        </a>
-      </div>
+    <!-- Projects Index View -->
+    <div class="project-container" id="projects-page" style="display: none;">
+        <div class="projects-index">
+            <div class="project-index-row">
+                <div class="project-year">2023</div>
+                <div class="project-title">Quelque chose</div>
+                <div class="project-category">Exhibition</div>
+            </div>
+            <div class="project-index-row">
+                <div class="project-year">2023</div>
+                <div class="project-title">Papier</div>
+                <div class="project-category">Publication</div>
+            </div>
+            <div class="project-index-row">
+                <div class="project-year">2023</div>
+                <div class="project-title">Surface Study</div>
+                <div class="project-category">Exhibition</div>
+            </div>
+            <div class="project-index-row">
+                <div class="project-year">2022</div>
+                <div class="project-title">Contre-Motif</div>
+                <div class="project-category">Exhibition</div>
+            </div>
+            <div class="project-index-row">
+                <div class="project-year">2022</div>
+                <div class="project-title">L'atelier du sculpteur</div>
+                <div class="project-category">Public art</div>
+            </div>
+            <div class="project-index-row">
+                <div class="project-year">2022</div>
+                <div class="project-title">Projets</div>
+                <div class="project-category">Exhibition</div>
+            </div>
+            <div class="project-index-row">
+                <div class="project-year">2021</div>
+                <div class="project-title">Structure and Void</div>
+                <div class="project-category">Exhibition</div>
+            </div>
+            <div class="project-index-row">
+                <div class="project-year">2021</div>
+                <div class="project-title">Emballage et socle</div>
+                <div class="project-category">Intervention</div>
+            </div>
+            <div class="project-index-row">
+                <div class="project-year">2021</div>
+                <div class="project-title">Formes</div>
+                <div class="project-category">Exhibition</div>
+            </div>
+            <div class="project-index-row">
+                <div class="project-year">2021</div>
+                <div class="project-title">Ceramic Vessel</div>
+                <div class="project-category">Exhibition</div>
+            </div>
+        </div>
     </div>
-  </div>
+    
+    <!-- Project Detail View -->
+    <div class="project-container" id="project-detail" style="display: none;">
+        <div class="project-header">
+            <h1 class="project-title" id="project-title-text">Project Title <span id="project-year">2023</span></h1>
+            <div class="project-info">
+                <h2>About the Project</h2>
+                <p id="project-description">Project description will appear here.</p>
+            </div>
+        </div>
+        
+        <div id="project-images-container">
+            <!-- Images will be added dynamically -->
+        </div>
+        
+        <a href="#" class="back-to-gallery" id="back-button">Back to Gallery</a>
+    </div>
 
-  <script src="main.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
