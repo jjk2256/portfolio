@@ -22,7 +22,7 @@
         <div class="nav-container">
             <div class="nav-left">
                 <div class="nav-links">
-                    <a href="/" class="active" id="works-link" data-section="works">Works</a>
+                    <a href="/" id="works-link" data-section="works">Works</a>
                     <a href="#projects" id="projects-link" data-section="projects">Projects</a>
                 </div>
             </div>
@@ -30,6 +30,7 @@
                 <div class="nav-links">
                     <a href="info.html">Info</a>
                     <a href="#">Studio</a>
+                    <a href="#" id="shuffle-button">Shuffle</a>
                 </div>
             </div>
         </div>
@@ -118,7 +119,11 @@
         </div>
         
         <div id="project-images-container">
-            <!-- Images will be added dynamically -->
+            <!-- Hero image/video and detail images will be added dynamically -->
+        </div>
+        
+        <div id="project-videos-container">
+            <!-- Additional videos will be added dynamically -->
         </div>
         
         <a href="/" class="back-to-gallery" id="back-button">Back to Gallery</a>
@@ -128,6 +133,24 @@
     <script>
         // Ensure proper navigation handling
         document.addEventListener('DOMContentLoaded', function() {
+            // Set initial state based on URL
+            const hash = window.location.hash;
+            if (hash === '#projects') {
+                showProjectsPage();
+            } else if (hash.startsWith('#project-')) {
+                const projectName = decodeURIComponent(hash.replace('#project-', ''));
+                const projectData = images.find(img => 
+                    img.title.toLowerCase() === projectName.toLowerCase().replace(/-/g, ' ')
+                );
+                if (projectData) {
+                    showProjectDetail(projectData);
+                } else {
+                    showGallery();
+                }
+            } else {
+                showGallery();
+            }
+
             // Handle all navigation links
             document.querySelectorAll('a[data-section]').forEach(link => {
                 link.addEventListener('click', function(e) {
@@ -144,6 +167,7 @@
                         history.pushState({}, '', '/');
                     } else if (section === 'projects') {
                         showProjectsPage();
+                        history.pushState({}, '', '#projects');
                     }
                 });
             });
@@ -160,10 +184,28 @@
             // Handle back button
             document.getElementById('back-button').addEventListener('click', function(e) {
                 e.preventDefault();
+                const projectsHash = window.location.hash === '#projects';
                 showGallery();
                 document.getElementById('works-link').classList.add('active');
                 document.getElementById('projects-link').classList.remove('active');
-                history.pushState({}, '', '/');
+                history.pushState({}, '', projectsHash ? '#projects' : '/');
+            });
+
+            // Initialize project row click handlers
+            const projectRows = document.querySelectorAll('.project-index-row');
+            projectRows.forEach(row => {
+                const projectTitle = row.querySelector('.project-title').textContent;
+                row.addEventListener('click', function() {
+                    const projectData = images.find(img => img.title === projectTitle);
+                    if (projectData) {
+                        showProjectDetail(projectData);
+                        history.pushState(
+                            {project: projectTitle}, 
+                            projectTitle,
+                            '#project-' + encodeURIComponent(projectTitle.toLowerCase())
+                        );
+                    }
+                });
             });
         });
 
@@ -172,6 +214,8 @@
             const hash = window.location.hash;
             if (hash === '#projects') {
                 showProjectsPage();
+                document.getElementById('projects-link').classList.add('active');
+                document.getElementById('works-link').classList.remove('active');
             } else if (hash.startsWith('#project-')) {
                 const projectName = decodeURIComponent(hash.replace('#project-', ''));
                 const projectData = images.find(img => 
@@ -179,11 +223,17 @@
                 );
                 if (projectData) {
                     showProjectDetail(projectData);
+                    document.getElementById('works-link').classList.add('active');
+                    document.getElementById('projects-link').classList.remove('active');
                 } else {
                     showGallery();
+                    document.getElementById('works-link').classList.add('active');
+                    document.getElementById('projects-link').classList.remove('active');
                 }
             } else {
                 showGallery();
+                document.getElementById('works-link').classList.add('active');
+                document.getElementById('projects-link').classList.remove('active');
             }
         });
     </script>

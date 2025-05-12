@@ -133,19 +133,46 @@ header {
     margin-top: 60px;
     padding: 20px;
     min-height: calc(100vh - 60px);
+    width: 100%;
     position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+#gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 30px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 40px;
+    justify-items: center;
+    align-items: start;
 }
 
 .gallery-item {
-    position: absolute;
-    max-width: 400px;
-    margin-bottom: 30px;
-    transition: opacity 0.3s ease;
+    position: relative;
+    width: 100%;
+    margin-bottom: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
     cursor: pointer;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
 }
 
 .gallery-item:hover {
-    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.gallery-item img {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    height: auto;
 }
 
 /* Project Detail Page */
@@ -309,10 +336,13 @@ header {
     padding: 12px 0;
     cursor: pointer;
     transition: color 0.2s ease;
+    position: relative;
+    z-index: 1;
 }
 
 .project-index-row:hover {
     color: #000;
+    background-color: rgba(0, 0, 0, 0.02);
 }
 
 .project-index-row:hover .project-year,
@@ -331,6 +361,7 @@ header {
     font-size: 15px;
     font-weight: normal;
     max-width: none;
+    pointer-events: none;
 }
 
 .project-category {
@@ -338,6 +369,7 @@ header {
     text-align: right;
     color: #aaa;
     font-size: 15px;
+    pointer-events: none;
 }
 
 /* Info Page Styles */
@@ -526,10 +558,10 @@ header {
 /* Photo grid container */
 .photo-grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Changed from 2 to 3 columns */
-    grid-gap: 40px; /* Spacing between images */
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 60px;
     width: 100%;
-    margin: 60px 0; /* Space above and below the grid */
+    margin: 60px 0;
 }
 
 /* Photography grid styles */
@@ -552,8 +584,12 @@ header {
 .photo-item {
     position: relative;
     transition: opacity 0.3s ease;
-    cursor: none; /* Works with your custom cursor */
-    margin-bottom: 40px; /* Space below each item for caption */
+    cursor: none;
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
 }
 
 .photo-item:hover {
@@ -561,38 +597,25 @@ header {
 }
 
 .photo-item img {
-    width: 100%;
+    width: 50%; /* Set consistent width for all detail images */
     height: auto;
     display: block;
-    object-fit: cover;
-    aspect-ratio: 1 / 1;
+    object-fit: none;
 }
 
 /* Image captions */
-.photo-caption {
+.image-caption {
+    margin-top: 20px;
+    width: 100%;
     display: flex;
-    font-size: 12px;
-    color: #333;
-    margin-top: 8px;
-}
-
-.photo-caption span {
-    margin-right: 20px;
+    justify-content: space-between;
 }
 
 .caption-text {
     display: flex;
-    justify-content: space-between; /* Change to space-between */
+    justify-content: space-between;
     width: 100%;
-}
-
-.caption-text span:first-child {
-    margin-right: auto; /* Push first element to the left */
-    margin-left: 0;
-}
-
-.caption-text span:not(:first-child) {
-    margin-left: 20px; /* Add space between right-justified elements */
+    flex-wrap: nowrap; /* Prevent wrapping */
 }
 
 /* Fullscreen viewer */
@@ -638,8 +661,18 @@ header {
     flex-direction: column;
 }
 
+/* Default alignment for non-hero videos */
+#project-videos-container .project-video-wrapper {
+    align-items: flex-end;
+}
+
+/* Hero video alignment */
+#project-images-container .project-video-wrapper {
+    align-items: flex-start;
+}
+
 .project-video.youtube-video {
-    width: 50%; /* Changed to 1/2 of container width */
+    width: 50%;
     aspect-ratio: 16 / 9;
     margin-bottom: 15px;
     background-color: #f5f5f5;
@@ -647,31 +680,35 @@ header {
 }
 
 .project-video-wrapper .video-caption {
-    width: 50%; /* Match video width */
+    width: 50%;
     display: flex;
+    justify-content: space-between;
     font-size: 14px;
     color: #666;
+    margin-top: 10px;
 }
 
-.video-caption span:first-child {
-    margin-right: auto; /* Push first element to left */
+/* Hero video specific styles */
+.project-video.youtube-video.hero-video {
+    width: 50%;
 }
 
-.video-caption span:nth-child(2),
-.video-caption span:last-child {
-    text-align: right;
-    margin-left: 20px; /* Space between right-aligned elements */
+.project-video.hero-video + .video-caption {
+    width: 50%;
 }
 
 /* Responsive video container */
 @media screen and (max-width: 768px) {
-    .project-video-wrapper {
+    .project-video-wrapper,
+    #project-videos-container .project-video-wrapper,
+    #project-images-container .project-video-wrapper {
         margin-bottom: 60px;
+        align-items: center; /* Center all videos on mobile */
     }
     
     .project-video.youtube-video,
     .project-video-wrapper .video-caption {
-        width: 100%; /* Full width on mobile */
+        width: 100%;
     }
     
     .video-caption {
@@ -681,10 +718,20 @@ header {
     
     .video-caption span {
         text-align: left !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
     }
 }
 
-/* Responsive */
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    #gallery {
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 25px;
+        padding: 30px;
+    }
+}
+
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
@@ -704,11 +751,17 @@ header {
         margin-top: 100px;
     }
     
+    #gallery {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 25px;
+    }
+    
     .gallery-item {
         position: relative !important;
         top: auto !important;
         left: auto !important;
         margin: 20px auto;
+        max-width: 100%;
     }
     
     .project-header {
@@ -770,8 +823,12 @@ header {
     }
     
     .photo-grid-container {
-        grid-template-columns: repeat(2, 1fr); /* Two columns on medium screens */
-        grid-gap: 20px;
+        grid-template-columns: 1fr; /* Single column on mobile */
+        grid-gap: 40px;
+    }
+    
+    .photo-item {
+        margin-bottom: 40px;
     }
     
     .photo-section-title {
@@ -816,7 +873,210 @@ header {
         padding-left: 30%;
     }
     
-    .photo-grid-container {
-        grid-template-columns: 1fr; /* One column on mobile */
+    #gallery {
+        grid-template-columns: 1fr;
+        grid-gap: 20px;
+        padding: 15px;
+        width: 100%;
+    }
+}
+
+/* Ensure consistent width for project detail images */
+#project-images-container .photo-grid-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 60px;
+    width: 100%;
+    margin: 60px 0;
+}
+
+/* Special handling for Photography project to maintain grid layout */
+#project-detail[data-project="photography"] .photo-grid-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: flex-start;
+}
+
+#project-detail[data-project="photography"] .photo-item {
+    width: calc(33.33% - 27px);
+    margin-bottom: 20px;
+}
+
+#project-detail[data-project="photography"] .photo-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+#project-detail[data-project="photography"] .photo-item .image-caption {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Position specific images */
+/* Positioning removed to allow horizontal layout */
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #project-detail[data-project="photography"] .photo-grid-container {
+        gap: 20px;
+    }
+    
+    #project-detail[data-project="photography"] .photo-item {
+        width: calc(50% - 10px);
+    }
+}
+
+@media (max-width: 480px) {
+    #project-detail[data-project="photography"] .photo-grid-container {
+        flex-direction: column;
+    }
+    
+    #project-detail[data-project="photography"] .photo-item {
+        width: 100%;
+    }
+}
+
+/* Project-specific image scaling */
+#project-detail[data-project="metatool"] .photo-item {
+    position: relative;
+}
+
+#project-detail[data-project="metatool"] .photo-item img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    transform: scale(0.75);
+    transform-origin: left top;
+}
+
+#project-detail[data-project="metatool"] .photo-item .image-caption {
+    width: 75%;
+    transform: translateY(-25%);
+}
+
+#project-detail[data-project="echopulse"] .project-image-wrapper {
+    position: relative;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#project-detail[data-project="echopulse"] .project-image-wrapper.left-aligned {
+    align-items: flex-start;
+}
+
+#project-detail[data-project="echopulse"] .project-image-wrapper:not(.left-aligned) {
+    align-items: flex-end;
+}
+
+#project-detail[data-project="echopulse"] .project-image-wrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    transform: scale(0.35);
+}
+
+#project-detail[data-project="echopulse"] .project-image-wrapper.left-aligned img {
+    transform-origin: left top;
+}
+
+#project-detail[data-project="echopulse"] .project-image-wrapper:not(.left-aligned) img {
+    transform-origin: right top;
+}
+
+#project-detail[data-project="echopulse"] .project-image-wrapper .image-caption {
+    width: 35%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    transform: translateY(-65%);
+}
+
+#project-detail[data-project="lumenbeat"] .photo-item {
+    position: relative;
+}
+
+#project-detail[data-project="lumenbeat"] .photo-item img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transform: scale(0.5);
+    transform-origin: left top;
+}
+
+#project-detail[data-project="lumenbeat"] .photo-item .image-caption {
+    width: 50%;
+    transform: translateY(-50%);
+}
+
+/* Keep Photography project at full width */
+#project-detail[data-project="photography"] .photo-item img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+#project-detail[data-project="photography"] .photo-item .image-caption {
+    width: 100%;
+}
+
+/* Hero image scaling and caption positioning */
+.project-image-wrapper img.hero-image {
+    width: 50%;
+    height: auto;
+    margin: 0;
+    display: block;
+}
+
+.project-image-wrapper img.hero-image + .image-caption {
+    width: 50%;
+    transform: translateY(-50%);
+}
+
+.project-image-wrapper img.capstone-hero-image {
+    width: 25%;
+}
+
+.project-image-wrapper img.capstone-hero-image + .image-caption {
+    width: 25%;
+    transform: translateY(-75%);
+}
+
+.project-image-wrapper img.dataviz-hero-image {
+    width: 35%;
+}
+
+.project-image-wrapper img.dataviz-hero-image + .image-caption {
+    width: 35%;
+    transform: translateY(-65%);
+}
+
+.project-image-wrapper img.lumenbeat-hero-image {
+    width: 35%;
+}
+
+.project-image-wrapper img.lumenbeat-hero-image + .image-caption {
+    width: 35%;
+    transform: translateY(-65%);
+}
+
+/* Responsive adjustments for Photography grid */
+@media (max-width: 768px) {
+    #project-detail[data-project="photography"] .photo-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    #project-detail[data-project="photography"] .photo-grid-container {
+        grid-template-columns: 1fr;
     }
 }
