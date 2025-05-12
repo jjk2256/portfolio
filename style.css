@@ -24,7 +24,9 @@
 /* Hide default cursor on interactive elements */
 a, .gallery-item, .project-index-row, .language-toggle, #randomize-btn, .back-to-gallery {
     cursor: none;
-}/* Base Styles */
+}
+
+/* Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -157,6 +159,7 @@ header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 60px;
+    position: relative; /* Add position relative for grid alignment */
 }
 
 .project-title {
@@ -169,8 +172,26 @@ header {
     color: #aaa;
 }
 
-.project-info {
-    max-width: 35%;
+/* Common grid alignment for project descriptions */
+.project-info,
+.photo-description {
+    width: calc(25% - 20px); /* 3 columns minus the grid line width */
+    position: absolute;
+    left: calc(75% + 40px); /* Increased offset from grid line */
+}
+
+/* Info section specific positioning (starting from 4th column) */
+.info-section {
+    width: calc(83.33% - 20px); /* Full width from 3rd column to end */
+    position: relative;
+    left: 16.67%; /* Position exactly at 3rd column (after 2 columns = 16.67%) */
+    margin-bottom: 40px;
+}
+
+/* Specific adjustments for photo description */
+.photo-description {
+    max-width: calc(25% - 20px);
+    margin-bottom: 40px;
 }
 
 .project-info h2 {
@@ -188,12 +209,56 @@ header {
 .project-image-wrapper {
     width: 100%;
     margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-image-wrapper img {
     width: 100%;
     height: auto;
     margin-bottom: 15px;
+}
+
+/* Image scaling rules */
+.project-image-wrapper img.hero-image {
+    width: 50%; /* Display at 50% scale */
+    height: auto;
+    margin: 0; /* Remove auto margins */
+    display: block;
+}
+
+.project-image-wrapper img.hero-image + .image-caption {
+    width: 50%;
+}
+
+/* Additional 50% reduction (25% total) for CAPSTONE project hero images */
+.project-image-wrapper img.capstone-hero-image {
+    width: 25%; /* 25% of original size for CAPSTONE projects */
+    margin: 0; /* Remove auto margins */
+}
+
+.project-image-wrapper img.capstone-hero-image + .image-caption {
+    width: 25%;
+}
+
+/* Additional scaling for DataViz hero image (30% reduction from 50% base) */
+.project-image-wrapper img.dataviz-hero-image {
+    width: 35%; /* 70% of 50% = 35% of original size */
+    margin: 0; /* Remove auto margins */
+}
+
+.project-image-wrapper img.dataviz-hero-image + .image-caption {
+    width: 35%;
+}
+
+/* Additional scaling for LumenBeat hero image (30% reduction from 50% base) */
+.project-image-wrapper img.lumenbeat-hero-image {
+    width: 35%; /* 70% of 50% = 35% of original size */
+    margin: 0; /* Remove auto margins */
+}
+
+.project-image-wrapper img.lumenbeat-hero-image + .image-caption {
+    width: 35%;
 }
 
 .image-caption {
@@ -203,8 +268,27 @@ header {
     margin-top: 10px;
 }
 
-.image-caption span {
-    margin-right: 20px;
+/* Create a container for the right-justified elements */
+.image-caption span:first-child {
+    margin-right: auto; /* Push subsequent elements to the right */
+}
+
+.image-caption span:not(:first-child) {
+    margin-left: 20px; /* Space between right-justified elements */
+}
+
+/* Photo grid captions */
+.caption-text {
+    display: flex;
+    width: 100%;
+}
+
+.caption-text span:first-child {
+    margin-right: auto; /* Push subsequent elements to the right */
+}
+
+.caption-text span:not(:first-child) {
+    margin-left: 20px; /* Space between right-justified elements */
 }
 
 .back-to-gallery {
@@ -256,21 +340,295 @@ header {
     font-size: 15px;
 }
 
-/* Randomize Button - No longer needed */
-/*
-#randomize-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 8px 12px;
-    background: #333;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    z-index: 1000;
+/* Info Page Styles */
+.info-container {
+    margin-top: 80px;
+    padding: 20px;
+    position: relative;
 }
-*/
+
+.info-content {
+    position: relative;
+    padding-left: calc(8.33% + 15px); /* Start content at 2nd column with 15px offset */
+}
+
+.info-section {
+    width: calc(91.67% - 35px); /* Adjusted width to account for smaller offset */
+    position: relative;
+    left: calc(8.33% + 15px); /* Position at 2nd column with 15px offset */
+    margin-bottom: 40px;
+}
+
+.info-section h2 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.info-section h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    color: #444;
+}
+
+.bio-text p {
+    margin-bottom: 16px;
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 800px;
+}
+
+/* Bio contact section */
+.bio-contact {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.bio-contact p {
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.bio-contact a {
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #ddd;
+    transition: border-color 0.2s ease;
+}
+
+.bio-contact a:hover {
+    border-color: #999;
+}
+
+/* CV Styles */
+.cv-section {
+    margin-bottom: 50px;
+    padding-bottom: 10px;
+}
+
+.cv-entry {
+    display: flex;
+    margin-bottom: 24px;
+}
+
+.cv-year {
+    width: 120px;
+    flex-shrink: 0;
+    font-size: 14px;
+    color: #777;
+}
+
+.cv-details {
+    flex-grow: 1;
+}
+
+.cv-title {
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.cv-institution {
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+.cv-location {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+/* Project lists in work experience */
+.cv-projects {
+    margin-top: 8px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.cv-description {
+    padding-left: 20px;
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.cv-description li {
+    margin-bottom: 5px;
+}
+
+.cv-note {
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+/* Italics for award distinctions */
+.cv-details em {
+    font-style: italic;
+}
+
+/* Skills section */
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 5px;
+}
+
+.skills-category {
+    min-width: 200px;
+}
+
+.skills-category h4 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.skills-category ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.skills-category li {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.skills-category p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* Contact section */
+.contact-info {
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.contact-info a {
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #ddd;
+}
+
+.contact-info a:hover {
+    border-bottom: 1px solid #999;
+}
+
+/* Photo grid container */
+.photo-grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Changed from 2 to 3 columns */
+    grid-gap: 40px; /* Spacing between images */
+    width: 100%;
+    margin: 60px 0; /* Space above and below the grid */
+}
+
+/* Photography grid styles */
+.photo-section-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 60px;
+    margin-bottom: 16px;
+    color: #444;
+}
+
+.photo-description {
+    max-width: 800px;
+    margin-bottom: 40px;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Individual photo items */
+.photo-item {
+    position: relative;
+    transition: opacity 0.3s ease;
+    cursor: none; /* Works with your custom cursor */
+    margin-bottom: 40px; /* Space below each item for caption */
+}
+
+.photo-item:hover {
+    opacity: 0.9;
+}
+
+.photo-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+}
+
+/* Image captions */
+.photo-caption {
+    display: flex;
+    font-size: 12px;
+    color: #333;
+    margin-top: 8px;
+}
+
+.photo-caption span {
+    margin-right: 20px;
+}
+
+.caption-text {
+    display: flex;
+    justify-content: space-between; /* Change to space-between */
+    width: 100%;
+}
+
+.caption-text span:first-child {
+    margin-right: auto; /* Push first element to the left */
+    margin-left: 0;
+}
+
+.caption-text span:not(:first-child) {
+    margin-left: 20px; /* Add space between right-justified elements */
+}
+
+/* Fullscreen viewer */
+.fullscreen-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.98);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    cursor: none;
+}
+
+.fullscreen-image {
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.fullscreen-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #333;
+    font-size: 28px;
+    cursor: none;
+}
+
+.fullscreen-close:hover {
+    color: #000;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -307,7 +665,19 @@ header {
         max-width: 100%;
     }
     
-    .project-info {
+    .project-info,
+    .photo-description {
+        position: static;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 30px;
+        left: auto;
+    }
+    
+    .info-section {
+        position: static;
+        width: 100%;
+        left: auto;
         margin-top: 30px;
     }
     
@@ -321,6 +691,53 @@ header {
     
     .project-category {
         width: 35%;
+    }
+    
+    .info-container {
+        padding: 20px;
+    }
+    
+    .cv-entry {
+        flex-direction: column;
+    }
+    
+    .cv-year {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .skills-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .skills-category {
+        width: 100%;
+    }
+    
+    .photo-grid-container {
+        grid-template-columns: repeat(2, 1fr); /* Two columns on medium screens */
+        grid-gap: 20px;
+    }
+    
+    .photo-section-title {
+        margin-top: 40px;
+        font-size: 16px;
+    }
+    
+    .fullscreen-image {
+        max-width: 95%;
+        max-height: 90%;
+    }
+    
+    .info-content {
+        padding-left: 0;
+    }
+    
+    .info-section {
+        position: static;
+        width: 100%;
+        margin-top: 30px;
     }
 }
 
@@ -343,5 +760,9 @@ header {
         text-align: left;
         margin-top: 5px;
         padding-left: 30%;
+    }
+    
+    .photo-grid-container {
+        grid-template-columns: 1fr; /* One column on mobile */
     }
 }

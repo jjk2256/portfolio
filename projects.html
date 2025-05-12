@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Title | Julia Kwon</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="green-circle-favicon.svg">
+    <link rel="alternate icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <!-- Custom Cursor -->
@@ -20,7 +22,7 @@
         <div class="nav-container">
             <div class="nav-left">
                 <div class="nav-links">
-                    <a href="index.html" class="active">Works</a>
+                    <a href="index.html" id="works-link">Works</a>
                     <a href="index.html#projects">Projects</a>
                 </div>
             </div>
@@ -34,54 +36,56 @@
         <a href="#" class="language-toggle">EN</a>
     </header>
     
-    <div class="project-container">
+    <div class="project-container" id="project-detail">
         <div class="project-header">
-            <h1 class="project-title">Project Title <span>2023</span></h1>
+            <h1 class="project-title" id="project-title-text">Project Title <span id="project-year">2023</span></h1>
             <div class="project-info">
                 <h2>About the Project</h2>
-                <p>This is a detailed description of the project. This text would be replaced with the actual project description when using a template system to generate individual project pages.</p>
+                <p id="project-description">This is a detailed description of the project. This text would be replaced with the actual project description when using a template system to generate individual project pages.</p>
             </div>
         </div>
         
-        <!-- Main Project Image -->
-        <div class="project-image-wrapper">
-            <img src="images/image00.png" alt="Project Title">
-            <div class="image-caption">
-                <span>View 00</span>
-                <span>Porcelain, clay</span>
-                <span>2023</span>
+        <div id="project-images-container">
+            <!-- Main Project Image -->
+            <div class="project-image-wrapper">
+                <img src="images/image00.png" alt="Project Title" class="hero-image">
+                <div class="image-caption">
+                    <span>Image 00</span>
+                    <span>Interactive media</span>
+                    <span>2023</span>
+                </div>
+            </div>
+            
+            <!-- Additional Project Images -->
+            <div class="project-image-wrapper">
+                <img src="images/image01.png" alt="Detail view" class="detail-image">
+                <div class="image-caption">
+                    <span>Detail view 1</span>
+                    <span>Interactive media</span>
+                    <span>2023</span>
+                </div>
+            </div>
+            
+            <div class="project-image-wrapper">
+                <img src="images/image02.png" alt="Installation view" class="detail-image">
+                <div class="image-caption">
+                    <span>Detail view 2</span>
+                    <span>Interactive media</span>
+                    <span>2023</span>
+                </div>
+            </div>
+            
+            <div class="project-image-wrapper">
+                <img src="images/image03.png" alt="Close-up view" class="detail-image">
+                <div class="image-caption">
+                    <span>Detail view 3</span>
+                    <span>Interactive media</span>
+                    <span>2023</span>
+                </div>
             </div>
         </div>
         
-        <!-- Additional Project Images -->
-        <div class="project-image-wrapper">
-            <img src="images/image01.png" alt="Detail view">
-            <div class="image-caption">
-                <span>Detail view 1</span>
-                <span>Porcelain</span>
-                <span>2023</span>
-            </div>
-        </div>
-        
-        <div class="project-image-wrapper">
-            <img src="images/image02.png" alt="Installation view">
-            <div class="image-caption">
-                <span>Detail view 2</span>
-                <span>Mixed media</span>
-                <span>2023</span>
-            </div>
-        </div>
-        
-        <div class="project-image-wrapper">
-            <img src="images/image03.png" alt="Close-up view">
-            <div class="image-caption">
-                <span>Detail view 3</span>
-                <span>Mixed media</span>
-                <span>2023</span>
-            </div>
-        </div>
-        
-        <a href="index.html" class="back-to-gallery">Back to Gallery</a>
+        <a href="index.html" class="back-to-gallery" id="back-button">Back to Gallery</a>
     </div>
 
     <script src="main.js"></script>
@@ -93,6 +97,15 @@
             
             // Initialize custom cursor
             initCustomCursor();
+            
+            // For CAPSTONE projects, add the special class (if viewing a CAPSTONE project)
+            const projectTitle = document.getElementById('project-title-text').textContent;
+            if (projectTitle.includes('CAPSTONE')) {
+                const heroImage = document.querySelector('.hero-image');
+                if (heroImage) {
+                    heroImage.classList.add('capstone-hero-image');
+                }
+            }
         });
     </script>
 </body>
