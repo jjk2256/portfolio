@@ -630,6 +630,60 @@ header {
     color: #000;
 }
 
+/* Project Detail Page */
+.project-video-wrapper {
+    width: 100%;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-video.youtube-video {
+    width: 50%; /* Changed to 1/2 of container width */
+    aspect-ratio: 16 / 9;
+    margin-bottom: 15px;
+    background-color: #f5f5f5;
+    border: none;
+}
+
+.project-video-wrapper .video-caption {
+    width: 50%; /* Match video width */
+    display: flex;
+    font-size: 14px;
+    color: #666;
+}
+
+.video-caption span:first-child {
+    margin-right: auto; /* Push first element to left */
+}
+
+.video-caption span:nth-child(2),
+.video-caption span:last-child {
+    text-align: right;
+    margin-left: 20px; /* Space between right-aligned elements */
+}
+
+/* Responsive video container */
+@media screen and (max-width: 768px) {
+    .project-video-wrapper {
+        margin-bottom: 60px;
+    }
+    
+    .project-video.youtube-video,
+    .project-video-wrapper .video-caption {
+        width: 100%; /* Full width on mobile */
+    }
+    
+    .video-caption {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .video-caption span {
+        text-align: left !important;
+    }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .nav-container {

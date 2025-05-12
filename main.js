@@ -7,7 +7,16 @@ const images = [
         title: 'CAPSTONE_grow', 
         year: '2025',
         description: 'The *Incubator* is a sensor-monitored environmental chamber designed to support and document optimal growth conditions for bio-based materials. Developed using open-source electronics and accessible materials, the system maintains a controlled microclimate by continuously tracking humidity, temperature, and carbon dioxide concentration.\n\nA Raspberry Pi functions as the central controller, interfacing with an Adafruit SCD-40 sensor and a NoIR camera to log environmental data and capture time-lapse imagery. This DIY platform enables scalable, low-cost experimentation, facilitating longitudinal studies on the relationship between growth conditions and material behavior. By integrating digital sensing and automated monitoring, the incubator supports research into the environmental performance of regenerative materials.',
-        slug: 'capstone_grow'
+        slug: 'capstone_grow',
+        videos: [
+            {
+                type: 'youtube',
+                id: 'je36RTjk31c',
+                title: 'Video documentation',
+                year: '2025',
+                medium: 'Timelapse'
+            }
+        ]
     },
     { 
         src: 'CAPSTONE_make/hero.webp',
@@ -16,7 +25,16 @@ const images = [
         title: 'CAPSTONE_make', 
         year: '2024',
         description: 'The *Scalable Infill Creator* is a custom-designed end effector developed for integration with a UR3 robotic arm. Engineered to fabricate wood-based infill structures and tension members, the system forms the internal framework for modular mycelium panels. By translating parametric design logic into precise material output, it enables scalable, repeatable, and materially efficient fabrication tailored to each panel\'s geometry.\n\nThrough a process of robotic automation, slender wooden elements are deployed into configured patterns, acting as both structural reinforcement and geometric scaffolding within the formwork during mycelium growth. This approach merges digital fabrication with physical computation, embedding intelligence into both the design process and material system.',
-        slug: 'capstone_make'
+        slug: 'capstone_make',
+        videos: [
+            {
+                type: 'youtube',
+                id: 'HD5T02s5_pI',
+                title: 'Video documentation',
+                year: '2024',
+                medium: 'Fabrication'
+            }
+        ]
     },
     { 
         src: 'CAPSTONE_test/hero.webp',
@@ -25,7 +43,16 @@ const images = [
         title: 'CAPSTONE_test', 
         year: '2025',
         description: 'The *Acoustic Tube Tester* is a DIY sound isolation system designed to evaluate the acoustic dampening performance of material samples. Using a directional sound source and a calibrated receiver positioned within a controlled tubular environment, the device measures sound transmission loss across various materials.\n\nConstructed from simple, accessible components, the setup simulates a vacuum-like chamber to minimize ambient interference. By isolating the sound path and capturing residual sound levels, it provides a low-cost method for assessing material-based sound attenuation. Tested samples include mycelium composite, cork sheet, and SonaSpray, offering comparative insights into their acoustic absorption properties.',
-        slug: 'capstone_test'
+        slug: 'capstone_test',
+        videos: [
+            {
+                type: 'youtube',
+                id: 'j5Tt_S9Vup8',
+                title: 'Video documentation',
+                year: '2025',
+                medium: 'Acoustics testing'
+            }
+        ]
     },
     { 
         src: 'Colloquium01/hero.png', 
@@ -52,7 +79,16 @@ const images = [
         title: 'EchoPULSE', 
         year: '2025',
         description: 'EchoPulse is an interactive game that visualizes players\' real-time heart rates through dynamic, pulsating waves.\n\nThe game uses biofeedback technology to create an immersive experience where participants can observe and manipulate their biometric data to achieve visual harmony.',
-        slug: 'echopulse'
+        slug: 'echopulse',
+        videos: [
+            {
+                type: 'youtube',
+                id: 'o2tsGA1ngAQ',
+                title: 'Interactive Game',
+                year: '2025',
+                medium: 'Echo Pulse'
+            }
+        ]
     },
     { 
         src: 'GIS/hero.png', 
@@ -70,7 +106,16 @@ const images = [
         title: 'LumenBeat', 
         year: '2022',
         description: '*LUMENBEAT* is an interactive Automaton that transforms biometric reading into a pulsating illumination. It draws inspiration from digital artists whose work deal with light features and human touch. Our design objective was to create a touch based digital object that reflects a person\'s heart rate in more ambient atmospheric conditions. Nestled within a hand-shaped recess, a touch sensor invites contact - activating a pulsing choreography of light driven by digital components within the object.',
-        slug: 'lumenbeat'
+        slug: 'lumenbeat',
+        videos: [
+            {
+                type: 'youtube',
+                id: 'RzlMUqnRZ_I',
+                title: 'Interactive Object',
+                year: '2022',
+                medium: 'Lumen Beat'
+            }
+        ]
     },
     { 
         src: 'MetaTool/hero.png', 
@@ -339,6 +384,62 @@ function showProjectDetail(imageData) {
             detailImage.onerror = function() {
                 detailImageWrapper.remove();
             };
+        });
+    }
+    
+    // Add videos if they exist
+    if (imageData.videos && imageData.videos.length > 0) {
+        imageData.videos.forEach((video, index) => {
+            const videoWrapper = document.createElement('div');
+            videoWrapper.className = 'project-video-wrapper';
+            
+            if (video.type === 'youtube') {
+                // Create YouTube iframe
+                const iframe = document.createElement('iframe');
+                iframe.classList.add('project-video', 'youtube-video');
+                iframe.src = `https://www.youtube.com/embed/${video.id}`;
+                iframe.title = video.title;
+                iframe.frameBorder = "0";
+                iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+                iframe.allowFullscreen = true;
+                videoWrapper.appendChild(iframe);
+            } else {
+                // Regular video handling
+                const videoElement = document.createElement('video');
+                videoElement.classList.add('project-video');
+                videoElement.controls = true;
+                videoElement.playsInline = true;
+                if (video.poster) {
+                    videoElement.poster = video.poster;
+                }
+                
+                const sourceElement = document.createElement('source');
+                sourceElement.src = video.src;
+                sourceElement.type = 'video/mp4';
+                
+                videoElement.appendChild(sourceElement);
+                videoWrapper.appendChild(videoElement);
+            }
+            
+            // Add caption for video
+            const videoCaption = document.createElement('div');
+            videoCaption.className = 'video-caption';
+            
+            const videoCaptionText = document.createElement('span');
+            videoCaptionText.textContent = video.title;
+            
+            const videoCaptionMedium = document.createElement('span');
+            videoCaptionMedium.textContent = video.medium || "Video documentation";
+            
+            const videoCaptionYear = document.createElement('span');
+            videoCaptionYear.textContent = video.year || imageData.year;
+            
+            videoCaption.appendChild(videoCaptionText);
+            videoCaption.appendChild(videoCaptionMedium);
+            videoCaption.appendChild(videoCaptionYear);
+            
+            videoWrapper.appendChild(videoCaption);
+            imagesContainer.appendChild(videoWrapper);
         });
     }
     

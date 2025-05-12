@@ -18,12 +18,12 @@
     </div>
 
     <header>
-        <a href="#" class="logo" id="logo-link">Julia Kwon</a>
+        <a href="/" class="logo" id="logo-link">Julia Kwon</a>
         <div class="nav-container">
             <div class="nav-left">
                 <div class="nav-links">
-                    <a href="#" class="active" id="works-link">Works</a>
-                    <a href="#" id="projects-link">Projects</a>
+                    <a href="/" class="active" id="works-link" data-section="works">Works</a>
+                    <a href="#projects" id="projects-link" data-section="projects">Projects</a>
                 </div>
             </div>
             <div class="nav-right">
@@ -45,62 +45,62 @@
     <div class="project-container" id="projects-page" style="display: none;">
         <div class="projects-index">
             <div class="project-index-row">
-                <div class="project-year">2023</div>
+                <div class="project-year">2024</div>
                 <div class="project-title">CAPSTONE_make</div>
                 <div class="project-category">Development</div>
             </div>
             <div class="project-index-row">
-                <div class="project-year">2022</div>
+                <div class="project-year">2025</div>
                 <div class="project-title">CAPSTONE_grow</div>
                 <div class="project-category">Development</div>
             </div>
             <div class="project-index-row">
-                <div class="project-year">2021</div>
+                <div class="project-year">2025</div>
                 <div class="project-title">CAPSTONE_test</div>
                 <div class="project-category">Development</div>
             </div>
             <div class="project-index-row">
-                <div class="project-year">2022</div>
+                <div class="project-year">2024</div>
                 <div class="project-title">Colloquium01</div>
                 <div class="project-category">Academic</div>
             </div>
             <div class="project-index-row">
-                <div class="project-year">2023</div>
+                <div class="project-year">2024</div>
                 <div class="project-title">DataViz</div>
                 <div class="project-category">Visualization</div>
             </div>
             <div class="project-index-row">
-                <div class="project-year">2021</div>
+                <div class="project-year">2025</div>
                 <div class="project-title">EchoPULSE</div>
                 <div class="project-category">Interactive</div>
             </div>
             <div class="project-index-row">
-                <div class="project-year">2023</div>
+                <div class="project-year">2024</div>
                 <div class="project-title">GIS</div>
                 <div class="project-category">Mapping</div>
             </div>
             <div class="project-index-row">
-                <div class="project-year">2022</div>
+                <div class="project-year">2025</div>
                 <div class="project-title">LumenBeat</div>
                 <div class="project-category">Installation</div>
             </div>
             <div class="project-index-row">
-                <div class="project-year">2021</div>
+                <div class="project-year">2024</div>
                 <div class="project-title">MetaTool</div>
                 <div class="project-category">Utility</div>
             </div>
             <div class="project-index-row">
-                <div class="project-year">2022</div>
+                <div class="project-year">2024</div>
                 <div class="project-title">Photography</div>
                 <div class="project-category">Digital</div>
             </div>
             <div class="project-index-row">
-                <div class="project-year">2023</div>
+                <div class="project-year">2024</div>
                 <div class="project-title">RubeGoldberg</div>
                 <div class="project-category">Mechanical</div>
             </div>
             <div class="project-index-row">
-                <div class="project-year">2021</div>
+                <div class="project-year">2024</div>
                 <div class="project-title">Zine</div>
                 <div class="project-category">Publication</div>
             </div>
@@ -121,9 +121,71 @@
             <!-- Images will be added dynamically -->
         </div>
         
-        <a href="#" class="back-to-gallery" id="back-button">Back to Gallery</a>
+        <a href="/" class="back-to-gallery" id="back-button">Back to Gallery</a>
     </div>
 
     <script src="main.js"></script>
+    <script>
+        // Ensure proper navigation handling
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle all navigation links
+            document.querySelectorAll('a[data-section]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    
+                    // Update active states
+                    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Handle navigation
+                    if (section === 'works') {
+                        showGallery();
+                        history.pushState({}, '', '/');
+                    } else if (section === 'projects') {
+                        showProjectsPage();
+                    }
+                });
+            });
+
+            // Handle logo click
+            document.getElementById('logo-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                showGallery();
+                document.getElementById('works-link').classList.add('active');
+                document.getElementById('projects-link').classList.remove('active');
+                history.pushState({}, '', '/');
+            });
+
+            // Handle back button
+            document.getElementById('back-button').addEventListener('click', function(e) {
+                e.preventDefault();
+                showGallery();
+                document.getElementById('works-link').classList.add('active');
+                document.getElementById('projects-link').classList.remove('active');
+                history.pushState({}, '', '/');
+            });
+        });
+
+        // Handle browser back/forward navigation
+        window.addEventListener('popstate', function(e) {
+            const hash = window.location.hash;
+            if (hash === '#projects') {
+                showProjectsPage();
+            } else if (hash.startsWith('#project-')) {
+                const projectName = decodeURIComponent(hash.replace('#project-', ''));
+                const projectData = images.find(img => 
+                    img.title.toLowerCase() === projectName.toLowerCase().replace(/-/g, ' ')
+                );
+                if (projectData) {
+                    showProjectDetail(projectData);
+                } else {
+                    showGallery();
+                }
+            } else {
+                showGallery();
+            }
+        });
+    </script>
 </body>
 </html>
