@@ -671,6 +671,16 @@ header {
     align-items: flex-start;
 }
 
+/* Right-aligned video for MetaTool */
+.right-aligned-video {
+    align-items: flex-end !important;
+    margin-bottom: 60px;
+}
+
+.right-aligned-video .project-video {
+    margin-left: auto !important;
+}
+
 .project-video.youtube-video {
     width: 50%;
     aspect-ratio: 16 / 9;
@@ -916,8 +926,12 @@ header {
     margin-top: 10px;
 }
 
-/* Position specific images */
-/* Positioning removed to allow horizontal layout */
+/* Ensure the last row with images 04, 07, and 08 align properly */
+#project-detail[data-project="photography"] .photo-item[data-image="04"],
+#project-detail[data-project="photography"] .photo-item[data-image="07"],
+#project-detail[data-project="photography"] .photo-item[data-image="08"] {
+    margin-top: 20px; /* Add some spacing from the row above */
+}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

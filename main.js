@@ -32,15 +32,15 @@ const images = [
         height: 400, 
         title: 'CAPSTONE_grow', 
         year: '2025',
-        description: 'The *Incubator* is a sensor-monitored environmental chamber designed to support and document optimal growth conditions for bio-based materials. Developed using open-source electronics and accessible materials, the system maintains a controlled microclimate by continuously tracking humidity, temperature, and carbon dioxide concentration.\n\nA Raspberry Pi functions as the central controller, interfacing with an Adafruit SCD-40 sensor and a NoIR camera to log environmental data and capture time-lapse imagery. This DIY platform enables scalable, low-cost experimentation, facilitating longitudinal studies on the relationship between growth conditions and material behavior. By integrating digital sensing and automated monitoring, the incubator supports research into the environmental performance of regenerative materials.',
+        description: 'The three-part process of the capstone project continues with environmental monitoring and growing, facilitated by a DIY incubator designed to support and document the development of mycelium-based composites. Built with accessible materials and open-source electronics, the system maintains a controlled microclimate by tracking temperature, humidity, and carbon dioxide concentration in real time. A Raspberry Pi functions as the central controller, interfacing with an Adafruit SCD-40 sensor and a NoIR camera to log environmental data and produce time-lapse imagery of the growth process.\n\nThis self-contained setup enables continuous observation and feedback, offering insight into how environmental factors influence material behavior over time. By integrating digital sensing with biological cultivation, this phase treats material formation as a living, adaptive process—deepening the project\'s commitment to scalable, regenerative construction systems.',
         slug: 'capstone_grow',
         videos: [
             {
                 type: 'youtube',
                 id: 'je36RTjk31c',
-                title: 'Video documentation',
+                title: 'Monitored Growth',
                 year: '2025',
-                medium: 'Timelapse'
+                medium: 'Process Documentation'
             }
         ]
     },
@@ -50,15 +50,15 @@ const images = [
         height: 300, 
         title: 'CAPSTONE_make', 
         year: '2024',
-        description: 'The *Scalable Infill Creator* is a custom-designed end effector developed for integration with a UR3 robotic arm. Engineered to fabricate wood-based infill structures and tension members, the system forms the internal framework for modular mycelium panels. By translating parametric design logic into precise material output, it enables scalable, repeatable, and materially efficient fabrication tailored to each panel\'s geometry.\n\nThrough a process of robotic automation, slender wooden elements are deployed into configured patterns, acting as both structural reinforcement and geometric scaffolding within the formwork during mycelium growth. This approach merges digital fabrication with physical computation, embedding intelligence into both the design process and material system.',
+        description: 'The three-part process of the capstone project begins with digital fabrication, where a custom-designed end effector integrated with a UR3 robotic arm is used to generate scalable infill structures—slender wooden tension members tailored to each panel\'s geometry. These elements are fabricated through parametric inputs and placed into precise configurations, acting as both reinforcement and scaffolding.\n\nOnce completed, the infill is inserted into a modular formwork, setting the stage for mycelium growth. This phase bridges computational design with robotic automation, embedding structural logic into the panel system while maintaining adaptability across variations. As the foundation for the bio-fabrication process, this step reflects a broader commitment to materially efficient, responsive construction workflows grounded in regenerative design principles.',
         slug: 'capstone_make',
         videos: [
             {
                 type: 'youtube',
                 id: 'HD5T02s5_pI',
-                title: 'Video documentation',
+                title: 'Robotic fabrication',
                 year: '2024',
-                medium: 'Fabrication'
+                medium: 'Process documentation'
             }
         ]
     },
@@ -68,15 +68,15 @@ const images = [
         height: 350,
         title: 'CAPSTONE_test', 
         year: '2025',
-        description: 'The *Acoustic Tube Tester* is a DIY sound isolation system designed to evaluate the acoustic dampening performance of material samples. Using a directional sound source and a calibrated receiver positioned within a controlled tubular environment, the device measures sound transmission loss across various materials.\n\nConstructed from simple, accessible components, the setup simulates a vacuum-like chamber to minimize ambient interference. By isolating the sound path and capturing residual sound levels, it provides a low-cost method for assessing material-based sound attenuation. Tested samples include mycelium composite, cork sheet, and SonaSpray, offering comparative insights into their acoustic absorption properties.',
+        description: 'The three-part process of the capstone project concludes with acoustic testing, using a low-tech, DIY setup developed to evaluate the sound absorption performance of bio-based and conventional materials. Constructed from readily available components, the system employs a directional speaker and a calibrated microphone within a tubular enclosure to isolate the sound path and minimize ambient interference—creating a controlled environment for measuring transmission loss.\n\nThis tool was instrumental in testing the acoustic behavior of experimental panels, including mycelium composite, cork sheet, and SonaSpray. By capturing and comparing residual sound levels, the tester offers accessible, preliminary insights into how these materials perform acoustically. Rooted in resourcefulness and open-ended inquiry, this phase complements the project\'s broader goal of assessing the viability of mycelium-based systems as regenerative acoustic solutions for interior environments.',
         slug: 'capstone_test',
         videos: [
             {
                 type: 'youtube',
                 id: 'j5Tt_S9Vup8',
-                title: 'Video documentation',
+                title: 'Acoustics Testing',
                 year: '2025',
-                medium: 'Acoustics testing'
+                medium: 'Process Documentation'
             }
         ]
     },
@@ -95,15 +95,15 @@ const images = [
         height: 320,
         title: 'DataViz', 
         year: '2024',
-        description: '*Hue Knew?* is an interactive web-based quiz developed by Hao Lee, Julia Kwon, and Vaibhav Jain as a final project for the 2024 course *Data Visualization for Architecture, Urbanism, and the Humanities* at Columbia University\'s Graduate School of Architecture, Planning, and Preservation (GSAPP). The project explores the relationship between color palettes and cinematic genres, challenging users to identify film genres based solely on curated color schemes. By gamifying visual analysis, *Hue Knew?* offers an engaging platform to examine how color theory and visual perception inform genre recognition and storytelling in film.',
+        description: 'Hue Knew? is an interactive web-based quiz developed by Hao Lee, Julia Kwon, and Vaibhav Jain. The project explores the relationship between color palettes and cinematic genres, challenging users to identify film genres based solely on curated color schemes. By gamifying visual analysis, Hue Knew? offers an engaging platform to examine how color theory and visual perception inform genre recognition and storytelling in film.',
         slug: 'dataviz',
         videos: [
             {
                 type: 'youtube',
                 id: 'VfR0h_FfCkY',
-                title: 'Project Demo',
+                title: 'Interactive Game',
                 year: '2024',
-                medium: 'Interactive'
+                medium: 'Project Demonstration'
             }
         ]
     },
@@ -112,17 +112,17 @@ const images = [
         width: 300, 
         height: 300,
         title: 'EchoPULSE', 
-        year: '2025',
-        description: 'EchoPulse is an interactive game that visualizes players\' real-time heart rates through dynamic, pulsating waves.\n\nThe game uses biofeedback technology to create an immersive experience where participants can observe and manipulate their biometric data to achieve visual harmony.',
+        year: '2024',
+        description: 'EchoPulse is an interactive game that visualizes players\' real-time heart rates through dynamic, pulsating waves. Created in collaboration with Skylar Zhang, the project uses biofeedback technology and physical computation to transform biometric data into a responsive visual interface. By integrating heart rate sensors, the game enables participants to observe and influence their physiological signals, fostering a unique interplay between body and environment. Through this system, players are invited to achieve visual harmony by actively engaging with their own heartbeat—turning internal rhythms into a shared, interactive experience.',
         slug: 'echopulse',
         isVideoHero: true,
         videos: [
             {
                 type: 'youtube',
                 id: 'o2tsGA1ngAQ',
-                title: 'Interactive Game',
-                year: '2025',
-                medium: 'Echo Pulse',
+                title: 'two-player interactive game',
+                year: '2024',
+                medium: 'project demonstration',
                 isHero: true
             }
         ]
@@ -133,16 +133,16 @@ const images = [
         height: 400, 
         title: 'GIS', 
         year: '2024',
-        description: '*GIS for Design Practices* is an interactive spatial analysis project developed by Kitae Kim and Julia Kwon that examines the accessibility of delivery services across the United States. Utilizing MapLibre and Maputnik, the project visualizes disparities in package, grocery, and meal delivery coverage, highlighting regions—termed "delivery deserts"—where services are limited or absent. Through layered mapping and case studies, it explores the intersection of infrastructure, population density, and geographic barriers, offering insights into how spatial data can inform equitable design and service planning.',
+        description: 'This project maps the service access of package, grocery, and meal delivery across the United States, revealing disparities in coverage and identifying regions—termed "delivery deserts"—where services are limited or absent. Developed by Kitae Kim and Julia Kwon, the interactive spatial analysis uses MapLibre and Maputnik to visualize how infrastructure, population density, and geographic barriers shape accessibility. Through layered mapping and focused case studies, the project explores how spatial data can support more equitable approaches to design and service distribution.',
         slug: 'gis',
         isVideoHero: true,
         videos: [
             {
                 type: 'youtube',
                 id: 'FupW2hQdHAM',
-                title: 'Project Demo',
+                title: 'mapping service access',
                 year: '2024',
-                medium: 'Interactive',
+                medium: 'project demonstration',
                 isHero: true
             }
         ]
@@ -152,16 +152,16 @@ const images = [
         width: 380, 
         height: 300, 
         title: 'LumenBeat', 
-        year: '2022',
-        description: '*LUMENBEAT* is an interactive Automaton that transforms biometric reading into a pulsating illumination. It draws inspiration from digital artists whose work deal with light features and human touch. Our design objective was to create a touch based digital object that reflects a person\'s heart rate in more ambient atmospheric conditions. Nestled within a hand-shaped recess, a touch sensor invites contact - activating a pulsing choreography of light driven by digital components within the object.',
+        year: '2025',
+        description: 'LUMENBEAT is a digital automaton that transforms biometric readings into pulsating illumination. Created in collaboration with Adnan Kasubhai and Kitae Kim, the project draws inspiration from digital artists who explore the interplay between light and human touch. Designed as a touch-based digital object, LUMENBEAT reflects a person\'s heart rate through ambient, atmospheric lighting.\n\nAt its core, the project integrates physical computation—translating biometric input into dynamic light patterns through embedded sensors and microcontrollers. The sculptural housing was fabricated through robotic metal forming, enabling the creation of precise, fluid geometries that echo the contours of the human hand. Nestled within a hand-shaped recess, a touch sensor invites contact—activating a choreographed pulse of light that responds in real time.\n\nBy merging biometric sensing, robotic fabrication, and interactive lighting, LUMENBEAT becomes both interface and instrument—transforming internal rhythms into a shared spatial experience.',
         slug: 'lumenbeat',
         videos: [
             {
                 type: 'youtube',
                 id: 'RzlMUqnRZ_I',
-                title: 'Interactive Object',
-                year: '2022',
-                medium: 'Lumen Beat'
+                title: 'Sensor Based Automaton',
+                year: '2025',
+                medium: 'Video Documentation'
             }
         ]
     },
@@ -171,15 +171,15 @@ const images = [
         height: 350,
         title: 'MetaTool', 
         year: '2024',
-        description: 'This project reconceptualizes wakefulness as a generative state shaped by physical balance and creative expression. Attention is treated not as a finite resource but as a dynamic instrument—responsive to bodily and environmental conditions—that enables mindfulness and spontaneity. By replacing routine-driven alertness with intentional, embodied engagement, the project reframes wakefulness as a practice of attunement and exploration.\n\nTraditionally reactive, my relationship to attention is shifting toward a generative and embodied practice. No longer triggered solely by external stimuli like caffeine or music, attention is cultivated through movement, sound, and mindful presence. The balancing board becomes both medium and metaphor: I act as both performer and listener, using physical focus to produce and respond to spontaneous acoustic expressions. This framework treats attention as a pliable, creative force—reshaped through bodily rhythm and emotional tone. Morning rituals thus evolve into intentional acts of recalibration, where motion and space serve as tools for grounding awareness. Ultimately, the project positions wakefulness as a form of mindful creativity—an adaptive, self-reflective process grounded in balance, spontaneity, and environmental attunement.',
+        description: 'This project begins with a simple intent: to replace caffeine-driven alertness with a ritual of embodied wakefulness. Each morning, I bend a metal wire into a spontaneous shape, connecting it to a physical computing system that transforms form into sound. As the wire\'s geometry becomes music, I balance on a board—listening, responding, recalibrating. The act is improvised yet attuned: a feedback loop between body, object, and sound.\n\nThe balancing board serves as both medium and metaphor, while the wire becomes an attention medium—a conduit for focusing awareness through tactile creation and acoustic response. In this system, attention is not passive or depleted, but sculpted and redirected through physical action.\n\nNo longer reactive to external triggers, wakefulness is reframed as an adaptive, generative process. Attention is cultivated—not consumed—through deliberate engagement with space and sensation. Through physical computation and spontaneous ritual, alertness is not something taken, but something made—grounded in balance, shaped by movement, and sustained through mindful presence.',
         slug: 'metatool',
         videos: [
             {
                 type: 'youtube',
                 id: 'ROk9-g6davw',
-                title: 'Video documentation',
+                title: 'Physical Computation',
                 year: '2024',
-                medium: 'Interactive tool'
+                medium: 'Process Documentation'
             }
         ]
     },
@@ -198,16 +198,16 @@ const images = [
         height: 320,
         title: 'RubeGoldberg', 
         year: '2024',
-        description: 'RubeGoldberg investigates chain reactions and mechanical systems through playful complexity. This project combines physical computing and kinetic elements to create elaborate sequences where each action triggers the next, exploring causality through deliberate overcomplication.',
+        description: 'RubeGoldberg investigates chain reactions and mechanical systems through playful complexity. Created in collaboration with Hao Lee, this project combines physical computing and kinetic elements to construct elaborate sequences where each action triggers the next. As the game unfolds, the chain reactions often transform in unexpected ways, introducing unpredictable outcomes that highlight the tension between control and chaos. Through deliberate over-complication, the project explores causality, failure, and surprise as core components of interactive design.',
         slug: 'rubegoldberg',
         isVideoHero: true,
         videos: [
             {
                 type: 'youtube',
                 id: 'Dr4IfNH6Ngk',
-                title: 'Rube Goldberg Machine',
+                title: 'RubeGoldberg machine',
                 year: '2024',
-                medium: 'Unpredictable',
+                medium: 'project documentation',
                 isHero: true
             }
         ]
@@ -218,16 +218,16 @@ const images = [
         height: 300,
         title: 'Zine', 
         year: '2024',
-        description: 'An interactive game that explores the intersection of physical and digital interaction through collaborative play. Players engage with a dynamic interface that responds to their movements and choices, creating a unique experience that bridges traditional gaming mechanics with experimental interaction design. The project investigates how shared digital spaces can foster meaningful connections and spontaneous creativity.',
+        description: 'An interactive game that explores the intersection of physical and digital interaction through collaborative play. Developed in collaboration with Panyanus Jansomwong, Pakjira Itthisang, and Kitae Kim, the project weaves together each group member\'s colloquium idea into a unified gaming experience. Players engage with a dynamic interface that responds to their movements and choices, creating a unique experience that bridges traditional gaming mechanics with experimental interaction design. At its core, the game investigates how shared digital spaces can foster meaningful connections, spontaneous creativity, and collective authorship.',
         slug: 'zine',
         isVideoHero: true,
         videos: [
             {
                 type: 'youtube',
                 id: 'ZhHwTqa2q_U',
-                title: 'Interactive Game',
+                title: 'interactive zine',
                 year: '2024',
-                medium: 'Collaborative',
+                medium: 'project demonstration',
                 isHero: true
             }
         ]
@@ -387,13 +387,50 @@ function showProjectDetail(imageData) {
         heroCaption.className = 'image-caption';
         
         const heroCaptionText = document.createElement('span');
-        heroCaptionText.textContent = 'Image 00';
-        
         const heroCaptionMedium = document.createElement('span');
-        heroCaptionMedium.textContent = 'Digital print';
-        
         const heroCaptionYear = document.createElement('span');
-        heroCaptionYear.textContent = imageData.year;
+        
+        // Set custom caption for CAPSTONE_make
+        if (imageData.title === 'CAPSTONE_make') {
+            heroCaptionText.textContent = 'diagrammatic pseudocode';
+            heroCaptionMedium.textContent = 'fabrication';
+            heroCaptionYear.textContent = '2024';
+        } 
+        // Set custom caption for CAPSTONE_grow
+        else if (imageData.title === 'CAPSTONE_grow') {
+            heroCaptionText.textContent = 'diagrammatic pseudocode';
+            heroCaptionMedium.textContent = 'monitored growth';
+            heroCaptionYear.textContent = '2025';
+        }
+        // Set custom caption for CAPSTONE_test
+        else if (imageData.title === 'CAPSTONE_test') {
+            heroCaptionText.textContent = 'diagrammatic pseudocode';
+            heroCaptionMedium.textContent = 'acoustics testing';
+            heroCaptionYear.textContent = '2025';
+        }
+        // Set custom caption for DataViz
+        else if (imageData.title === 'DataViz') {
+            heroCaptionText.textContent = 'interface image';
+            heroCaptionMedium.textContent = 'interactive game';
+            heroCaptionYear.textContent = '2024';
+        }
+        // Set custom caption for LumenBeat
+        else if (imageData.title === 'LumenBeat') {
+            heroCaptionText.textContent = 'object image';
+            heroCaptionMedium.textContent = 'digital automaton';
+            heroCaptionYear.textContent = '2025';
+        }
+        // Set custom caption for MetaTool
+        else if (imageData.title === 'MetaTool') {
+            heroCaptionText.textContent = 'documentation image';
+            heroCaptionMedium.textContent = 'digital interactive components';
+            heroCaptionYear.textContent = '2024';
+        }
+        else {
+            heroCaptionText.textContent = 'Image 00';
+            heroCaptionMedium.textContent = 'Digital print';
+            heroCaptionYear.textContent = imageData.year;
+        }
         
         heroCaption.appendChild(heroCaptionText);
         heroCaption.appendChild(heroCaptionMedium);
@@ -403,30 +440,81 @@ function showProjectDetail(imageData) {
         imagesContainer.appendChild(heroImageWrapper);
     }
     
-    // Special handling for Photography, EchoPULSE, LumenBeat, and MetaTool projects
-    if (imageData.title === 'Photography') {
-        loadPhotographyImages(imagesContainer);
-    } else if (imageData.title === 'EchoPULSE') {
-        loadEchoPULSEImages(imagesContainer);
-    } else if (imageData.title === 'LumenBeat') {
-        loadLumenBeatImages(imagesContainer);
-    } else if (imageData.title === 'MetaTool') {
-        loadMetaToolImages(imagesContainer);
-    }
-    
-    // Handle additional videos if present
-    if (imageData.videos) {
+    // Special case for MetaTool - add video before image01
+    if (imageData.title === 'MetaTool' && imageData.videos) {
+        // Add videos before images
         const nonHeroVideos = imageData.videos.filter(v => !v.isHero);
         if (nonHeroVideos.length > 0) {
-            if (!videosContainer) {
-                const newVideosContainer = document.createElement('div');
-                newVideosContainer.id = 'project-videos-container';
-                projectDetail.insertBefore(newVideosContainer, document.getElementById('back-button'));
-            }
+            // Use images container instead of videos container
             nonHeroVideos.forEach(video => {
                 const videoWrapper = createVideoElement(video, false);
-                videosContainer.appendChild(videoWrapper);
+                // Add right justification to the video wrapper
+                videoWrapper.style.alignSelf = 'flex-end'; // Right-justify the wrapper
+                videoWrapper.style.width = '100%'; // Ensure full width container
+                videoWrapper.classList.add('right-aligned-video');
+                
+                // Right-justify the actual video element
+                const videoElement = videoWrapper.querySelector('.project-video');
+                if (videoElement) {
+                    videoElement.style.marginLeft = 'auto'; // Push to the right
+                }
+                
+                imagesContainer.appendChild(videoWrapper);
             });
+        }
+        
+        // Now add the MetaTool images
+        loadMetaToolImages(imagesContainer);
+    } 
+    // Special case for LumenBeat - add video before image01
+    else if (imageData.title === 'LumenBeat' && imageData.videos) {
+        // Add videos before images
+        const nonHeroVideos = imageData.videos.filter(v => !v.isHero);
+        if (nonHeroVideos.length > 0) {
+            // Use images container instead of videos container
+            nonHeroVideos.forEach(video => {
+                const videoWrapper = createVideoElement(video, false);
+                // Add right justification to the video wrapper
+                videoWrapper.style.alignSelf = 'flex-end'; // Right-justify the wrapper
+                videoWrapper.style.width = '100%'; // Ensure full width container
+                videoWrapper.classList.add('right-aligned-video');
+                
+                // Right-justify the actual video element
+                const videoElement = videoWrapper.querySelector('.project-video');
+                if (videoElement) {
+                    videoElement.style.marginLeft = 'auto'; // Push to the right
+                }
+                
+                imagesContainer.appendChild(videoWrapper);
+            });
+        }
+        
+        // Now add the LumenBeat images
+        loadLumenBeatImages(imagesContainer);
+    }
+    else {
+        // Standard order for other projects - images first, then videos
+        // Special handling for Photography, EchoPULSE, and other projects
+        if (imageData.title === 'Photography') {
+            loadPhotographyImages(imagesContainer);
+        } else if (imageData.title === 'EchoPULSE') {
+            loadEchoPULSEImages(imagesContainer);
+        }
+        
+        // Handle additional videos if present (for non-MetaTool projects)
+        if (imageData.videos) {
+            const nonHeroVideos = imageData.videos.filter(v => !v.isHero);
+            if (nonHeroVideos.length > 0) {
+                if (!videosContainer) {
+                    const newVideosContainer = document.createElement('div');
+                    newVideosContainer.id = 'project-videos-container';
+                    projectDetail.insertBefore(newVideosContainer, document.getElementById('back-button'));
+                }
+                nonHeroVideos.forEach(video => {
+                    const videoWrapper = createVideoElement(video, false);
+                    videosContainer.appendChild(videoWrapper);
+                });
+            }
         }
     }
     
@@ -865,18 +953,261 @@ function createVideoElement(video, isHero) {
     const videoCaption = document.createElement('div');
     videoCaption.className = 'video-caption';
     
-    const videoCaptionText = document.createElement('span');
-    videoCaptionText.textContent = video.title;
-    
-    const videoCaptionMedium = document.createElement('span');
-    videoCaptionMedium.textContent = video.medium;
-    
-    const videoCaptionYear = document.createElement('span');
-    videoCaptionYear.textContent = video.year;
-    
-    videoCaption.appendChild(videoCaptionText);
-    videoCaption.appendChild(videoCaptionMedium);
-    videoCaption.appendChild(videoCaptionYear);
+    // Check if this is CAPSTONE_make video and customize caption
+    if (video.id === 'HD5T02s5_pI') { // CAPSTONE_make video ID
+        // Special format for CAPSTONE_make with process documentation and year right-justified
+        const leftSpan = document.createElement('span');
+        leftSpan.textContent = 'Robotic fabrication';
+        
+        // Create a right-aligned container for "Process Documentation" and "2024"
+        const rightContainer = document.createElement('div');
+        rightContainer.style.marginLeft = 'auto'; // This pushes it to the right
+        rightContainer.style.display = 'flex';
+        rightContainer.style.gap = '20px'; // Consistent spacing between right items
+        
+        const mediumSpan = document.createElement('span');
+        mediumSpan.textContent = 'Process Documentation';
+        
+        const yearSpan = document.createElement('span');
+        yearSpan.textContent = '2024';
+        
+        rightContainer.appendChild(mediumSpan);
+        rightContainer.appendChild(yearSpan);
+        
+        videoCaption.appendChild(leftSpan);
+        videoCaption.appendChild(rightContainer);
+    } 
+    // Check if this is CAPSTONE_grow video and customize caption
+    else if (video.id === 'je36RTjk31c') { // CAPSTONE_grow video ID
+        // Special format for CAPSTONE_grow with right-justified elements
+        const leftSpan = document.createElement('span');
+        leftSpan.textContent = 'Monitored Growth';
+        
+        // Create a right-aligned container
+        const rightContainer = document.createElement('div');
+        rightContainer.style.marginLeft = 'auto';
+        rightContainer.style.display = 'flex';
+        rightContainer.style.gap = '20px';
+        
+        const mediumSpan = document.createElement('span');
+        mediumSpan.textContent = 'Process Documentation';
+        
+        const yearSpan = document.createElement('span');
+        yearSpan.textContent = '2025';
+        
+        rightContainer.appendChild(mediumSpan);
+        rightContainer.appendChild(yearSpan);
+        
+        videoCaption.appendChild(leftSpan);
+        videoCaption.appendChild(rightContainer);
+    }
+    // Check if this is CAPSTONE_test video and customize caption
+    else if (video.id === 'j5Tt_S9Vup8') { // CAPSTONE_test video ID
+        // Special format for CAPSTONE_test with right-justified elements
+        const leftSpan = document.createElement('span');
+        leftSpan.textContent = 'Acoustics Testing';
+        
+        // Create a right-aligned container
+        const rightContainer = document.createElement('div');
+        rightContainer.style.marginLeft = 'auto';
+        rightContainer.style.display = 'flex';
+        rightContainer.style.gap = '20px';
+        
+        const mediumSpan = document.createElement('span');
+        mediumSpan.textContent = 'Process Documentation';
+        
+        const yearSpan = document.createElement('span');
+        yearSpan.textContent = '2025';
+        
+        rightContainer.appendChild(mediumSpan);
+        rightContainer.appendChild(yearSpan);
+        
+        videoCaption.appendChild(leftSpan);
+        videoCaption.appendChild(rightContainer);
+    }
+    // Check if this is DataViz video and customize caption
+    else if (video.id === 'VfR0h_FfCkY') { // DataViz video ID
+        // Special format for DataViz with right-justified elements
+        const leftSpan = document.createElement('span');
+        leftSpan.textContent = 'Interactive Game';
+        
+        // Create a right-aligned container
+        const rightContainer = document.createElement('div');
+        rightContainer.style.marginLeft = 'auto';
+        rightContainer.style.display = 'flex';
+        rightContainer.style.gap = '20px';
+        
+        const mediumSpan = document.createElement('span');
+        mediumSpan.textContent = 'Project Demonstration';
+        
+        const yearSpan = document.createElement('span');
+        yearSpan.textContent = '2024';
+        
+        rightContainer.appendChild(mediumSpan);
+        rightContainer.appendChild(yearSpan);
+        
+        videoCaption.appendChild(leftSpan);
+        videoCaption.appendChild(rightContainer);
+    }
+    // Check if this is EchoPULSE video and customize caption
+    else if (video.id === 'o2tsGA1ngAQ') { // EchoPULSE video ID
+        // Special format for EchoPULSE with right-justified elements
+        const leftSpan = document.createElement('span');
+        leftSpan.textContent = 'two-player interactive game';
+        
+        // Create a right-aligned container
+        const rightContainer = document.createElement('div');
+        rightContainer.style.marginLeft = 'auto';
+        rightContainer.style.display = 'flex';
+        rightContainer.style.gap = '20px';
+        
+        const mediumSpan = document.createElement('span');
+        mediumSpan.textContent = 'project demonstration';
+        
+        const yearSpan = document.createElement('span');
+        yearSpan.textContent = '2024';
+        
+        rightContainer.appendChild(mediumSpan);
+        rightContainer.appendChild(yearSpan);
+        
+        videoCaption.appendChild(leftSpan);
+        videoCaption.appendChild(rightContainer);
+    }
+    // Check if this is GIS video and customize caption
+    else if (video.id === 'FupW2hQdHAM') { // GIS video ID
+        // Special format for GIS with right-justified elements
+        const leftSpan = document.createElement('span');
+        leftSpan.textContent = 'mapping service access';
+        
+        // Create a right-aligned container
+        const rightContainer = document.createElement('div');
+        rightContainer.style.marginLeft = 'auto';
+        rightContainer.style.display = 'flex';
+        rightContainer.style.gap = '20px';
+        
+        const mediumSpan = document.createElement('span');
+        mediumSpan.textContent = 'project demonstration';
+        
+        const yearSpan = document.createElement('span');
+        yearSpan.textContent = '2024';
+        
+        rightContainer.appendChild(mediumSpan);
+        rightContainer.appendChild(yearSpan);
+        
+        videoCaption.appendChild(leftSpan);
+        videoCaption.appendChild(rightContainer);
+    }
+    // Check if this is LumenBeat video and customize caption
+    else if (video.id === 'RzlMUqnRZ_I') { // LumenBeat video ID
+        // Special format for LumenBeat with right-justified elements
+        const leftSpan = document.createElement('span');
+        leftSpan.textContent = 'Sensor Based Automaton';
+        
+        // Create a right-aligned container
+        const rightContainer = document.createElement('div');
+        rightContainer.style.marginLeft = 'auto';
+        rightContainer.style.display = 'flex';
+        rightContainer.style.gap = '20px';
+        
+        const mediumSpan = document.createElement('span');
+        mediumSpan.textContent = 'Video Documentation';
+        
+        const yearSpan = document.createElement('span');
+        yearSpan.textContent = '2025';
+        
+        rightContainer.appendChild(mediumSpan);
+        rightContainer.appendChild(yearSpan);
+        
+        videoCaption.appendChild(leftSpan);
+        videoCaption.appendChild(rightContainer);
+    }
+    // Check if this is MetaTool video and customize caption
+    else if (video.id === 'ROk9-g6davw') { // MetaTool video ID
+        // Special format for MetaTool with right-justified elements
+        const leftSpan = document.createElement('span');
+        leftSpan.textContent = 'Physical Computation';
+        
+        // Create a right-aligned container
+        const rightContainer = document.createElement('div');
+        rightContainer.style.marginLeft = 'auto';
+        rightContainer.style.display = 'flex';
+        rightContainer.style.gap = '20px';
+        
+        const mediumSpan = document.createElement('span');
+        mediumSpan.textContent = 'Process Documentation';
+        
+        const yearSpan = document.createElement('span');
+        yearSpan.textContent = '2024';
+        
+        rightContainer.appendChild(mediumSpan);
+        rightContainer.appendChild(yearSpan);
+        
+        videoCaption.appendChild(leftSpan);
+        videoCaption.appendChild(rightContainer);
+    }
+    // Check if this is RubeGoldberg video and customize caption
+    else if (video.id === 'Dr4IfNH6Ngk') { // RubeGoldberg video ID
+        // Special format for RubeGoldberg with right-justified elements
+        const leftSpan = document.createElement('span');
+        leftSpan.textContent = 'RubeGoldberg machine';
+        
+        // Create a right-aligned container
+        const rightContainer = document.createElement('div');
+        rightContainer.style.marginLeft = 'auto';
+        rightContainer.style.display = 'flex';
+        rightContainer.style.gap = '20px';
+        
+        const mediumSpan = document.createElement('span');
+        mediumSpan.textContent = 'project documentation';
+        
+        const yearSpan = document.createElement('span');
+        yearSpan.textContent = '2024';
+        
+        rightContainer.appendChild(mediumSpan);
+        rightContainer.appendChild(yearSpan);
+        
+        videoCaption.appendChild(leftSpan);
+        videoCaption.appendChild(rightContainer);
+    }
+    // Check if this is Zine video and customize caption
+    else if (video.id === 'ZhHwTqa2q_U') { // Zine video ID
+        // Special format for Zine with right-justified elements
+        const leftSpan = document.createElement('span');
+        leftSpan.textContent = 'interactive zine';
+        
+        // Create a right-aligned container
+        const rightContainer = document.createElement('div');
+        rightContainer.style.marginLeft = 'auto';
+        rightContainer.style.display = 'flex';
+        rightContainer.style.gap = '20px';
+        
+        const mediumSpan = document.createElement('span');
+        mediumSpan.textContent = 'project demonstration';
+        
+        const yearSpan = document.createElement('span');
+        yearSpan.textContent = '2024';
+        
+        rightContainer.appendChild(mediumSpan);
+        rightContainer.appendChild(yearSpan);
+        
+        videoCaption.appendChild(leftSpan);
+        videoCaption.appendChild(rightContainer);
+    }
+    else {
+        // Standard three-part caption for all other videos
+        const videoCaptionText = document.createElement('span');
+        videoCaptionText.textContent = video.title;
+        
+        const videoCaptionMedium = document.createElement('span');
+        videoCaptionMedium.textContent = video.medium;
+        
+        const videoCaptionYear = document.createElement('span');
+        videoCaptionYear.textContent = video.year;
+        
+        videoCaption.appendChild(videoCaptionText);
+        videoCaption.appendChild(videoCaptionMedium);
+        videoCaption.appendChild(videoCaptionYear);
+    }
     
     videoWrapper.appendChild(videoCaption);
     return videoWrapper;
@@ -952,7 +1283,7 @@ function loadLumenBeatImages(container) {
     const imageDetails = [
         {
             path: getResourcePath('LumenBeat/image01.png'),
-            caption: ['Image 01', 'Digital print', '2022']
+            caption: ['', '', '']
         }
     ];
     
@@ -983,7 +1314,7 @@ function loadLumenBeatImages(container) {
         
         imageWrapper.appendChild(image);
         
-        // Add caption
+        // Add caption (now empty)
         const caption = document.createElement('div');
         caption.className = 'image-caption';
         
@@ -1013,7 +1344,7 @@ function loadMetaToolImages(container) {
     const imageDetails = [
         {
             path: getResourcePath('MetaTool/image01.png'),
-            caption: ['Image 01', 'Digital print', '2024']
+            caption: ['', '', '']
         }
     ];
     
@@ -1044,7 +1375,7 @@ function loadMetaToolImages(container) {
         
         imageWrapper.appendChild(image);
         
-        // Add caption
+        // Add caption (now empty)
         const caption = document.createElement('div');
         caption.className = 'image-caption';
         
