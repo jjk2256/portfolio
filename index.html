@@ -18,7 +18,7 @@
     </div>
 
     <header>
-        <a href="/" class="logo" id="logo-link">Julia Kwon</a>
+        <a href="intro.html" class="logo" id="logo-link">Julia Kwon</a>
         <div class="nav-container">
             <div class="nav-left">
                 <div class="nav-links">
@@ -109,6 +109,11 @@
                 <div class="project-title">Zine</div>
                 <div class="project-category">Collaboration</div>
             </div>
+            <div class="project-index-row">
+                <div class="project-year">2024</div>
+                <div class="project-title">Unhampering</div>
+                <div class="project-category">Speculative Design</div>
+            </div>
         </div>
     </div>
     
@@ -178,11 +183,8 @@
 
             // Handle logo click
             document.getElementById('logo-link').addEventListener('click', function(e) {
-                e.preventDefault();
-                showGallery();
-                document.getElementById('works-link').classList.add('active');
-                document.getElementById('projects-link').classList.remove('active');
-                history.pushState({}, '', '/');
+                // Don't prevent default - allow normal navigation to intro.html
+                // No need to call showGallery() or update history
             });
 
             // Handle back button

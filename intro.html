@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Julia Kwon - Introduction</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="green-circle-favicon.svg">
+    <link rel="alternate icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        .intro-text {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 20px 0;
+            max-width: 800px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    
+    <!-- Vertical Grid Lines -->
+    <div class="grid-lines" id="grid-lines">
+        <!-- Grid lines will be created by JavaScript -->
+    </div>
+
+    <header>
+        <a href="intro.html" class="logo" id="logo-link">Julia Kwon</a>
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="nav-links">
+                    <a href="#" id="works-link-intro" class="nav-link-direct">Works</a>
+                    <a href="#" id="projects-link-intro" class="nav-link-direct">Projects</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="info.html">Info</a>
+                    <a href="https://issuu.com/jisun.kwon/docs/issuu_portfolio" target="_blank">Design</a>
+                </div>
+            </div>
+        </div>
+        <span class="language-toggle">EN</span>
+    </header>
+    
+    <div class="info-container">
+        <div class="info-content">
+            <div class="info-section">
+                <p class="intro-text">
+                    Hello! I'm Julia, I am an interdisciplinary designer working at the intersection of computation, architecture, and material practice. My work bridges digital and physical design, using computational tools, fabrication, and ecological thinking to explore how systems can be built, grown, and repurposed. I approach design as a process of inquiry—one that bridges abstraction and materiality, speculation and implementation.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        // Create grid lines when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createGridLines();
+            initCustomCursor();
+            
+            // Direct navigation from the intro page
+            document.getElementById('works-link-intro').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'index.html';
+            });
+            
+            document.getElementById('projects-link-intro').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'index.html#projects';
+            });
+        });
+        
+        // Reposition grid lines on window resize
+        window.addEventListener('resize', function() {
+            createGridLines();
+        });
+    </script>
+</body>
+</html> 

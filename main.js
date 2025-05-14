@@ -249,6 +249,26 @@ const images = [
                 isHero: true
             }
         ]
+    },
+    { 
+        src: getResourcePath('Unhampering/hero.png'), 
+        width: 350, 
+        height: 400,
+        title: 'Unhampering', 
+        year: '2024',
+        description: 'UNHAMPERING, a collaborative project by Julia Kwon and Jonathan Marcos, reimagines the global clothing waste crisis through the lens of language. Just as fast fashion generates excess and disposability, the project treats its own research text as a material system—fragmented, overwhelming, and in need of restructuring.\n\nDrawing parallels between discarded garments and discarded language, the project disassembles its written report into modular typographic elements that reflect the lifecycle of clothing: produced, discarded, reclaimed, and reused. By working with the report\'s own text as both subject and structure, UNHAMPERING explores how narratives of sustainability can be made spatial, legible, and materially felt—slowing the pace of both consumption and communication through acts of dismantling and care.',
+        slug: 'unhampering',
+        heroCaption: {
+            title: 'Unpacking Narrative',
+            medium: 'Speculative Design',
+            year: '2024'
+        },
+        additionalImages: [
+            {
+                src: getResourcePath('Unhampering/image01.png'),
+                caption: ['Breakdown of Units', 'Modular Diagram', '2024']
+            }
+        ]
     }
 ];
 
@@ -456,6 +476,12 @@ function showProjectDetail(imageData) {
             heroCaptionMedium.textContent = 'digital interactive components';
             heroCaptionYear.textContent = '2024';
         }
+        // Use heroCaption if provided
+        else if (imageData.heroCaption) {
+            heroCaptionText.textContent = imageData.heroCaption.title;
+            heroCaptionMedium.textContent = imageData.heroCaption.medium;
+            heroCaptionYear.textContent = imageData.heroCaption.year;
+        }
         else {
             heroCaptionText.textContent = 'Image 00';
             heroCaptionMedium.textContent = 'Digital print';
@@ -529,6 +555,8 @@ function showProjectDetail(imageData) {
             loadPhotographyImages(imagesContainer);
         } else if (imageData.title === 'EchoPULSE') {
             loadEchoPULSEImages(imagesContainer);
+        } else if (imageData.title === 'Unhampering' && imageData.additionalImages) {
+            loadUnhamperingImages(imagesContainer, imageData.additionalImages);
         }
         
         // Handle additional videos if present (for non-MetaTool projects)
@@ -913,11 +941,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const logoLink = document.getElementById('logo-link');
     if (logoLink) {
-        logoLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('Logo link clicked'); // Debugging log
-            showGallery();
-        });
+        // Only override default behavior on gallery and project pages, not on intro.html
+        if (window.location.pathname !== '/intro.html' && !window.location.pathname.endsWith('intro.html')) {
+            logoLink.addEventListener('click', function(e) {
+                // Check if we're already on intro.html
+                if (e.currentTarget.getAttribute('href') === 'intro.html') {
+                    // Let the default link behavior work
+                    return;
+                }
+                e.preventDefault();
+                console.log('Logo link clicked'); // Debugging log
+                window.location.href = 'intro.html';
+            });
+        }
     } else {
         console.error('Logo link element not found!');
     }
@@ -1365,6 +1401,72 @@ function loadLumenBeatImages(container) {
     container.appendChild(imageGridContainer);
 }
 
+// Function to load Unhampering images
+function loadUnhamperingImages(container, additionalImages) {
+    // Create a container for the image grid
+    const imageGridContainer = document.createElement('div');
+    imageGridContainer.className = 'photo-grid-container';
+    imageGridContainer.style.display = 'flex';
+    imageGridContainer.style.flexDirection = 'column';
+    imageGridContainer.style.alignItems = 'flex-start';
+    imageGridContainer.style.gap = '60px';
+    
+    // Add each image to the grid
+    additionalImages.forEach((imageDetail, index) => {
+        const imageWrapper = document.createElement('div');
+        imageWrapper.className = 'photo-item';
+        imageWrapper.setAttribute('data-image-index', index);
+        imageWrapper.style.width = '100%';
+        imageWrapper.style.maxWidth = '100%';
+        imageWrapper.style.overflow = 'visible';
+        
+                 const image = document.createElement('img');
+        image.src = imageDetail.src;
+        image.alt = `Unhampering Project Image ${index + 1}`;
+        image.loading = 'lazy';
+        image.style.width = '100%';
+        image.style.height = 'auto';
+        image.style.objectFit = 'contain';
+        
+        // Add error handling for the image
+        image.onerror = function() {
+            console.error(`Failed to load Unhampering image: ${imageDetail.src}`);
+            imageWrapper.remove();
+        };
+        
+        // Add click event to show image in fullscreen
+        imageWrapper.addEventListener('click', function() {
+            showImageFullscreen(imageDetail.src);
+        });
+        
+        imageWrapper.appendChild(image);
+        
+        // Add caption
+        if (imageDetail.caption) {
+            const caption = document.createElement('div');
+            caption.className = 'image-caption';
+            
+            const captionParts = document.createElement('div');
+            captionParts.className = 'caption-text';
+            
+            imageDetail.caption.forEach(text => {
+                const span = document.createElement('span');
+                span.textContent = text;
+                captionParts.appendChild(span);
+            });
+            
+            caption.appendChild(captionParts);
+            imageWrapper.appendChild(caption);
+        }
+        
+        // Add image wrapper to grid container
+        imageGridContainer.appendChild(imageWrapper);
+    });
+    
+    // Add the image grid container to the main container
+    container.appendChild(imageGridContainer);
+}
+
 // Function to load MetaTool images
 function loadMetaToolImages(container) {
     // Define the image details
@@ -1425,3 +1527,64 @@ function loadMetaToolImages(container) {
     // Add the image grid container to the main container
     container.appendChild(imageGridContainer);
 }
+
+// Add CSS rule to ensure Unhampering images are not cropped
+document.addEventListener('DOMContentLoaded', function() {
+    // Create a style element
+    const style = document.createElement('style');
+    
+    // Add CSS rule for Unhampering project
+    style.textContent = `
+                 /* Apply scaling only to non-hero images */
+         #project-detail[data-project="unhampering"] .photo-item img {
+             width: 33.33% !important;
+             height: auto !important;
+             object-fit: contain !important;
+             max-width: none !important;
+             max-height: none !important;
+         }
+         
+         /* Scale hero image to match other projects */
+         #project-detail[data-project="unhampering"] .project-image-wrapper img {
+             width: 50% !important;
+             height: auto !important;
+             object-fit: contain !important;
+             max-width: 100% !important;
+         }
+        
+                 #project-detail[data-project="unhampering"] .photo-item {
+             width: 100% !important;
+             max-width: 100% !important;
+             height: auto !important;
+             overflow: visible !important;
+             display: flex !important;
+             justify-content: flex-end !important;
+         }
+        
+                 #project-detail[data-project="unhampering"] .photo-grid-container {
+             display: flex !important;
+             flex-direction: column !important;
+             align-items: flex-start !important;
+             width: 100% !important;
+         }
+         
+         #project-detail[data-project="unhampering"] .photo-item[data-image-index="0"] {
+             align-self: flex-end !important;
+             margin-right: 0 !important;
+         }
+         
+         #project-detail[data-project="unhampering"] .photo-item[data-image-index="0"] img {
+             margin-left: auto !important;
+         }
+         
+         #project-detail[data-project="unhampering"] .photo-item[data-image-index="0"] .image-caption {
+             align-self: flex-end !important;
+             text-align: right !important;
+             margin-left: auto !important;
+             width: 33.33% !important;
+         }
+    `;
+    
+    // Append style to head
+    document.head.appendChild(style);
+});
