@@ -1157,7 +1157,7 @@ header {
 /* Responsive adjustments for Photography grid */
 @media (max-width: 768px) {
     #project-detail[data-project="photography"] .photo-grid-container {
-        grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
         grid-gap: 20px;
     }
 }

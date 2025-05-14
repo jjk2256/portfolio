@@ -485,7 +485,7 @@ function showProjectDetail(imageData) {
         else {
             heroCaptionText.textContent = 'Image 00';
             heroCaptionMedium.textContent = 'Digital print';
-            heroCaptionYear.textContent = imageData.year;
+        heroCaptionYear.textContent = imageData.year;
         }
         
         heroCaption.appendChild(heroCaptionText);
@@ -551,27 +551,27 @@ function showProjectDetail(imageData) {
     else {
         // Standard order for other projects - images first, then videos
         // Special handling for Photography, EchoPULSE, and other projects
-        if (imageData.title === 'Photography') {
-            loadPhotographyImages(imagesContainer);
-        } else if (imageData.title === 'EchoPULSE') {
-            loadEchoPULSEImages(imagesContainer);
+    if (imageData.title === 'Photography') {
+        loadPhotographyImages(imagesContainer);
+    } else if (imageData.title === 'EchoPULSE') {
+        loadEchoPULSEImages(imagesContainer);
         } else if (imageData.title === 'Unhampering' && imageData.additionalImages) {
             loadUnhamperingImages(imagesContainer, imageData.additionalImages);
-        }
-        
+    }
+    
         // Handle additional videos if present (for non-MetaTool projects)
-        if (imageData.videos) {
-            const nonHeroVideos = imageData.videos.filter(v => !v.isHero);
-            if (nonHeroVideos.length > 0) {
-                if (!videosContainer) {
-                    const newVideosContainer = document.createElement('div');
-                    newVideosContainer.id = 'project-videos-container';
-                    projectDetail.insertBefore(newVideosContainer, document.getElementById('back-button'));
-                }
-                nonHeroVideos.forEach(video => {
-                    const videoWrapper = createVideoElement(video, false);
-                    videosContainer.appendChild(videoWrapper);
-                });
+    if (imageData.videos) {
+        const nonHeroVideos = imageData.videos.filter(v => !v.isHero);
+        if (nonHeroVideos.length > 0) {
+            if (!videosContainer) {
+                const newVideosContainer = document.createElement('div');
+                newVideosContainer.id = 'project-videos-container';
+                projectDetail.insertBefore(newVideosContainer, document.getElementById('back-button'));
+            }
+            nonHeroVideos.forEach(video => {
+                const videoWrapper = createVideoElement(video, false);
+                videosContainer.appendChild(videoWrapper);
+            });
             }
         }
     }
@@ -943,16 +943,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (logoLink) {
         // Only override default behavior on gallery and project pages, not on intro.html
         if (window.location.pathname !== '/intro.html' && !window.location.pathname.endsWith('intro.html')) {
-            logoLink.addEventListener('click', function(e) {
+        logoLink.addEventListener('click', function(e) {
                 // Check if we're already on intro.html
                 if (e.currentTarget.getAttribute('href') === 'intro.html') {
                     // Let the default link behavior work
                     return;
                 }
-                e.preventDefault();
-                console.log('Logo link clicked'); // Debugging log
+            e.preventDefault();
+            console.log('Logo link clicked'); // Debugging log
                 window.location.href = 'intro.html';
-            });
+        });
         }
     } else {
         console.error('Logo link element not found!');
@@ -1258,18 +1258,18 @@ function createVideoElement(video, isHero) {
     }
     else {
         // Standard three-part caption for all other videos
-        const videoCaptionText = document.createElement('span');
-        videoCaptionText.textContent = video.title;
-        
-        const videoCaptionMedium = document.createElement('span');
-        videoCaptionMedium.textContent = video.medium;
-        
-        const videoCaptionYear = document.createElement('span');
-        videoCaptionYear.textContent = video.year;
-        
-        videoCaption.appendChild(videoCaptionText);
-        videoCaption.appendChild(videoCaptionMedium);
-        videoCaption.appendChild(videoCaptionYear);
+    const videoCaptionText = document.createElement('span');
+    videoCaptionText.textContent = video.title;
+    
+    const videoCaptionMedium = document.createElement('span');
+    videoCaptionMedium.textContent = video.medium;
+    
+    const videoCaptionYear = document.createElement('span');
+    videoCaptionYear.textContent = video.year;
+    
+    videoCaption.appendChild(videoCaptionText);
+    videoCaption.appendChild(videoCaptionMedium);
+    videoCaption.appendChild(videoCaptionYear);
     }
     
     videoWrapper.appendChild(videoCaption);
@@ -1443,20 +1443,20 @@ function loadUnhamperingImages(container, additionalImages) {
         
         // Add caption
         if (imageDetail.caption) {
-            const caption = document.createElement('div');
-            caption.className = 'image-caption';
-            
-            const captionParts = document.createElement('div');
-            captionParts.className = 'caption-text';
-            
-            imageDetail.caption.forEach(text => {
-                const span = document.createElement('span');
-                span.textContent = text;
-                captionParts.appendChild(span);
-            });
-            
-            caption.appendChild(captionParts);
-            imageWrapper.appendChild(caption);
+        const caption = document.createElement('div');
+        caption.className = 'image-caption';
+        
+        const captionParts = document.createElement('div');
+        captionParts.className = 'caption-text';
+        
+        imageDetail.caption.forEach(text => {
+            const span = document.createElement('span');
+            span.textContent = text;
+            captionParts.appendChild(span);
+        });
+        
+        caption.appendChild(captionParts);
+        imageWrapper.appendChild(caption);
         }
         
         // Add image wrapper to grid container
