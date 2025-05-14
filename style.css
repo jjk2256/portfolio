@@ -22,8 +22,13 @@
 }
 
 /* Hide default cursor on interactive elements */
-a, .gallery-item, .project-index-row, .language-toggle, #randomize-btn, .back-to-gallery {
+a, .project-index-row, .language-toggle, #randomize-btn, .back-to-gallery {
     cursor: none;
+}
+
+/* Use default cursor for gallery items */
+.gallery-item {
+    cursor: pointer;
 }
 
 /* Base Styles */
@@ -175,6 +180,32 @@ header {
     height: auto;
 }
 
+/* Title overlay styling */
+.title-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
+    z-index: 2;
+    pointer-events: none;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item:hover .title-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
 /* Project Detail Page */
 .project-container {
     margin-top: 60px;
@@ -233,6 +264,17 @@ header {
     margin-bottom: 15px;
 }
 
+/* Style links in project descriptions with grey and bold text */
+.project-info p a {
+    color: #777;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.project-info p a:hover {
+    color: #555;
+}
+
 .project-image-wrapper {
     width: 100%;
     margin-bottom: 100px;
@@ -260,12 +302,28 @@ header {
 
 /* Additional 50% reduction (25% total) for CAPSTONE project hero images */
 .project-image-wrapper img.capstone-hero-image {
-    width: 25%; /* 25% of original size for CAPSTONE projects */
+    width: 56.25%; /* Increased by another 50% (from 37.5% to 56.25%) */
     margin: 0; /* Remove auto margins */
 }
 
 .project-image-wrapper img.capstone-hero-image + .image-caption {
+    width: 56.25%; /* Match the image width */
+    transform: translateY(-43.75%); /* Adjust for new size */
+}
+
+/* Scale down hero images for CAPSTONE_make, CAPSTONE_grow, and CAPSTONE_test by 50% */
+#project-detail[data-project="capstone_make"] .project-image-wrapper img.hero-image,
+#project-detail[data-project="capstone_grow"] .project-image-wrapper img.hero-image,
+#project-detail[data-project="capstone_test"] .project-image-wrapper img.hero-image {
+    width: 25%; /* 50% reduction from the standard 50% width = 25% */
+    margin: 0;
+}
+
+#project-detail[data-project="capstone_make"] .project-image-wrapper img.hero-image + .image-caption,
+#project-detail[data-project="capstone_grow"] .project-image-wrapper img.hero-image + .image-caption,
+#project-detail[data-project="capstone_test"] .project-image-wrapper img.hero-image + .image-caption {
     width: 25%;
+    transform: translateY(-75%); /* Adjust for new size */
 }
 
 /* Additional scaling for DataViz hero image (30% reduction from 50% base) */
@@ -291,8 +349,9 @@ header {
 .image-caption {
     display: flex;
     font-size: 12px;
-    color: #333;
+    color: #333; /* Reverted back to original color */
     margin-top: 10px;
+    font-weight: normal; /* Reverted back to normal weight */
 }
 
 /* Create a container for the right-justified elements */
@@ -322,6 +381,8 @@ header {
     display: inline-block;
     margin-top: 40px;
     font-size: 14px;
+    color: inherit; /* Reverted to default color */
+    font-weight: normal; /* Reverted to normal weight */
 }
 
 /* Projects Index Page */
@@ -329,15 +390,21 @@ header {
     margin-top: 40px;
     width: 100%;
     padding: 0 10px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 0;
 }
 
 .project-index-row {
-    display: flex;
+    grid-column: 1 / span 12; /* Span all 12 columns */
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
     padding: 12px 0;
     cursor: pointer;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, background-color 0.2s ease;
     position: relative;
     z-index: 1;
+    font-weight: bold;
 }
 
 .project-index-row:hover {
@@ -346,30 +413,32 @@ header {
 }
 
 .project-index-row:hover .project-year,
+.project-index-row:hover .project-title,
 .project-index-row:hover .project-category {
     color: #000;
 }
 
 .project-year {
-    width: 15%;
-    color: #aaa;
-    font-size: 15px;
+    grid-column: 1 / span 2; /* Spans columns 1-2 */
+    color: #999; /* Lightened from #777 to #999 */
+    font-size: 18.75px;
 }
 
 .project-index-row .project-title {
-    width: 50%;
-    font-size: 15px;
-    font-weight: normal;
-    max-width: none;
+    grid-column: 3 / span 6; /* Spans columns 3-8 */
+    font-size: 18.75px;
+    font-weight: bold;
     pointer-events: none;
+    color: #999;
 }
 
 .project-category {
-    width: 35%;
-    text-align: right;
-    color: #aaa;
-    font-size: 15px;
+    grid-column: 9 / span 1; /* Position in the 9th column only */
+    text-align: left; /* Changed to left alignment since it's now in a specific column */
+    color: #999;
+    font-size: 18.75px;
     pointer-events: none;
+    padding-left: 10%; /* Add 10% offset to the right */
 }
 
 /* Info Page Styles */
@@ -694,8 +763,9 @@ header {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
-    color: #666;
+    color: #666; /* Reverted back to original color */
     margin-top: 10px;
+    font-weight: normal; /* Reverted back to normal weight */
 }
 
 /* Hero video specific styles */
@@ -780,6 +850,9 @@ header {
     
     .project-title, .project-info {
         max-width: 100%;
+        width: 100%;
+        position: static;
+        left: auto;
     }
     
     .project-info,
@@ -1055,12 +1128,392 @@ header {
 }
 
 .project-image-wrapper img.capstone-hero-image {
-    width: 25%;
+    width: 56.25%; /* Increased by another 50% (from 37.5% to 56.25%) */
 }
 
 .project-image-wrapper img.capstone-hero-image + .image-caption {
-    width: 25%;
-    transform: translateY(-75%);
+    width: 56.25%; /* Match the image width */
+    transform: translateY(-43.75%); /* Adjust for new size */
+}
+
+.project-image-wrapper img.dataviz-hero-image {
+    width: 35%;
+}
+
+.project-image-wrapper img.dataviz-hero-image + .image-caption {
+    width: 35%;
+    transform: translateY(-65%);
+}
+
+.project-image-wrapper img.lumenbeat-hero-image {
+    width: 35%;
+}
+
+.project-image-wrapper img.lumenbeat-hero-image + .image-caption {
+    width: 35%;
+    transform: translateY(-65%);
+}
+
+/* Responsive adjustments for Photography grid */
+@media (max-width: 768px) {
+    #project-detail[data-project="photography"] .photo-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    #project-detail[data-project="photography"] .photo-grid-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Portfolio link at bottom of info page */
+.portfolio-link-container {
+    width: 100%;
+    text-align: center;
+    margin: 40px 0 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.portfolio-link {
+    font-size: 15px;
+    color: #555;
+}
+
+.portfolio-link a {
+    color: #777;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.portfolio-link a:hover {
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .nav-left {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    
+    .nav-links a, .language-toggle {
+        margin-left: 20px;
+    }
+    
+    .gallery-container {
+        margin-top: 100px;
+    }
+    
+    #gallery {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 25px;
+    }
+    
+    .gallery-item {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        margin: 20px auto;
+        max-width: 100%;
+    }
+    
+    .project-header {
+        flex-direction: column;
+    }
+    
+    .project-title, .project-info {
+        max-width: 100%;
+        width: 100%;
+        position: static;
+        left: auto;
+    }
+    
+    .project-info,
+    .photo-description {
+        position: static;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 30px;
+        left: auto;
+    }
+    
+    .info-section {
+        position: static;
+        width: 100%;
+        left: auto;
+        margin-top: 30px;
+    }
+    
+    .project-year {
+        width: 20%;
+    }
+    
+    .project-index-row .project-title {
+        width: 45%;
+    }
+    
+    .project-category {
+        width: 35%;
+    }
+    
+    .info-container {
+        padding: 20px;
+    }
+    
+    .cv-entry {
+        flex-direction: column;
+    }
+    
+    .cv-year {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .skills-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .skills-category {
+        width: 100%;
+    }
+    
+    .photo-grid-container {
+        grid-template-columns: 1fr; /* Single column on mobile */
+        grid-gap: 40px;
+    }
+    
+    .photo-item {
+        margin-bottom: 40px;
+    }
+    
+    .photo-section-title {
+        margin-top: 40px;
+        font-size: 16px;
+    }
+    
+    .fullscreen-image {
+        max-width: 95%;
+        max-height: 90%;
+    }
+    
+    .info-content {
+        padding-left: 0;
+    }
+    
+    .info-section {
+        position: static;
+        width: 100%;
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-index-row {
+        flex-wrap: wrap;
+        padding: 15px 0;
+    }
+    
+    .project-year {
+        width: 30%;
+    }
+    
+    .project-index-row .project-title {
+        width: 70%;
+    }
+    
+    .project-category {
+        width: 100%;
+        text-align: left;
+        margin-top: 5px;
+        padding-left: 30%;
+    }
+    
+    #gallery {
+        grid-template-columns: 1fr;
+        grid-gap: 20px;
+        padding: 15px;
+        width: 100%;
+    }
+}
+
+/* Ensure consistent width for project detail images */
+#project-images-container .photo-grid-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 60px;
+    width: 100%;
+    margin: 60px 0;
+}
+
+/* Special handling for Photography project to maintain grid layout */
+#project-detail[data-project="photography"] .photo-grid-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: flex-start;
+}
+
+#project-detail[data-project="photography"] .photo-item {
+    width: calc(33.33% - 27px);
+    margin-bottom: 20px;
+}
+
+#project-detail[data-project="photography"] .photo-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+#project-detail[data-project="photography"] .photo-item .image-caption {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Ensure the last row with images 04, 07, and 08 align properly */
+#project-detail[data-project="photography"] .photo-item[data-image="04"],
+#project-detail[data-project="photography"] .photo-item[data-image="07"],
+#project-detail[data-project="photography"] .photo-item[data-image="08"] {
+    margin-top: 20px; /* Add some spacing from the row above */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #project-detail[data-project="photography"] .photo-grid-container {
+        gap: 20px;
+    }
+    
+    #project-detail[data-project="photography"] .photo-item {
+        width: calc(50% - 10px);
+    }
+}
+
+@media (max-width: 480px) {
+    #project-detail[data-project="photography"] .photo-grid-container {
+        flex-direction: column;
+    }
+    
+    #project-detail[data-project="photography"] .photo-item {
+        width: 100%;
+    }
+}
+
+/* Project-specific image scaling */
+#project-detail[data-project="metatool"] .photo-item {
+    position: relative;
+}
+
+#project-detail[data-project="metatool"] .photo-item img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    transform: scale(0.75);
+    transform-origin: left top;
+}
+
+#project-detail[data-project="metatool"] .photo-item .image-caption {
+    width: 75%;
+    transform: translateY(-25%);
+}
+
+#project-detail[data-project="echopulse"] .project-image-wrapper {
+    position: relative;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#project-detail[data-project="echopulse"] .project-image-wrapper.left-aligned {
+    align-items: flex-start;
+}
+
+#project-detail[data-project="echopulse"] .project-image-wrapper:not(.left-aligned) {
+    align-items: flex-end;
+}
+
+#project-detail[data-project="echopulse"] .project-image-wrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    transform: scale(0.35);
+}
+
+#project-detail[data-project="echopulse"] .project-image-wrapper.left-aligned img {
+    transform-origin: left top;
+}
+
+#project-detail[data-project="echopulse"] .project-image-wrapper:not(.left-aligned) img {
+    transform-origin: right top;
+}
+
+#project-detail[data-project="echopulse"] .project-image-wrapper .image-caption {
+    width: 35%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    transform: translateY(-65%);
+}
+
+#project-detail[data-project="lumenbeat"] .photo-item {
+    position: relative;
+}
+
+#project-detail[data-project="lumenbeat"] .photo-item img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transform: scale(0.5);
+    transform-origin: left top;
+}
+
+#project-detail[data-project="lumenbeat"] .photo-item .image-caption {
+    width: 50%;
+    transform: translateY(-50%);
+}
+
+/* Keep Photography project at full width */
+#project-detail[data-project="photography"] .photo-item img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+#project-detail[data-project="photography"] .photo-item .image-caption {
+    width: 100%;
+}
+
+/* Hero image scaling and caption positioning */
+.project-image-wrapper img.hero-image {
+    width: 50%;
+    height: auto;
+    margin: 0;
+    display: block;
+}
+
+.project-image-wrapper img.hero-image + .image-caption {
+    width: 50%;
+    transform: translateY(-50%);
+}
+
+.project-image-wrapper img.capstone-hero-image {
+    width: 56.25%; /* Increased by another 50% (from 37.5% to 56.25%) */
+}
+
+.project-image-wrapper img.capstone-hero-image + .image-caption {
+    width: 56.25%; /* Match the image width */
+    transform: translateY(-43.75%); /* Adjust for new size */
 }
 
 .project-image-wrapper img.dataviz-hero-image {

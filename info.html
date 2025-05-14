@@ -22,14 +22,14 @@
         <div class="nav-container">
             <div class="nav-left">
                 <div class="nav-links">
-                    <a href="index.html" id="works-link">Works</a>
-                    <a href="index.html#projects">Projects</a>
+                    <a href="/" id="works-link" data-section="works">Works</a>
+                    <a href="#projects" id="projects-link" data-section="projects">Projects</a>
                 </div>
             </div>
             <div class="nav-right">
                 <div class="nav-links">
                     <a href="info.html" class="active">Info</a>
-                    <a href="#">Studio</a>
+                    <a href="https://issuu.com/jisun.kwon/docs/issuu_portfolio" target="_blank">Design</a>
                 </div>
             </div>
         </div>
@@ -395,6 +395,20 @@
             if (typeof initCustomCursor === 'function') {
                 initCustomCursor();
             }
+            
+            // Handle navigation links
+            document.querySelectorAll('a[data-section]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    
+                    if (section === 'works') {
+                        window.location.href = '/';
+                    } else if (section === 'projects') {
+                        window.location.href = '/#projects';
+                    }
+                });
+            });
         });
     </script>
 </body>

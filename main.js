@@ -27,6 +27,15 @@ const SAVED_POSITIONS_KEY = 'galleryItemPositions';
 // Final updated images array with proper path handling
 const images = [
     { 
+        src: getResourcePath('CAPSTONE/hero.png'),
+        width: 340, 
+        height: 380, 
+        title: 'CAPSTONE', 
+        year: '2024-2025',
+        description: 'This capstone project investigates regenerative design principles through the integration of digital fabrication, mycelium-based composites, and acoustic performance testing. Structured around three core phases—Make, Grow, and Test—the project outlines a comprehensive process for developing, cultivating, and evaluating sustainable building systems.\n\nTogether, these components form the foundation of the Mycelium Acoustic Module, demonstrating a viable model for bio-based architectural materials that are low-impact, adaptable, and responsive to environmental and acoustic performance needs.\n\nFor a detailed overview of the project, visit the full archive: <a href="https://gsapp-cdp.github.io/archive/projects/2025/mycelium-acoustic-module/" target="_blank">Mycelium Acoustic Module – GSAPP CDP Archive</a>.',
+        slug: 'capstone'
+    },
+    { 
         src: getResourcePath('CAPSTONE_grow/hero.webp'),
         width: 320, 
         height: 400, 
@@ -50,7 +59,7 @@ const images = [
         height: 300, 
         title: 'CAPSTONE_make', 
         year: '2024',
-        description: 'The three-part process of the capstone project begins with digital fabrication, where a custom-designed end effector integrated with a UR3 robotic arm is used to generate scalable infill structures—slender wooden tension members tailored to each panel\'s geometry. These elements are fabricated through parametric inputs and placed into precise configurations, acting as both reinforcement and scaffolding.\n\nOnce completed, the infill is inserted into a modular formwork, setting the stage for mycelium growth. This phase bridges computational design with robotic automation, embedding structural logic into the panel system while maintaining adaptability across variations. As the foundation for the bio-fabrication process, this step reflects a broader commitment to materially efficient, responsive construction workflows grounded in regenerative design principles.',
+        description: 'The three-part process of the capstone project begins with digital fabrication, where a custom-designed end effector integrated with a UR3 robotic arm is used to generate scalable infill structures—slender wooden tension members tailored to each panel\'s geometry. These elements are fabricated through parametric inputs and placed into precise configurations, acting as both reinforcement and scaffolding.\n\nOnce completed, the infill is inserted into a modular formwork, setting the stage for mycelium growth. This phase bridges computational design with robotic automation, embedding structural logic into the panel system while maintaining adaptability across variations. As the foundation for the bio-fabrication process, this step reflects a broader commitment to materially efficient, responsive construction workflows grounded in regenerative design principles.\n\nFor more details on the robotic fabrication process, see the <a href="https://medium.com/design-intelligence-course/transformative-automation-b0ca243ab551" target="_blank">Transformative Automation</a> project documentation.',
         slug: 'capstone_make',
         videos: [
             {
@@ -84,10 +93,19 @@ const images = [
         src: getResourcePath('Colloquium01/hero.png'), 
         width: 350, 
         height: 400,
-        title: 'Colloquium01', 
+        title: 'Pre_Capstone', 
         year: '2024',
-        description: 'Colloquium01 synthesizes research findings from an interdisciplinary forum on emerging technologies. This presentation visualizes complex relationships between technological innovation and social impact, mapping connections across diverse fields to identify patterns and opportunities.',
-        slug: 'colloquium01'
+        description: 'Summer Colloquium reflects on the arc of the semester and marks the conceptual point of departure for the capstone project. Grounded in the metaphor of urban foraging, it considers how design can emerge not from invention, but from what is already present—materials, systems, and overlooked ecologies. Like Philippe Petit\'s walk between the Twin Towers—undertaken simply because they were there—this approach privileges immediacy and responsiveness over novelty. It began with upcycled plastic, chosen not for its innovation but because it was there. Reclaimed wood followed, sourced from what the city had already discarded. The mycelium module emerged from this same logic: it was grown, not made, because it was there.\n\nThis practice of doing what can be done with what is already available raises a simple but urgent question that now guides the work: what is next?',
+        slug: 'pre_capstone',
+        videos: [
+            {
+                type: 'youtube',
+                id: '6dqhm6vl0Tw',
+                title: 'Project Presentation',
+                year: '2024',
+                medium: 'Video Documentation'
+            }
+        ]
     },
     { 
         src: getResourcePath('DataViz/hero.png'), 
@@ -284,6 +302,11 @@ function positionImages(shuffle = true) {
         img.src = image.src;
         img.alt = image.title;
         
+        // Add title overlay
+        const titleOverlay = document.createElement('div');
+        titleOverlay.className = 'title-overlay';
+        titleOverlay.textContent = image.title;
+        
         // Calculate dimensions with project-specific scaling
         const aspectRatio = image.width / image.height;
         
@@ -303,7 +326,7 @@ function positionImages(shuffle = true) {
         item.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            showProjectDetail(images[index]);
+            showProjectDetail(image);
         });
         
         // Add error handling for the image
@@ -321,6 +344,7 @@ function positionImages(shuffle = true) {
         
         // Add item to gallery
         item.appendChild(img);
+        item.appendChild(titleOverlay);
         gallery.appendChild(item);
         
         // Set cursor style for project detail
@@ -396,6 +420,12 @@ function showProjectDetail(imageData) {
             heroCaptionMedium.textContent = 'fabrication';
             heroCaptionYear.textContent = '2024';
         } 
+        // Set custom caption for CAPSTONE main project
+        else if (imageData.title === 'CAPSTONE') {
+            heroCaptionText.textContent = 'comprehensive diagram';
+            heroCaptionMedium.textContent = 'process pseudocode';
+            heroCaptionYear.textContent = '2024-2025';
+        }
         // Set custom caption for CAPSTONE_grow
         else if (imageData.title === 'CAPSTONE_grow') {
             heroCaptionText.textContent = 'diagrammatic pseudocode';
@@ -781,7 +811,7 @@ function initCustomCursor() {
     });
     
     // Make cursor larger when hovering over links and clickable elements
-    const interactiveElements = document.querySelectorAll('a, .gallery-item, .project-index-row, .language-toggle, #randomize-btn, .back-to-gallery');
+    const interactiveElements = document.querySelectorAll('a, .project-index-row, .language-toggle, #randomize-btn, .back-to-gallery');
     
     interactiveElements.forEach(element => {
         element.addEventListener('mouseenter', function() {
@@ -795,7 +825,7 @@ function initCustomCursor() {
     
     // Create a mutation observer for tracking new interactive elements
     const observer = new MutationObserver(function(mutations) {
-        const newInteractiveElements = document.querySelectorAll('a, .gallery-item, .project-index-row, .language-toggle, #randomize-btn, .back-to-gallery');
+        const newInteractiveElements = document.querySelectorAll('a, .project-index-row, .language-toggle, #randomize-btn, .back-to-gallery');
         
         newInteractiveElements.forEach(element => {
             if (!element.hasAttribute('data-cursor-initialized')) {
@@ -829,9 +859,6 @@ window.addEventListener('load', function() {
     
     // Initialize custom cursor
     initCustomCursor();
-    
-    // Initialize shuffle button
-    initShuffleButton();
     
     // Check if URL has a hash and handle accordingly
     if (window.location.hash.startsWith('#project-')) {
