@@ -3,6 +3,8 @@ const baseUrl = window.location.hostname === 'jjk2256.github.io' ? '/portfolio/'
 
 // Use this baseUrl when referencing resources
 function getResourcePath(path) {
+  // Make sure folders with uppercase names like 'Unhampering' work consistently on GitHub Pages
+  // GitHub Pages is case-sensitive while local development may not be
   return baseUrl + path;
 }
 
@@ -252,6 +254,8 @@ const images = [
     },
     { 
         src: getResourcePath('Unhampering/hero.png'), 
+        // Provide an alternative fallback path specifically for GitHub Pages
+        githubSrc: '/portfolio/unhampering/hero.png',
         width: 350, 
         height: 400,
         title: 'Unhampering', 
@@ -266,6 +270,8 @@ const images = [
         additionalImages: [
             {
                 src: getResourcePath('Unhampering/image01.png'),
+                // Provide an alternative fallback path specifically for GitHub Pages
+                githubSrc: '/portfolio/unhampering/image01.png',
                 caption: ['Breakdown of Units', 'Modular Diagram', '2024']
             }
         ]
@@ -319,7 +325,13 @@ function positionImages(shuffle = true) {
         item.dataset.index = index;
         
         const img = document.createElement('img');
-        img.src = image.src;
+        // Use GitHub specific path if available and if on GitHub Pages
+        if (window.location.hostname === 'jjk2256.github.io' && image.githubSrc) {
+            console.log('Using GitHub specific path for gallery image:', image.githubSrc);
+            img.src = image.githubSrc;
+        } else {
+            img.src = image.src;
+        }
         img.alt = image.title;
         
         // Add title overlay
@@ -410,7 +422,13 @@ function showProjectDetail(imageData) {
         
         // Create and add hero image
         const heroImage = document.createElement('img');
-        heroImage.src = imageData.src;
+        // Use GitHub specific path if available and if on GitHub Pages
+        if (window.location.hostname === 'jjk2256.github.io' && imageData.githubSrc) {
+            console.log('Using GitHub specific path for hero:', imageData.githubSrc);
+            heroImage.src = imageData.githubSrc;
+        } else {
+            heroImage.src = imageData.src;
+        }
         heroImage.alt = imageData.title;
         
         // Add appropriate hero image class based on project type
@@ -485,7 +503,7 @@ function showProjectDetail(imageData) {
         else {
             heroCaptionText.textContent = 'Image 00';
             heroCaptionMedium.textContent = 'Digital print';
-        heroCaptionYear.textContent = imageData.year;
+            heroCaptionYear.textContent = imageData.year;
         }
         
         heroCaption.appendChild(heroCaptionText);
@@ -1411,6 +1429,9 @@ function loadUnhamperingImages(container, additionalImages) {
     imageGridContainer.style.alignItems = 'flex-start';
     imageGridContainer.style.gap = '60px';
     
+    console.log("Loading Unhampering images. Count:", additionalImages.length);
+    console.log("First image path:", additionalImages[0].src);
+    
     // Add each image to the grid
     additionalImages.forEach((imageDetail, index) => {
         const imageWrapper = document.createElement('div');
@@ -1420,23 +1441,52 @@ function loadUnhamperingImages(container, additionalImages) {
         imageWrapper.style.maxWidth = '100%';
         imageWrapper.style.overflow = 'visible';
         
-                 const image = document.createElement('img');
-        image.src = imageDetail.src;
+        const image = document.createElement('img');
+        // Use GitHub specific path if available and if on GitHub Pages
+        if (window.location.hostname === 'jjk2256.github.io' && imageDetail.githubSrc) {
+            image.src = imageDetail.githubSrc;
+            console.log('Using GitHub specific path:', imageDetail.githubSrc);
+        } else {
+            image.src = imageDetail.src;
+        }
         image.alt = `Unhampering Project Image ${index + 1}`;
         image.loading = 'lazy';
         image.style.width = '100%';
         image.style.height = 'auto';
         image.style.objectFit = 'contain';
         
-        // Add error handling for the image
+        // Add detailed error handling for the image
         image.onerror = function() {
-            console.error(`Failed to load Unhampering image: ${imageDetail.src}`);
-            imageWrapper.remove();
+            console.error(`Failed to load Unhampering image: ${image.src}`);
+            console.log('Current hostname:', window.location.hostname);
+            console.log('Current baseUrl:', baseUrl);
+            console.log('Attempted full path:', image.src);
+            
+            // Try with lowercase path as fallback for GitHub Pages
+            if (window.location.hostname === 'jjk2256.github.io' && !imageDetail.githubSrc) {
+                const lowercasePath = image.src.toLowerCase();
+                console.log('Attempting with lowercase path:', lowercasePath);
+                image.src = lowercasePath;
+            } else {
+                imageWrapper.style.border = '2px dashed red';
+                imageWrapper.style.padding = '20px';
+                imageWrapper.style.opacity = '0.5';
+                const errorMsg = document.createElement('p');
+                errorMsg.textContent = 'Image failed to load';
+                errorMsg.style.color = 'red';
+                imageWrapper.appendChild(errorMsg);
+            }
+        };
+        
+        // Add load event handler
+        image.onload = function() {
+            console.log('Successfully loaded Unhampering image:', image.src);
+            imageWrapper.style.opacity = '1';
         };
         
         // Add click event to show image in fullscreen
         imageWrapper.addEventListener('click', function() {
-            showImageFullscreen(imageDetail.src);
+            showImageFullscreen(image.src);
         });
         
         imageWrapper.appendChild(image);
