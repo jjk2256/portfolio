@@ -44,7 +44,7 @@
         <div class="nav-container">
             <div class="nav-left">
                 <div class="nav-links">
-                    <a href="." id="works-link" data-section="works">Works</a>
+                    <a href="index.html" id="works-link" data-section="works">Works</a>
                     <a href="#projects" id="projects-link" data-section="projects">Projects</a>
                 </div>
             </div>
@@ -157,7 +157,7 @@
             <!-- Additional videos will be added dynamically -->
         </div>
         
-        <a href="." class="back-to-gallery" id="back-button">Back to Gallery</a>
+        <a href="index.html" class="back-to-gallery" id="back-button">Back to Gallery</a>
     </div>
 
     <script src="main.js"></script>
@@ -166,6 +166,12 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Check if we're on GitHub Pages and update relative URLs
             const isGitHubPages = window.location.hostname === 'jjk2256.github.io';
+            
+            // If on GitHub Pages, explicitly set the Works link
+            if (isGitHubPages) {
+                document.querySelector('#works-link').href = 'https://jjk2256.github.io/portfolio/index.html';
+                document.querySelector('#back-button').href = 'https://jjk2256.github.io/portfolio/index.html';
+            }
             
             // Set initial state based on URL
             const hash = window.location.hash;
@@ -198,8 +204,12 @@
                     // Handle navigation
                     if (section === 'works') {
                         showGallery();
-                        const basePath = window.location.pathname;
-                        history.pushState({}, '', basePath);
+                        if (window.location.hostname === 'jjk2256.github.io') {
+                            history.pushState({}, '', 'https://jjk2256.github.io/portfolio/index.html');
+                        } else {
+                            const basePath = window.location.pathname;
+                            history.pushState({}, '', basePath);
+                        }
                     } else if (section === 'projects') {
                         showProjectsPage();
                         const basePath = window.location.pathname;
@@ -221,8 +231,13 @@
                 showGallery();
                 document.getElementById('works-link').classList.add('active');
                 document.getElementById('projects-link').classList.remove('active');
-                const basePath = window.location.pathname;
-                history.pushState({}, '', projectsHash ? basePath + '#projects' : basePath);
+                
+                if (window.location.hostname === 'jjk2256.github.io') {
+                    history.pushState({}, '', projectsHash ? 'https://jjk2256.github.io/portfolio/index.html#projects' : 'https://jjk2256.github.io/portfolio/index.html');
+                } else {
+                    const basePath = window.location.pathname;
+                    history.pushState({}, '', projectsHash ? basePath + '#projects' : basePath);
+                }
             });
 
             // Initialize project row click handlers
