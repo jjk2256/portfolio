@@ -7,6 +7,28 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/svg+xml" href="green-circle-favicon.svg">
     <link rel="alternate icon" href="favicon.ico" type="image/x-icon">
+    <script>
+        // Handle GitHub Pages path issues
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hostname === 'jjk2256.github.io') {
+                document.querySelectorAll('a[href]').forEach(link => {
+                    const href = link.getAttribute('href');
+                    // Only update relative internal links that don't already have /portfolio/ and aren't external links
+                    if (href && !href.startsWith('http') && !href.startsWith('/portfolio/') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+                        // If it's a root-relative link (starts with /)
+                        if (href.startsWith('/')) {
+                            link.href = '/portfolio' + href;
+                        } 
+                        // If it's a relative link (doesn't start with /) and not just a hash or empty
+                        else if (href !== '#' && href !== '' && !href.startsWith('#')) {
+                            link.href = '/portfolio/' + href;
+                        }
+                        console.log('Updated link:', href, 'to', link.href);
+                    }
+                });
+            }
+        });
+    </script>
 </head>
 <body>
     <!-- Custom Cursor -->
@@ -22,7 +44,7 @@
         <div class="nav-container">
             <div class="nav-left">
                 <div class="nav-links">
-                    <a href="/" id="works-link" data-section="works">Works</a>
+                    <a href="." id="works-link" data-section="works">Works</a>
                     <a href="#projects" id="projects-link" data-section="projects">Projects</a>
                 </div>
             </div>
@@ -135,13 +157,16 @@
             <!-- Additional videos will be added dynamically -->
         </div>
         
-        <a href="/" class="back-to-gallery" id="back-button">Back to Gallery</a>
+        <a href="." class="back-to-gallery" id="back-button">Back to Gallery</a>
     </div>
 
     <script src="main.js"></script>
     <script>
         // Ensure proper navigation handling
         document.addEventListener('DOMContentLoaded', function() {
+            // Check if we're on GitHub Pages and update relative URLs
+            const isGitHubPages = window.location.hostname === 'jjk2256.github.io';
+            
             // Set initial state based on URL
             const hash = window.location.hash;
             if (hash === '#projects') {
@@ -173,10 +198,12 @@
                     // Handle navigation
                     if (section === 'works') {
                         showGallery();
-                        history.pushState({}, '', '/');
+                        const basePath = window.location.pathname;
+                        history.pushState({}, '', basePath);
                     } else if (section === 'projects') {
                         showProjectsPage();
-                        history.pushState({}, '', '#projects');
+                        const basePath = window.location.pathname;
+                        history.pushState({}, '', basePath + '#projects');
                     }
                 });
             });
@@ -194,7 +221,8 @@
                 showGallery();
                 document.getElementById('works-link').classList.add('active');
                 document.getElementById('projects-link').classList.remove('active');
-                history.pushState({}, '', projectsHash ? '#projects' : '/');
+                const basePath = window.location.pathname;
+                history.pushState({}, '', projectsHash ? basePath + '#projects' : basePath);
             });
 
             // Initialize project row click handlers
@@ -205,10 +233,11 @@
                     const projectData = images.find(img => img.title === projectTitle);
                     if (projectData) {
                         showProjectDetail(projectData);
+                        const basePath = window.location.pathname;
                         history.pushState(
                             {project: projectTitle}, 
                             projectTitle,
-                            '#project-' + encodeURIComponent(projectTitle.toLowerCase())
+                            basePath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
                         );
                     }
                 });
@@ -241,6 +270,49 @@
                 document.getElementById('works-link').classList.add('active');
                 document.getElementById('projects-link').classList.remove('active');
             }
+        });
+    </script>
+    
+    <!-- GitHub Pages path handling -->
+    <script>
+        // Global function to fix all links when on GitHub Pages
+        function fixGitHubPagesLinks() {
+            if (window.location.hostname === 'jjk2256.github.io') {
+                console.log('Fixing links for GitHub Pages');
+                
+                document.querySelectorAll('a[href]').forEach(link => {
+                    const href = link.getAttribute('href');
+                    
+                    // Skip if it's already a full URL, starts with #, or already has the portfolio prefix
+                    if (href && !href.startsWith('http') && !href.startsWith('#') && 
+                        !href.startsWith('/portfolio') && !href.startsWith('mailto:')) {
+                        
+                        // If it's a root-relative link (starts with /)
+                        if (href.startsWith('/')) {
+                            link.href = '/portfolio' + href;
+                        } 
+                        // If it's a relative link (doesn't start with /) and not just a hash
+                        else if (href !== '#' && href !== '' && !href.startsWith('#')) {
+                            link.href = '/portfolio/' + href;
+                        }
+                        
+                        console.log('Updated link:', href, 'to', link.href);
+                    }
+                });
+            }
+        }
+        
+        // Run once on page load
+        document.addEventListener('DOMContentLoaded', fixGitHubPagesLinks);
+        
+        // Run whenever content might be dynamically added or changed
+        window.addEventListener('load', fixGitHubPagesLinks);
+        document.addEventListener('DOMNodeInserted', function() {
+            // Use debounce/throttle to avoid running too often
+            if (window.fixLinksTimeout) {
+                clearTimeout(window.fixLinksTimeout);
+            }
+            window.fixLinksTimeout = setTimeout(fixGitHubPagesLinks, 500);
         });
     </script>
 </body>

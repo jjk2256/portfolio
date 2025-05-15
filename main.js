@@ -1,10 +1,22 @@
 // Base URL handling for GitHub Pages
 const baseUrl = window.location.hostname === 'jjk2256.github.io' ? '/portfolio/' : '/';
+const baseUrlNoSlash = window.location.hostname === 'jjk2256.github.io' ? '/portfolio' : '';
 
 // Use this baseUrl when referencing resources
 function getResourcePath(path) {
   // Make sure folders with uppercase names like 'Unhampering' work consistently on GitHub Pages
   // GitHub Pages is case-sensitive while local development may not be
+  return baseUrl + path;
+}
+
+// Function to get correct path for navigation URLs based on environment
+function getNavigationPath(path) {
+  // Add portfolio prefix for GitHub Pages
+  // If path already starts with /, just append the baseUrlNoSlash
+  if (path.startsWith('/')) {
+    return baseUrlNoSlash + path;
+  }
+  // Otherwise, use the baseUrl with trailing slash
   return baseUrl + path;
 }
 
@@ -594,9 +606,10 @@ function showProjectDetail(imageData) {
         }
     }
     
-    // Update URL hash
+    // Update URL hash - keeping the current path and just adding the hash
     const projectSlug = imageData.title.toLowerCase().replace(/ /g, '-');
-    window.location.hash = `project-${projectSlug}`;
+    const currentPath = window.location.pathname;
+    history.pushState({}, imageData.title, currentPath + '#project-' + projectSlug);
 }
 
 // Function to show gallery
@@ -612,7 +625,8 @@ function showGallery() {
     document.getElementById('works-link').classList.add('active');
     document.getElementById('projects-link').classList.remove('active');
     
-    history.pushState({}, 'Gallery', window.location.pathname);
+    // Update URL accounting for GitHub Pages path
+    history.pushState({}, 'Gallery', getNavigationPath(window.location.pathname));
 }
 
 // Function to show projects page
@@ -647,10 +661,13 @@ function showProjectsPage() {
                 row.addEventListener('click', function() {
                     console.log('Project row clicked:', projectTitle);
                     showProjectDetail(projectData);
+                    
+                    // Use current path as base and append hash for GitHub Pages compatibility
+                    const basePath = window.location.pathname;
                     history.pushState(
                         {project: projectTitle},
                         projectTitle,
-                        '#project-' + encodeURIComponent(projectTitle.toLowerCase())
+                        basePath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
                     );
                 });
             } else {
@@ -961,16 +978,17 @@ document.addEventListener('DOMContentLoaded', function() {
     if (logoLink) {
         // Only override default behavior on gallery and project pages, not on intro.html
         if (window.location.pathname !== '/intro.html' && !window.location.pathname.endsWith('intro.html')) {
-        logoLink.addEventListener('click', function(e) {
+            logoLink.addEventListener('click', function(e) {
                 // Check if we're already on intro.html
                 if (e.currentTarget.getAttribute('href') === 'intro.html') {
                     // Let the default link behavior work
                     return;
                 }
-            e.preventDefault();
-            console.log('Logo link clicked'); // Debugging log
-                window.location.href = 'intro.html';
-        });
+                e.preventDefault();
+                console.log('Logo link clicked'); // Debugging log
+                // Account for GitHub Pages path
+                window.location.href = getNavigationPath('/intro.html');
+            });
         }
     } else {
         console.error('Logo link element not found!');
@@ -985,6 +1003,25 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     } else {
         console.error('Back button element not found!');
+    }
+    
+    // Update all links in the document to add the portfolio prefix when on GitHub Pages
+    if (window.location.hostname === 'jjk2256.github.io') {
+        document.querySelectorAll('a[href]').forEach(link => {
+            const href = link.getAttribute('href');
+            // Only update relative internal links that don't already have /portfolio/ and aren't external links
+            if (href && !href.startsWith('http') && !href.startsWith('/portfolio/') && !href.startsWith('#')) {
+                // If it's a root-relative link (starts with /)
+                if (href.startsWith('/')) {
+                    link.href = '/portfolio' + href;
+                } 
+                // If it's a relative link (doesn't start with /)
+                else {
+                    link.href = '/portfolio/' + href;
+                }
+                console.log('Updated link:', href, 'to', link.href);
+            }
+        });
     }
 });
 

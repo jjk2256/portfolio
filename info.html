@@ -22,8 +22,8 @@
         <div class="nav-container">
             <div class="nav-left">
                 <div class="nav-links">
-                    <a href="/" id="works-link" data-section="works">Works</a>
-                    <a href="#projects" id="projects-link" data-section="projects">Projects</a>
+                    <a href="index.html" id="works-link" data-section="works">Works</a>
+                    <a href="index.html#projects" id="projects-link" data-section="projects">Projects</a>
                 </div>
             </div>
             <div class="nav-right">
@@ -402,13 +402,59 @@
                     e.preventDefault();
                     const section = this.getAttribute('data-section');
                     
+                    // Add GitHub Pages path prefix if needed
+                    const baseUrl = window.location.hostname === 'jjk2256.github.io' ? '/portfolio' : '';
+                    
                     if (section === 'works') {
-                        window.location.href = '/';
+                        window.location.href = baseUrl + '/';
                     } else if (section === 'projects') {
-                        window.location.href = '/#projects';
+                        window.location.href = baseUrl + '/#projects';
                     }
                 });
             });
+        });
+    </script>
+    
+    <!-- GitHub Pages path handling -->
+    <script>
+        // Global function to fix all links when on GitHub Pages
+        function fixGitHubPagesLinks() {
+            if (window.location.hostname === 'jjk2256.github.io') {
+                console.log('Fixing links for GitHub Pages');
+                
+                document.querySelectorAll('a[href]').forEach(link => {
+                    const href = link.getAttribute('href');
+                    
+                    // Skip if it's already a full URL, starts with #, or already has the portfolio prefix
+                    if (href && !href.startsWith('http') && !href.startsWith('#') && 
+                        !href.startsWith('/portfolio') && !href.startsWith('mailto:')) {
+                        
+                        // If it's a root-relative link (starts with /)
+                        if (href.startsWith('/')) {
+                            link.href = '/portfolio' + href;
+                        } 
+                        // If it's a relative link (doesn't start with /) and not just a hash
+                        else if (href !== '#' && href !== '' && !href.startsWith('#')) {
+                            link.href = '/portfolio/' + href;
+                        }
+                        
+                        console.log('Updated link:', href, 'to', link.href);
+                    }
+                });
+            }
+        }
+        
+        // Run once on page load
+        document.addEventListener('DOMContentLoaded', fixGitHubPagesLinks);
+        
+        // Run whenever content might be dynamically added or changed
+        window.addEventListener('load', fixGitHubPagesLinks);
+        document.addEventListener('DOMNodeInserted', function() {
+            // Use debounce/throttle to avoid running too often
+            if (window.fixLinksTimeout) {
+                clearTimeout(window.fixLinksTimeout);
+            }
+            window.fixLinksTimeout = setTimeout(fixGitHubPagesLinks, 500);
         });
     </script>
 </body>
