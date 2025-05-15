@@ -1,5 +1,5 @@
 // Base URL handling for GitHub Pages
-const baseUrl = window.location.hostname === 'jjk2256.github.io' ? '/' : '/';
+const baseUrl = window.location.hostname === 'jjk2256.github.io' ? '/portfolio/' : '/';
 
 // Use this baseUrl when referencing resources
 function getResourcePath(path) {
@@ -325,8 +325,13 @@ function positionImages(shuffle = true) {
         item.dataset.index = index;
         
         const img = document.createElement('img');
-        // Use standard path
-        img.src = image.src;
+        // Use GitHub specific path if available and if on GitHub Pages
+        if (window.location.hostname === 'jjk2256.github.io' && image.githubSrc) {
+            console.log('Using GitHub specific path for gallery image:', image.githubSrc);
+            img.src = image.githubSrc;
+        } else {
+            img.src = image.src;
+        }
         img.alt = image.title;
         
         // Add title overlay
@@ -417,8 +422,13 @@ function showProjectDetail(imageData) {
         
         // Create and add hero image
         const heroImage = document.createElement('img');
-        // Use standard path
-        heroImage.src = imageData.src;
+        // Use GitHub specific path if available and if on GitHub Pages
+        if (window.location.hostname === 'jjk2256.github.io' && imageData.githubSrc) {
+            console.log('Using GitHub specific path for hero:', imageData.githubSrc);
+            heroImage.src = imageData.githubSrc;
+        } else {
+            heroImage.src = imageData.src;
+        }
         heroImage.alt = imageData.title;
         
         // Add appropriate hero image class based on project type
@@ -1432,8 +1442,13 @@ function loadUnhamperingImages(container, additionalImages) {
         imageWrapper.style.overflow = 'visible';
         
         const image = document.createElement('img');
-        // Use standard path handling
-        image.src = imageDetail.src;
+        // Use GitHub specific path if available and if on GitHub Pages
+        if (window.location.hostname === 'jjk2256.github.io' && imageDetail.githubSrc) {
+            image.src = imageDetail.githubSrc;
+            console.log('Using GitHub specific path:', imageDetail.githubSrc);
+        } else {
+            image.src = imageDetail.src;
+        }
         image.alt = `Unhampering Project Image ${index + 1}`;
         image.loading = 'lazy';
         image.style.width = '100%';
@@ -1448,7 +1463,7 @@ function loadUnhamperingImages(container, additionalImages) {
             console.log('Attempted full path:', image.src);
             
             // Try with lowercase path as fallback for GitHub Pages
-            if (window.location.hostname === 'jjk2256.github.io') {
+            if (window.location.hostname === 'jjk2256.github.io' && !imageDetail.githubSrc) {
                 const lowercasePath = image.src.toLowerCase();
                 console.log('Attempting with lowercase path:', lowercasePath);
                 image.src = lowercasePath;
