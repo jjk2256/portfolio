@@ -55,7 +55,6 @@
                 </div>
             </div>
         </div>
-        <a href="#" class="language-toggle">EN</a>
     </header>
     
     <!-- Gallery View (Home) -->
@@ -164,6 +163,11 @@
     <script>
         // Ensure proper navigation handling
         document.addEventListener('DOMContentLoaded', function() {
+            // Check if we're on GitHub Pages and update logo URL
+            if (window.location.hostname === 'jjk2256.github.io') {
+                document.querySelector('.logo').href = '/portfolio/intro.html';
+            }
+            
             // Check if we're on GitHub Pages and update relative URLs
             const isGitHubPages = window.location.hostname === 'jjk2256.github.io';
             
@@ -325,6 +329,75 @@
                 clearTimeout(window.fixLinksTimeout);
             }
             window.fixLinksTimeout = setTimeout(fixGitHubPagesLinks, 500);
+        });
+    </script>
+    
+    <!-- Mobile footer navigation -->
+    <div class="mobile-footer-nav" id="mobile-footer-nav" style="display: none;">
+        <a href="index.html" id="mobile-works-link">Works</a>
+        <a href="#projects" id="mobile-projects-link">Projects</a>
+        <a href="info.html" id="mobile-info-link">Info</a>
+        <a href="https://issuu.com/jisun.kwon/docs/issuu_portfolio" target="_blank" id="mobile-design-link">Design</a>
+    </div>
+    
+    <script>
+        // Initialize mobile navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if we're on mobile
+            const isMobile = window.innerWidth <= 768 || 
+                             ('ontouchstart' in window) || 
+                             (navigator.maxTouchPoints > 0);
+            
+            if (isMobile) {
+                const mobileNav = document.getElementById('mobile-footer-nav');
+                if (mobileNav) mobileNav.style.display = 'flex';
+                
+                // Set active state based on current page
+                const currentPath = window.location.pathname;
+                const currentHash = window.location.hash;
+                
+                if (currentHash === '#projects') {
+                    document.getElementById('mobile-projects-link').classList.add('active');
+                } else if (currentPath.includes('info.html')) {
+                    document.getElementById('mobile-info-link').classList.add('active');
+                } else {
+                    document.getElementById('mobile-works-link').classList.add('active');
+                }
+                
+                // Handle mobile navigation link clicks
+                document.getElementById('mobile-works-link').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Use getNavigationPath for consistent URL handling
+                    window.location.href = getNavigationPath('index.html');
+                });
+                
+                document.getElementById('mobile-projects-link').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showProjectsPage();
+                    const navigationPath = getNavigationPath(window.location.pathname);
+                    history.pushState({}, '', navigationPath + '#projects');
+                    
+                    // Update active state
+                    document.querySelectorAll('.mobile-footer-nav a').forEach(a => a.classList.remove('active'));
+                    this.classList.add('active');
+                });
+                
+                document.getElementById('mobile-info-link').addEventListener('click', function(e) {
+                    // Let the default link behavior work
+                });
+            }
+        });
+        
+        // Update mobile nav on resize
+        window.addEventListener('resize', function() {
+            const isMobile = window.innerWidth <= 768 || 
+                             ('ontouchstart' in window) || 
+                             (navigator.maxTouchPoints > 0);
+            
+            const mobileNav = document.getElementById('mobile-footer-nav');
+            if (mobileNav) {
+                mobileNav.style.display = isMobile ? 'flex' : 'none';
+            }
         });
     </script>
 </body>

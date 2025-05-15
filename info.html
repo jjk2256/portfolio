@@ -33,7 +33,6 @@
                 </div>
             </div>
         </div>
-        <a href="#" class="language-toggle">EN</a>
     </header>
     
     <!-- Info Content -->
@@ -386,6 +385,11 @@
     <script>
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            // Check if we're on GitHub Pages and update logo URL
+            if (window.location.hostname === 'jjk2256.github.io') {
+                document.querySelector('.logo').href = '/portfolio/index.html';
+            }
+            
             // Create grid lines
             if (typeof createGridLines === 'function') {
                 createGridLines();
@@ -455,6 +459,44 @@
                 clearTimeout(window.fixLinksTimeout);
             }
             window.fixLinksTimeout = setTimeout(fixGitHubPagesLinks, 500);
+        });
+    </script>
+    
+    <!-- Mobile footer navigation -->
+    <div class="mobile-footer-nav" id="mobile-footer-nav" style="display: none;">
+        <a href="index.html" id="mobile-works-link">Works</a>
+        <a href="index.html#projects" id="mobile-projects-link">Projects</a>
+        <a href="info.html" id="mobile-info-link">Info</a>
+        <a href="https://issuu.com/jisun.kwon/docs/issuu_portfolio" target="_blank" id="mobile-design-link">Design</a>
+    </div>
+    
+    <script>
+        // Initialize mobile navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if we're on mobile
+            const isMobile = window.innerWidth <= 768 || 
+                             ('ontouchstart' in window) || 
+                             (navigator.maxTouchPoints > 0);
+            
+            if (isMobile) {
+                const mobileNav = document.getElementById('mobile-footer-nav');
+                if (mobileNav) mobileNav.style.display = 'flex';
+                
+                // Set info page as active
+                document.getElementById('mobile-info-link').classList.add('active');
+            }
+        });
+        
+        // Update mobile nav on resize
+        window.addEventListener('resize', function() {
+            const isMobile = window.innerWidth <= 768 || 
+                             ('ontouchstart' in window) || 
+                             (navigator.maxTouchPoints > 0);
+            
+            const mobileNav = document.getElementById('mobile-footer-nav');
+            if (mobileNav) {
+                mobileNav.style.display = isMobile ? 'flex' : 'none';
+            }
         });
     </script>
 </body>

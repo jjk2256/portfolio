@@ -2,12 +2,41 @@
 const baseUrl = window.location.hostname === 'jjk2256.github.io' ? '/portfolio/' : '/';
 const baseUrlNoSlash = window.location.hostname === 'jjk2256.github.io' ? '/portfolio' : '';
 
-// Detect touch device
+// Enhanced touch device detection
 const isTouchDevice = () => {
   return (('ontouchstart' in window) ||
      (navigator.maxTouchPoints > 0) ||
-     (navigator.msMaxTouchPoints > 0));
+     (navigator.msMaxTouchPoints > 0) ||
+     (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ||
+     window.innerWidth <= 768);
 }
+
+// Fix mobile viewport issues, especially for iOS Safari
+function fixMobileViewport() {
+  // Fix for 100vh in iOS Safari
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+  
+  // Disable overscroll/bounce effects on iOS
+  document.body.style.overscrollBehavior = 'none';
+  
+  // Force hardware acceleration for smoother animations
+  document.body.style.webkitBackfaceVisibility = 'hidden';
+  document.body.style.backfaceVisibility = 'hidden';
+}
+
+// Call the function initially and on resize
+window.addEventListener('load', fixMobileViewport);
+window.addEventListener('resize', fixMobileViewport);
+
+// Disable pull-to-refresh on mobile
+window.addEventListener('touchmove', function(e) {
+  if (isTouchDevice() && window.pageYOffset === 0 && e.touches.length === 1) {
+    if (e.touches[0].clientY > 5) {
+      e.preventDefault();
+    }
+  }
+}, { passive: false });
 
 // Use this baseUrl when referencing resources
 function getResourcePath(path) {
@@ -908,7 +937,7 @@ function initCustomCursor() {
     });
     
     // Make cursor larger when hovering over links and clickable elements
-    const interactiveElements = document.querySelectorAll('a, .project-index-row, .language-toggle, #randomize-btn, .back-to-gallery');
+    const interactiveElements = document.querySelectorAll('a, .project-index-row, #randomize-btn, .back-to-gallery');
     
     interactiveElements.forEach(element => {
         element.addEventListener('mouseenter', function() {
@@ -922,7 +951,7 @@ function initCustomCursor() {
     
     // Create a mutation observer for tracking new interactive elements
     const observer = new MutationObserver(function(mutations) {
-        const newInteractiveElements = document.querySelectorAll('a, .project-index-row, .language-toggle, #randomize-btn, .back-to-gallery');
+        const newInteractiveElements = document.querySelectorAll('a, .project-index-row, #randomize-btn, .back-to-gallery');
         
         newInteractiveElements.forEach(element => {
             if (!element.hasAttribute('data-cursor-initialized')) {

@@ -42,7 +42,6 @@
                 </div>
             </div>
         </div>
-        <span class="language-toggle">EN</span>
     </header>
     
     <div class="info-container">
@@ -59,6 +58,11 @@
     <script>
         // Create grid lines when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            // Check if we're on GitHub Pages and update logo URL
+            if (window.location.hostname === 'jjk2256.github.io') {
+                document.querySelector('.logo').href = '/portfolio/intro.html';
+            }
+            
             createGridLines();
             initCustomCursor();
             
@@ -124,6 +128,43 @@
                 clearTimeout(window.fixLinksTimeout);
             }
             window.fixLinksTimeout = setTimeout(fixGitHubPagesLinks, 500);
+        });
+    </script>
+    
+    <!-- Mobile footer navigation -->
+    <div class="mobile-footer-nav" id="mobile-footer-nav" style="display: none;">
+        <a href="index.html" id="mobile-works-link">Works</a>
+        <a href="index.html#projects" id="mobile-projects-link">Projects</a>
+        <a href="info.html" id="mobile-info-link">Info</a>
+        <a href="https://issuu.com/jisun.kwon/docs/issuu_portfolio" target="_blank" id="mobile-design-link">Design</a>
+    </div>
+    
+    <script>
+        // Initialize mobile navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if we're on mobile
+            const isMobile = window.innerWidth <= 768 || 
+                             ('ontouchstart' in window) || 
+                             (navigator.maxTouchPoints > 0);
+            
+            if (isMobile) {
+                const mobileNav = document.getElementById('mobile-footer-nav');
+                if (mobileNav) mobileNav.style.display = 'flex';
+                
+                // No active state for intro page
+            }
+        });
+        
+        // Update mobile nav on resize
+        window.addEventListener('resize', function() {
+            const isMobile = window.innerWidth <= 768 || 
+                             ('ontouchstart' in window) || 
+                             (navigator.maxTouchPoints > 0);
+            
+            const mobileNav = document.getElementById('mobile-footer-nav');
+            if (mobileNav) {
+                mobileNav.style.display = isMobile ? 'flex' : 'none';
+            }
         });
     </script>
 </body>
