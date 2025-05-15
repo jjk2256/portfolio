@@ -427,7 +427,7 @@
                     
                     // Skip if it's already a full URL, starts with #, or already has the portfolio prefix
                     if (href && !href.startsWith('http') && !href.startsWith('#') && 
-                        !href.startsWith('/portfolio') && !href.startsWith('mailto:')) {
+                        !href.startsWith('/portfolio') && !href.includes('/portfolio/') && !href.startsWith('mailto:')) {
                         
                         // If it's a root-relative link (starts with /)
                         if (href.startsWith('/')) {

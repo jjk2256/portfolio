@@ -157,7 +157,7 @@
             <!-- Additional videos will be added dynamically -->
         </div>
         
-        <a href="index.html" class="back-to-gallery" id="back-button">Back to Gallery</a>
+        <a href="/portfolio/index.html" class="back-to-gallery" id="back-button">Back to Gallery</a>
     </div>
 
     <script src="main.js"></script>
@@ -169,8 +169,8 @@
             
             // If on GitHub Pages, explicitly set the Works link
             if (isGitHubPages) {
-                document.querySelector('#works-link').href = 'https://jjk2256.github.io/portfolio/index.html';
-                document.querySelector('#back-button').href = 'https://jjk2256.github.io/portfolio/index.html';
+                document.querySelector('#works-link').href = '/portfolio/index.html';
+                document.querySelector('#back-button').href = '/portfolio/index.html';
             }
             
             // Set initial state based on URL
@@ -205,7 +205,7 @@
                     if (section === 'works') {
                         showGallery();
                         if (window.location.hostname === 'jjk2256.github.io') {
-                            history.pushState({}, '', 'https://jjk2256.github.io/portfolio/index.html');
+                            history.pushState({}, '', '/portfolio/index.html');
                         } else {
                             const basePath = window.location.pathname;
                             history.pushState({}, '', basePath);
@@ -233,7 +233,7 @@
                 document.getElementById('projects-link').classList.remove('active');
                 
                 if (window.location.hostname === 'jjk2256.github.io') {
-                    history.pushState({}, '', projectsHash ? 'https://jjk2256.github.io/portfolio/index.html#projects' : 'https://jjk2256.github.io/portfolio/index.html');
+                    history.pushState({}, '', projectsHash ? '/portfolio/index.html#projects' : '/portfolio/index.html');
                 } else {
                     const basePath = window.location.pathname;
                     history.pushState({}, '', projectsHash ? basePath + '#projects' : basePath);
@@ -300,7 +300,7 @@
                     
                     // Skip if it's already a full URL, starts with #, or already has the portfolio prefix
                     if (href && !href.startsWith('http') && !href.startsWith('#') && 
-                        !href.startsWith('/portfolio') && !href.startsWith('mailto:')) {
+                        !href.startsWith('/portfolio') && !href.includes('/portfolio/') && !href.startsWith('mailto:')) {
                         
                         // If it's a root-relative link (starts with /)
                         if (href.startsWith('/')) {
