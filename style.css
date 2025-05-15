@@ -813,82 +813,138 @@ header {
 }
 
 @media (max-width: 768px) {
-    .nav-container {
-        flex-direction: column;
-        align-items: flex-start;
+    header {
+        padding: 10px 15px;
+        flex-wrap: wrap;
     }
     
-    .nav-left {
+    .logo {
+        font-size: 14px;
+        margin-right: 10px;
+    }
+    
+    .nav-container {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 5px;
+    }
+    
+    .nav-left, .nav-right {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
         margin-left: 0;
-        margin-top: 10px;
+        margin-top: 5px;
+    }
+    
+    .nav-links {
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
     }
     
     .nav-links a, .language-toggle {
-        margin-left: 20px;
+        margin-left: 0;
+        margin-right: 20px;
+        font-size: 12px;
     }
     
+    .language-toggle {
+        margin-left: auto;
+    }
+    
+    /* Gallery adjustments */
     .gallery-container {
-        margin-top: 100px;
+        margin-top: 80px;
+        padding: 10px;
     }
     
     #gallery {
         grid-template-columns: repeat(2, 1fr);
-        grid-gap: 25px;
+        gap: 15px;
+        padding: 15px;
     }
     
-    .gallery-item {
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        margin: 20px auto;
-        max-width: 100%;
+    .gallery-item:hover {
+        transform: none;
     }
     
+    .title-overlay {
+        position: static;
+        transform: none;
+        background-color: transparent;
+        padding: 5px 0;
+        font-size: 12px;
+        opacity: 1;
+        visibility: visible;
+        margin-top: 5px;
+    }
+    
+    /* Project detail page */
     .project-header {
-        flex-direction: column;
+        padding: 15px;
+        margin-top: 80px;
     }
     
-    .project-title, .project-info {
-        max-width: 100%;
-        width: 100%;
-        position: static;
-        left: auto;
+    .project-title {
+        font-size: 20px;
+        margin-bottom: 10px;
     }
     
-    .project-info,
-    .photo-description {
-        position: static;
-        width: 100%;
+    .project-info h2 {
+        font-size: 16px;
+    }
+    
+    .project-info p {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    .project-image-wrapper {
+        margin: 15px 0;
+    }
+    
+    .image-caption {
+        font-size: 12px;
+        margin-top: 5px;
+    }
+    
+    /* Projects index page */
+    .projects-index {
+        padding: 15px;
+        margin-top: 80px;
+    }
+    
+    .project-index-row {
+        padding: 10px 5px;
+    }
+    
+    /* Info page */
+    .info-container {
+        padding: 15px;
+        margin-top: 80px;
+    }
+    
+    .info-content {
         max-width: 100%;
-        margin-top: 30px;
-        left: auto;
     }
     
     .info-section {
-        position: static;
-        width: 100%;
-        left: auto;
-        margin-top: 30px;
+        padding: 15px 0;
     }
     
-    .project-year {
-        width: 20%;
+    .info-section h2 {
+        font-size: 20px;
     }
     
-    .project-index-row .project-title {
-        width: 45%;
-    }
-    
-    .project-category {
-        width: 35%;
-    }
-    
-    .info-container {
-        padding: 20px;
+    .info-section h3 {
+        font-size: 16px;
+        margin-top: 20px;
     }
     
     .cv-entry {
         flex-direction: column;
+        margin-bottom: 15px;
     }
     
     .cv-year {
@@ -896,71 +952,85 @@ header {
         margin-bottom: 5px;
     }
     
-    .skills-container {
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .skills-category {
+    .cv-details {
         width: 100%;
     }
     
-    .photo-grid-container {
-        grid-template-columns: 1fr; /* Single column on mobile */
-        grid-gap: 40px;
-    }
-    
-    .photo-item {
-        margin-bottom: 40px;
-    }
-    
-    .photo-section-title {
-        margin-top: 40px;
-        font-size: 16px;
-    }
-    
-    .fullscreen-image {
-        max-width: 95%;
-        max-height: 90%;
-    }
-    
-    .info-content {
-        padding-left: 0;
-    }
-    
-    .info-section {
-        position: static;
-        width: 100%;
-        margin-top: 30px;
+    /* Fullscreen image view */
+    .fullscreen-close {
+        top: 20px;
+        right: 20px;
+        font-size: 30px;
     }
 }
 
+/* Smaller phones */
 @media (max-width: 480px) {
-    .project-index-row {
-        flex-wrap: wrap;
-        padding: 15px 0;
+    header {
+        padding: 8px 10px;
     }
     
-    .project-year {
-        width: 30%;
+    .logo {
+        font-size: 13px;
     }
     
-    .project-index-row .project-title {
-        width: 70%;
-    }
-    
-    .project-category {
-        width: 100%;
-        text-align: left;
-        margin-top: 5px;
-        padding-left: 30%;
+    .nav-links a, .language-toggle {
+        margin-right: 15px;
+        font-size: 11px;
     }
     
     #gallery {
         grid-template-columns: 1fr;
-        grid-gap: 20px;
-        padding: 15px;
-        width: 100%;
+        gap: 20px;
+        padding: 10px;
+    }
+    
+    .gallery-item {
+        max-width: 280px;
+        margin: 0 auto;
+    }
+    
+    .project-title {
+        font-size: 18px;
+    }
+    
+    .project-info h2 {
+        font-size: 15px;
+    }
+    
+    .project-info p {
+        font-size: 13px;
+    }
+    
+    /* Fix for project videos */
+    .project-video.youtube-video {
+        height: 200px;
+    }
+    
+    /* Adjust spacing in project details */
+    #project-images-container, #project-videos-container {
+        padding: 0 10px;
+    }
+    
+    /* Back button positioning */
+    .back-to-gallery {
+        margin: 20px 10px;
+        font-size: 14px;
+    }
+}
+
+/* Portrait orientation specific */
+@media (max-width: 768px) and (orientation: portrait) {
+    .cursor-dot {
+        display: none; /* Hide custom cursor on mobile portrait */
+    }
+    
+    a, .project-index-row, .language-toggle, #randomize-btn, .back-to-gallery {
+        cursor: auto; /* Restore default cursor behavior for mobile */
+    }
+    
+    .gallery-item {
+        cursor: pointer;
     }
 }
 
@@ -1157,7 +1227,7 @@ header {
 /* Responsive adjustments for Photography grid */
 @media (max-width: 768px) {
     #project-detail[data-project="photography"] .photo-grid-container {
-    grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         grid-gap: 20px;
     }
 }

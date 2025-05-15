@@ -2,6 +2,13 @@
 const baseUrl = window.location.hostname === 'jjk2256.github.io' ? '/portfolio/' : '/';
 const baseUrlNoSlash = window.location.hostname === 'jjk2256.github.io' ? '/portfolio' : '';
 
+// Detect touch device
+const isTouchDevice = () => {
+  return (('ontouchstart' in window) ||
+     (navigator.maxTouchPoints > 0) ||
+     (navigator.msMaxTouchPoints > 0));
+}
+
 // Use this baseUrl when referencing resources
 function getResourcePath(path) {
   // Make sure folders with uppercase names like 'Unhampering' work consistently on GitHub Pages
@@ -314,15 +321,16 @@ function createGridLines() {
 // Function to position images in a grid without overlapping
 function positionImages(shuffle = true) {
     const gallery = document.getElementById('gallery');
+    const isMobile = window.innerWidth <= 768 || isTouchDevice();
     
     // Set gallery container styles to ensure full-width grid layout
     gallery.style.display = 'grid';
-    gallery.style.gridTemplateColumns = 'repeat(4, 1fr)';
-    gallery.style.gap = '30px';
+    gallery.style.gridTemplateColumns = isMobile ? (window.innerWidth <= 480 ? '1fr' : 'repeat(2, 1fr)') : 'repeat(4, 1fr)';
+    gallery.style.gap = isMobile ? '15px' : '30px';
     gallery.style.width = '100%';
     gallery.style.maxWidth = '100%';
     gallery.style.margin = '0';
-    gallery.style.padding = '40px';
+    gallery.style.padding = isMobile ? '15px' : '40px';
     
     // Clear gallery
     gallery.innerHTML = '';
@@ -351,6 +359,19 @@ function positionImages(shuffle = true) {
         titleOverlay.className = 'title-overlay';
         titleOverlay.textContent = image.title;
         
+        if (isMobile) {
+            titleOverlay.style.position = 'static';
+            titleOverlay.style.transform = 'none';
+            titleOverlay.style.backgroundColor = 'transparent';
+            titleOverlay.style.opacity = '1';
+            titleOverlay.style.visibility = 'visible';
+            titleOverlay.style.padding = '5px 0';
+            titleOverlay.style.marginTop = '5px';
+            titleOverlay.style.fontSize = '12px';
+            titleOverlay.style.color = '#333';
+            titleOverlay.style.textAlign = 'center';
+        }
+        
         // Calculate dimensions with project-specific scaling
         const aspectRatio = image.width / image.height;
         
@@ -358,6 +379,11 @@ function positionImages(shuffle = true) {
         let scaleFactor = 0.5; // Default: 1/2 of original size
         if (image.title === 'Zine' || image.title === 'EchoPULSE') {
             scaleFactor = 0.6; // 60% of original size (20% larger than other images)
+        }
+        
+        // Adjust scale factor for mobile
+        if (isMobile) {
+            scaleFactor = scaleFactor * 0.8; // Slightly smaller on mobile
         }
         
         const newWidth = Math.floor(image.width * scaleFactor);
@@ -392,7 +418,7 @@ function positionImages(shuffle = true) {
         gallery.appendChild(item);
         
         // Set cursor style for project detail
-        item.style.cursor = 'pointer';
+        item.style.cursor = isMobile ? 'pointer' : 'none';
     });
 }
 
