@@ -94,6 +94,14 @@
                 document.querySelectorAll('a[href]').forEach(link => {
                     const href = link.getAttribute('href');
                     
+                    // First, fix any duplicate portfolio paths
+                    if (href && href.includes('/portfolio/portfolio/')) {
+                        const fixedHref = href.replace('/portfolio/portfolio/', '/portfolio/');
+                        link.href = fixedHref;
+                        console.log('Fixed duplicate path:', href, 'to', fixedHref);
+                        return; // Skip further processing for this link
+                    }
+                    
                     // Skip if it's already a full URL, starts with #, or already has the portfolio prefix
                     if (href && !href.startsWith('http') && !href.startsWith('#') && 
                         !href.startsWith('/portfolio') && !href.includes('/portfolio/') && !href.startsWith('mailto:')) {

@@ -635,7 +635,26 @@ function showProjectDetail(imageData) {
     // Update URL hash - keeping the current path and just adding the hash
     const projectSlug = imageData.title.toLowerCase().replace(/ /g, '-');
     const currentPath = window.location.pathname;
-    history.pushState({}, imageData.title, currentPath + '#project-' + projectSlug);
+    
+    // Check if we're on GitHub Pages and need to handle paths
+    if (window.location.hostname === 'jjk2256.github.io') {
+        // If path already contains duplicate portfolio, fix it
+        if (currentPath.includes('/portfolio/portfolio/')) {
+            const correctedPath = currentPath.replace('/portfolio/portfolio/', '/portfolio/');
+            history.pushState({}, imageData.title, correctedPath + '#project-' + projectSlug);
+        } 
+        // If path is correct, just add the hash
+        else if (currentPath.includes('/portfolio/')) {
+            history.pushState({}, imageData.title, currentPath + '#project-' + projectSlug);
+        }
+        // If path doesn't have portfolio prefix, add it
+        else {
+            history.pushState({}, imageData.title, '/portfolio' + currentPath + '#project-' + projectSlug);
+        }
+    } else {
+        // Local development - simple path handling
+        history.pushState({}, imageData.title, currentPath + '#project-' + projectSlug);
+    }
 }
 
 // Function to show gallery
@@ -690,11 +709,42 @@ function showProjectsPage() {
                     
                     // Use current path as base and append hash for GitHub Pages compatibility
                     const basePath = window.location.pathname;
-                    history.pushState(
-                        {project: projectTitle},
-                        projectTitle,
-                        basePath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
-                    );
+                    
+                    // Handle GitHub Pages path correctly
+                    if (window.location.hostname === 'jjk2256.github.io') {
+                        // If path already contains duplicate portfolio, fix it
+                        if (basePath.includes('/portfolio/portfolio/')) {
+                            const correctedPath = basePath.replace('/portfolio/portfolio/', '/portfolio/');
+                            history.pushState(
+                                {project: projectTitle},
+                                projectTitle,
+                                correctedPath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
+                            );
+                        }
+                        // If path is correct, just add the hash
+                        else if (basePath.includes('/portfolio/')) {
+                            history.pushState(
+                                {project: projectTitle},
+                                projectTitle,
+                                basePath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
+                            );
+                        }
+                        // If path doesn't have portfolio prefix, add it
+                        else {
+                            history.pushState(
+                                {project: projectTitle},
+                                projectTitle,
+                                '/portfolio' + basePath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
+                            );
+                        }
+                    } else {
+                        // Local development - simple path handling
+                        history.pushState(
+                            {project: projectTitle},
+                            projectTitle,
+                            basePath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
+                        );
+                    }
                 });
             } else {
                 console.warn('No project data found for:', projectTitle);
@@ -948,6 +998,18 @@ window.addEventListener('load', function() {
     
     // Initialize custom cursor
     initCustomCursor();
+    
+    // Check if we're on GitHub Pages and fix duplicate paths
+    if (window.location.hostname === 'jjk2256.github.io') {
+        // Check and fix duplicate /portfolio/ in URL
+        if (window.location.pathname.includes('/portfolio/portfolio/')) {
+            const fixedPath = window.location.pathname.replace('/portfolio/portfolio/', '/portfolio/');
+            const newUrl = window.location.origin + fixedPath + window.location.hash;
+            // Update URL without reloading the page
+            history.replaceState({}, document.title, newUrl);
+            console.log('Fixed duplicate portfolio path in URL:', newUrl);
+        }
+    }
     
     // Check if URL has a hash and handle accordingly
     if (window.location.hash.startsWith('#project-')) {
