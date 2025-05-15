@@ -18,13 +18,17 @@ function getResourcePath(path) {
 
 // Function to get correct path for navigation URLs based on environment
 function getNavigationPath(path) {
-  // Add portfolio prefix for GitHub Pages
-  // If path already starts with /, just append the baseUrlNoSlash
-  if (path.startsWith('/')) {
-    return baseUrlNoSlash + path;
+  // For GitHub Pages, always ensure we have exactly one '/portfolio' prefix
+  if (window.location.hostname === 'jjk2256.github.io') {
+    // Remove any existing portfolio prefix
+    const cleanPath = path.replace(/\/portfolio\//g, '/').replace(/\/portfolio$/g, '/');
+    
+    // Add portfolio prefix once
+    return '/portfolio' + (cleanPath.startsWith('/') ? cleanPath : '/' + cleanPath);
   }
-  // Otherwise, use the baseUrl with trailing slash
-  return baseUrl + path;
+  
+  // For local development, return path as is
+  return path;
 }
 
 // Function to shuffle array (Fisher-Yates algorithm)
@@ -636,25 +640,9 @@ function showProjectDetail(imageData) {
     const projectSlug = imageData.title.toLowerCase().replace(/ /g, '-');
     const currentPath = window.location.pathname;
     
-    // Check if we're on GitHub Pages and need to handle paths
-    if (window.location.hostname === 'jjk2256.github.io') {
-        // If path already contains duplicate portfolio, fix it
-        if (currentPath.includes('/portfolio/portfolio/')) {
-            const correctedPath = currentPath.replace('/portfolio/portfolio/', '/portfolio/');
-            history.pushState({}, imageData.title, correctedPath + '#project-' + projectSlug);
-        } 
-        // If path is correct, just add the hash
-        else if (currentPath.includes('/portfolio/')) {
-            history.pushState({}, imageData.title, currentPath + '#project-' + projectSlug);
-        }
-        // If path doesn't have portfolio prefix, add it
-        else {
-            history.pushState({}, imageData.title, '/portfolio' + currentPath + '#project-' + projectSlug);
-        }
-    } else {
-        // Local development - simple path handling
-        history.pushState({}, imageData.title, currentPath + '#project-' + projectSlug);
-    }
+    // Use the getNavigationPath function to ensure correct path
+    const basePath = getNavigationPath(currentPath);
+    history.pushState({}, imageData.title, basePath + '#project-' + projectSlug);
 }
 
 // Function to show gallery
@@ -707,44 +695,14 @@ function showProjectsPage() {
                     console.log('Project row clicked:', projectTitle);
                     showProjectDetail(projectData);
                     
-                    // Use current path as base and append hash for GitHub Pages compatibility
+                    // Use getNavigationPath for consistent URL handling
                     const basePath = window.location.pathname;
-                    
-                    // Handle GitHub Pages path correctly
-                    if (window.location.hostname === 'jjk2256.github.io') {
-                        // If path already contains duplicate portfolio, fix it
-                        if (basePath.includes('/portfolio/portfolio/')) {
-                            const correctedPath = basePath.replace('/portfolio/portfolio/', '/portfolio/');
-                            history.pushState(
-                                {project: projectTitle},
-                                projectTitle,
-                                correctedPath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
-                            );
-                        }
-                        // If path is correct, just add the hash
-                        else if (basePath.includes('/portfolio/')) {
-                            history.pushState(
-                                {project: projectTitle},
-                                projectTitle,
-                                basePath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
-                            );
-                        }
-                        // If path doesn't have portfolio prefix, add it
-                        else {
-                            history.pushState(
-                                {project: projectTitle},
-                                projectTitle,
-                                '/portfolio' + basePath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
-                            );
-                        }
-                    } else {
-                        // Local development - simple path handling
-                        history.pushState(
-                            {project: projectTitle},
-                            projectTitle,
-                            basePath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
-                        );
-                    }
+                    const navigationPath = getNavigationPath(basePath);
+                    history.pushState(
+                        {project: projectTitle},
+                        projectTitle,
+                        navigationPath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
+                    );
                 });
             } else {
                 console.warn('No project data found for:', projectTitle);
@@ -999,16 +957,13 @@ window.addEventListener('load', function() {
     // Initialize custom cursor
     initCustomCursor();
     
-    // Check if we're on GitHub Pages and fix duplicate paths
-    if (window.location.hostname === 'jjk2256.github.io') {
-        // Check and fix duplicate /portfolio/ in URL
-        if (window.location.pathname.includes('/portfolio/portfolio/')) {
-            const fixedPath = window.location.pathname.replace('/portfolio/portfolio/', '/portfolio/');
-            const newUrl = window.location.origin + fixedPath + window.location.hash;
-            // Update URL without reloading the page
-            history.replaceState({}, document.title, newUrl);
-            console.log('Fixed duplicate portfolio path in URL:', newUrl);
-        }
+    // Check if on GitHub Pages and fix current URL if needed
+    if (window.location.hostname === 'jjk2256.github.io' && window.location.pathname.includes('/portfolio/portfolio/')) {
+        // Use getNavigationPath to fix the URL without reloading
+        const fixedPath = getNavigationPath(window.location.pathname);
+        const newUrl = window.location.origin + fixedPath + window.location.hash;
+        history.replaceState({}, document.title, newUrl);
+        console.log('Fixed URL path:', newUrl);
     }
     
     // Check if URL has a hash and handle accordingly

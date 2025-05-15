@@ -94,28 +94,20 @@
                 document.querySelectorAll('a[href]').forEach(link => {
                     const href = link.getAttribute('href');
                     
-                    // First, fix any duplicate portfolio paths
-                    if (href && href.includes('/portfolio/portfolio/')) {
-                        const fixedHref = href.replace('/portfolio/portfolio/', '/portfolio/');
-                        link.href = fixedHref;
-                        console.log('Fixed duplicate path:', href, 'to', fixedHref);
-                        return; // Skip further processing for this link
-                    }
-                    
-                    // Skip if it's already a full URL, starts with #, or already has the portfolio prefix
+                    // Skip external links, hash links, mailto links and links that already use the correct format
                     if (href && !href.startsWith('http') && !href.startsWith('#') && 
-                        !href.startsWith('/portfolio') && !href.includes('/portfolio/') && !href.startsWith('mailto:')) {
+                        !href.startsWith('mailto:')) {
                         
-                        // If it's a root-relative link (starts with /)
-                        if (href.startsWith('/')) {
-                            link.href = '/portfolio' + href;
-                        } 
-                        // If it's a relative link (doesn't start with /) and not just a hash
-                        else if (href !== '#' && href !== '' && !href.startsWith('#')) {
-                            link.href = '/portfolio/' + href;
+                        // For relative or absolute internal links, use getNavigationPath
+                        if ((href.startsWith('/') || !href.includes('://')) && 
+                            !href.startsWith('/portfolio/') && 
+                            href !== '' && 
+                            !href.startsWith('#')) {
+                            
+                            // Use getNavigationPath to ensure consistent path formatting
+                            link.href = getNavigationPath(href);
+                            console.log('Updated link:', href, 'to', link.href);
                         }
-                        
-                        console.log('Updated link:', href, 'to', link.href);
                     }
                 });
             }

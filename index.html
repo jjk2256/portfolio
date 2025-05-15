@@ -204,12 +204,9 @@
                     // Handle navigation
                     if (section === 'works') {
                         showGallery();
-                        if (window.location.hostname === 'jjk2256.github.io') {
-                            history.pushState({}, '', '/portfolio/index.html');
-                        } else {
-                            const basePath = window.location.pathname;
-                            history.pushState({}, '', basePath);
-                        }
+                        // Use getNavigationPath for consistent URL handling
+                        const navigationPath = getNavigationPath(window.location.pathname);
+                        history.pushState({}, '', navigationPath);
                     } else if (section === 'projects') {
                         showProjectsPage();
                         const basePath = window.location.pathname;
@@ -232,12 +229,9 @@
                 document.getElementById('works-link').classList.add('active');
                 document.getElementById('projects-link').classList.remove('active');
                 
-                if (window.location.hostname === 'jjk2256.github.io') {
-                    history.pushState({}, '', projectsHash ? '/portfolio/index.html#projects' : '/portfolio/index.html');
-                } else {
-                    const basePath = window.location.pathname;
-                    history.pushState({}, '', projectsHash ? basePath + '#projects' : basePath);
-                }
+                // Use getNavigationPath for consistent URL handling
+                const navigationPath = getNavigationPath(window.location.pathname);
+                history.pushState({}, '', projectsHash ? navigationPath + '#projects' : navigationPath);
             });
 
             // Initialize project row click handlers
@@ -250,41 +244,13 @@
                         showProjectDetail(projectData);
                         const basePath = window.location.pathname;
                         
-                        // Handle GitHub Pages path correctly
-                        if (window.location.hostname === 'jjk2256.github.io') {
-                            // If path already contains duplicate portfolio, fix it
-                            if (basePath.includes('/portfolio/portfolio/')) {
-                                const correctedPath = basePath.replace('/portfolio/portfolio/', '/portfolio/');
-                                history.pushState(
-                                    {project: projectTitle}, 
-                                    projectTitle,
-                                    correctedPath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
-                                );
-                            }
-                            // If path is correct, just add the hash
-                            else if (basePath.includes('/portfolio/')) {
-                                history.pushState(
-                                    {project: projectTitle}, 
-                                    projectTitle,
-                                    basePath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
-                                );
-                            }
-                            // If path doesn't have portfolio prefix, add it
-                            else {
-                                history.pushState(
-                                    {project: projectTitle}, 
-                                    projectTitle,
-                                    '/portfolio' + basePath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
-                                );
-                            }
-                        } else {
-                            // Local development - simple path handling
-                            history.pushState(
-                                {project: projectTitle}, 
-                                projectTitle,
-                                basePath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
-                            );
-                        }
+                        // Use the getNavigationPath function for correct path handling
+                        const navigationPath = getNavigationPath(basePath);
+                        history.pushState(
+                            {project: projectTitle}, 
+                            projectTitle,
+                            navigationPath + '#project-' + encodeURIComponent(projectTitle.toLowerCase())
+                        );
                     }
                 });
             });
@@ -329,28 +295,20 @@
                 document.querySelectorAll('a[href]').forEach(link => {
                     const href = link.getAttribute('href');
                     
-                    // First, fix any duplicate portfolio paths
-                    if (href && href.includes('/portfolio/portfolio/')) {
-                        const fixedHref = href.replace('/portfolio/portfolio/', '/portfolio/');
-                        link.href = fixedHref;
-                        console.log('Fixed duplicate path:', href, 'to', fixedHref);
-                        return; // Skip further processing for this link
-                    }
-                    
-                    // Skip if it's already a full URL, starts with #, or already has the portfolio prefix
+                    // Skip external links, hash links, mailto links and links that already use the correct format
                     if (href && !href.startsWith('http') && !href.startsWith('#') && 
-                        !href.startsWith('/portfolio') && !href.includes('/portfolio/') && !href.startsWith('mailto:')) {
+                        !href.startsWith('mailto:')) {
                         
-                        // If it's a root-relative link (starts with /)
-                        if (href.startsWith('/')) {
-                            link.href = '/portfolio' + href;
-                        } 
-                        // If it's a relative link (doesn't start with /) and not just a hash
-                        else if (href !== '#' && href !== '' && !href.startsWith('#')) {
-                            link.href = '/portfolio/' + href;
+                        // For relative or absolute internal links, use getNavigationPath
+                        if ((href.startsWith('/') || !href.includes('://')) && 
+                            !href.startsWith('/portfolio/') && 
+                            href !== '' && 
+                            !href.startsWith('#')) {
+                            
+                            // Use getNavigationPath to ensure consistent path formatting
+                            link.href = getNavigationPath(href);
+                            console.log('Updated link:', href, 'to', link.href);
                         }
-                        
-                        console.log('Updated link:', href, 'to', link.href);
                     }
                 });
             }
