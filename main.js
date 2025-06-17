@@ -17,8 +17,8 @@ function fixMobileViewport() {
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
   
-  // Disable overscroll/bounce effects on iOS
-  document.body.style.overscrollBehavior = 'none';
+  // Remove overscroll behavior restrictions for better native scrolling
+  document.body.style.overscrollBehavior = 'auto';
   
   // Force hardware acceleration for smoother animations
   document.body.style.webkitBackfaceVisibility = 'hidden';
@@ -29,14 +29,14 @@ function fixMobileViewport() {
 window.addEventListener('load', fixMobileViewport);
 window.addEventListener('resize', fixMobileViewport);
 
-// Disable pull-to-refresh on mobile
-window.addEventListener('touchmove', function(e) {
-  if (isTouchDevice() && window.pageYOffset === 0 && e.touches.length === 1) {
-    if (e.touches[0].clientY > 5) {
-      e.preventDefault();
-    }
-  }
-}, { passive: false });
+// Remove the pull-to-refresh prevention to enable natural scrolling
+// window.addEventListener('touchmove', function(e) {
+//   if (isTouchDevice() && window.pageYOffset === 0 && e.touches.length === 1) {
+//     if (e.touches[0].clientY > 5) {
+//       e.preventDefault();
+//     }
+//   }
+// }, { passive: false });
 
 // Use this baseUrl when referencing resources
 function getResourcePath(path) {
@@ -184,7 +184,7 @@ const images = [
         width: 300, 
         height: 300,
         title: 'EchoPULSE', 
-        year: '2024',
+        year: '2025',
         description: 'EchoPulse is an interactive game that visualizes players\' real-time heart rates through dynamic, pulsating waves. Created in collaboration with Skylar Zhang, the project uses biofeedback technology and physical computation to transform biometric data into a responsive visual interface. By integrating heart rate sensors, the game enables participants to observe and influence their physiological signals, fostering a unique interplay between body and environment. Through this system, players are invited to achieve visual harmony by actively engaging with their own heartbeat—turning internal rhythms into a shared, interactive experience.',
         slug: 'echopulse',
         isVideoHero: true,
@@ -193,7 +193,7 @@ const images = [
                 type: 'youtube',
                 id: 'o2tsGA1ngAQ',
                 title: 'two-player interactive game',
-                year: '2024',
+                year: '2025',
                 medium: 'project demonstration',
                 isHero: true
             }
@@ -393,16 +393,8 @@ function positionImages(shuffle = true) {
         titleOverlay.textContent = image.title;
         
         if (isMobile) {
-            titleOverlay.style.position = 'static';
-            titleOverlay.style.transform = 'none';
-            titleOverlay.style.backgroundColor = 'transparent';
-            titleOverlay.style.opacity = '1';
-            titleOverlay.style.visibility = 'visible';
-            titleOverlay.style.padding = '5px 0';
-            titleOverlay.style.marginTop = '5px';
-            titleOverlay.style.fontSize = '12px';
-            titleOverlay.style.color = '#333';
-            titleOverlay.style.textAlign = 'center';
+            // Hide title overlay on mobile
+            titleOverlay.style.display = 'none';
         }
         
         // Calculate dimensions with project-specific scaling
@@ -985,6 +977,9 @@ window.addEventListener('load', function() {
     
     // Initialize custom cursor
     initCustomCursor();
+    
+    // Create mobile footer navigation
+    createMobileFooter();
     
     // Check if on GitHub Pages and fix current URL if needed
     if (window.location.hostname === 'jjk2256.github.io' && window.location.pathname.includes('/portfolio/portfolio/')) {
@@ -1747,3 +1742,57 @@ document.addEventListener('DOMContentLoaded', function() {
     // Append style to head
     document.head.appendChild(style);
 });
+
+// Function to create mobile footer navigation
+function createMobileFooter() {
+    if (window.innerWidth <= 768 || isTouchDevice()) {
+        // Create the footer element
+        const footer = document.createElement('div');
+        footer.className = 'mobile-footer-nav';
+        
+        // Create links - updated order to match the image: Works, Projects, Info, Design
+        const links = [
+            { text: 'Works', href: getNavigationPath('/'), id: 'mobile-works-link', active: !window.location.hash.includes('#project-') && !window.location.hash.includes('#projects') },
+            { text: 'Projects', href: getNavigationPath('/#projects'), id: 'mobile-projects-link', active: window.location.hash.includes('#projects') },
+            { text: 'Info', href: getNavigationPath('/info.html'), id: 'mobile-info-link', active: window.location.pathname.includes('info.html') },
+            { text: 'Design', href: getNavigationPath('/#design'), id: 'mobile-design-link', active: window.location.hash.includes('#design') }
+        ];
+        
+        // Add links to footer
+        links.forEach(link => {
+            const a = document.createElement('a');
+            a.textContent = link.text;
+            a.href = link.href;
+            a.id = link.id;
+            if (link.active) a.classList.add('active');
+            
+            // Add click handlers
+            if (link.text === 'Works') {
+                a.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showGallery();
+                    updateMobileNavActive(this);
+                });
+            } else if (link.text === 'Projects') {
+                a.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showProjectsPage();
+                    updateMobileNavActive(this);
+                });
+            }
+            
+            footer.appendChild(a);
+        });
+        
+        // Add to document
+        document.body.appendChild(footer);
+    }
+}
+
+// Update active state in mobile navigation
+function updateMobileNavActive(activeLink) {
+    document.querySelectorAll('.mobile-footer-nav a').forEach(link => {
+        link.classList.remove('active');
+    });
+    activeLink.classList.add('active');
+}

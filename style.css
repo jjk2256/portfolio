@@ -48,9 +48,13 @@ body {
     background-color: #fff;
     line-height: 1.5;
     overflow-x: hidden;
+    overflow-y: auto; /* Ensure vertical scrolling is enabled */
     position: relative;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    height: auto;
+    min-height: 100%;
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
 }
 
 /* Vertical Grid Lines */
@@ -148,6 +152,8 @@ header {
     position: relative;
     display: flex;
     justify-content: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
 }
 
 #gallery {
@@ -218,6 +224,8 @@ header {
     margin-top: 60px;
     padding: 40px 20px;
     min-height: 100vh; /* Added for scrollable layout */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
 }
 
 .project-header {
@@ -453,6 +461,7 @@ header {
     margin-top: 80px;
     padding: 20px;
     position: relative;
+    overflow-y: auto;
 }
 
 .info-content {
@@ -844,6 +853,39 @@ header {
 }
 
 @media (max-width: 768px) {
+    /* Remove these mobile scrolling fixes */
+    /* Mobile styles */
+    body, html {
+        height: auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: auto;
+    }
+    
+    .gallery-container, .project-container, .info-container {
+        height: auto;
+        min-height: 100%;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+    }
+    
+    /* Project image wrappers */
+    .project-image-wrapper {
+        margin-bottom: 40px;
+        align-items: center !important;
+    }
+    
+    .project-image-wrapper img.hero-image,
+    .project-image-wrapper img.capstone-hero-image,
+    .project-image-wrapper img.dataviz-hero-image,
+    .project-image-wrapper img.lumenbeat-hero-image {
+        width: 100% !important;
+        transform: none !important;
+        height: auto !important;
+        max-height: none !important;
+    }
+    
     header {
         padding: 12px 15px;
         flex-wrap: nowrap;
@@ -861,281 +903,26 @@ header {
         display: none;
     }
     
-    /* Hide cursor on touch devices */
-    .cursor-dot {
-        display: none;
-    }
-    
-    /* Reset cursor styles for touch */
-    a, .project-index-row, #randomize-btn, .back-to-gallery {
-        cursor: auto;
-    }
-    
-    /* Gallery adjustments */
-    .gallery-container {
-        margin-top: 60px;
-        padding: 15px;
-        padding-bottom: 70px; /* Space for mobile footer */
-    }
-    
-    #gallery {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        padding: 15px;
-    }
-    
-    .gallery-item {
-        transition: transform 0.2s ease; /* Faster transitions on mobile */
-    }
-    
-    .gallery-item:hover {
-        transform: none; /* No hover effect on mobile */
-    }
-    
-    .title-overlay {
-        position: static;
-        transform: none;
-        background-color: transparent;
-        padding: 5px 0;
-        font-size: 12px;
-        opacity: 1;
-        visibility: visible;
-        margin-top: 8px;
-        box-shadow: none;
-    }
-    
-    /* Project detail page */
-    .project-container {
-        margin-top: 60px;
-        padding: 15px;
-        padding-bottom: 70px; /* Space for mobile footer */
-    }
-    
-    .project-header {
-        margin-bottom: 30px;
-        flex-direction: column;
-    }
-    
-    .project-title {
-        font-size: 22px;
-        max-width: 100%;
-        margin-bottom: 20px;
-    }
-    
-    .project-info {
-        position: static;
-        width: 100%;
-        max-width: 100%;
-        left: auto;
-        margin-top: 0;
-    }
-    
-    .project-info h2 {
-        font-size: 16px;
-        margin-bottom: 12px;
-    }
-    
-    .project-info p {
-        font-size: 14px;
-        line-height: 1.5;
-    }
-    
-    .project-image-wrapper {
-        margin-bottom: 40px;
-        align-items: center !important; /* Center all images on mobile */
-    }
-    
-    .project-image-wrapper img.hero-image,
-    .project-image-wrapper img.capstone-hero-image,
-    .project-image-wrapper img.dataviz-hero-image,
-    .project-image-wrapper img.lumenbeat-hero-image {
-        width: 100% !important; /* Full width on mobile */
-        transform: none !important;
-    }
-    
-    .project-image-wrapper img.hero-image + .image-caption,
-    .project-image-wrapper img.capstone-hero-image + .image-caption,
-    .project-image-wrapper img.dataviz-hero-image + .image-caption,
-    .project-image-wrapper img.lumenbeat-hero-image + .image-caption {
-        width: 100% !important;
-        transform: none !important;
-        margin-top: 10px;
-    }
-    
-    .image-caption {
-        font-size: 12px;
-        flex-direction: column;
-        margin-top: 8px;
-    }
-    
-    .image-caption span:not(:first-child) {
-        margin-left: 0;
-        margin-top: 4px;
-    }
-    
-    /* Projects index page */
-    .projects-index {
-        margin-top: 90px;
-        padding: 0 15px;
-    }
-    
-    .project-index-row {
-        padding: 12px 5px;
-        display: grid;
-        grid-template-columns: 30% 70%;
-        grid-template-rows: auto auto;
-    }
-    
-    .project-year {
-        grid-column: 1;
-        grid-row: 1;
-        font-size: 14px;
-    }
-    
-    .project-index-row .project-title {
-        grid-column: 2;
-        grid-row: 1;
-        font-size: 14px;
-        margin-bottom: 0;
-    }
-    
-    .project-category {
-        grid-column: 2;
-        grid-row: 2;
-        text-align: left;
-        padding-left: 0;
-        font-size: 12px;
-        margin-top: 4px;
-    }
-    
-    /* Videos */
-    .project-video.youtube-video,
-    .project-video-wrapper .video-caption {
-        width: 100%;
-    }
-    
-    .video-caption {
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    .video-caption span {
-        text-align: left !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-    
-    /* Info page */
-    .info-container {
-        margin-top: 60px;
-        padding: 15px;
-        padding-bottom: 70px; /* Space for mobile footer */
-    }
-    
-    .info-content {
-        padding-left: 0;
-    }
-    
-    .info-section {
-        position: static;
-        width: 100%;
-        left: auto;
-        margin-bottom: 30px;
-    }
-    
-    .info-section h2 {
-        font-size: 20px;
-    }
-    
-    .info-section h3 {
-        font-size: 16px;
-        margin-top: 20px;
-    }
-    
-    .cv-entry {
-        flex-direction: column;
-        margin-bottom: 20px;
-    }
-    
-    .cv-year {
-        width: 100%;
-        margin-bottom: 5px;
-    }
-    
-    .cv-details {
-        width: 100%;
-    }
-    
-    .skills-container {
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .skills-category {
-        width: 100%;
-    }
-    
-    /* Custom project layouts */
-    #project-detail[data-project="photography"] .photo-grid-container {
-        gap: 20px;
-    }
-    
-    #project-detail[data-project="photography"] .photo-item {
-        width: calc(50% - 10px);
-    }
-    
-    #project-detail[data-project="metatool"] .photo-item img,
-    #project-detail[data-project="lumenbeat"] .photo-item img,
-    #project-detail[data-project="echopulse"] .project-image-wrapper img {
-        width: 100%;
-        transform: none;
-        transform-origin: center;
-    }
-    
-    #project-detail[data-project="metatool"] .photo-item .image-caption,
-    #project-detail[data-project="lumenbeat"] .photo-item .image-caption,
-    #project-detail[data-project="echopulse"] .project-image-wrapper .image-caption {
-        width: 100%;
-        transform: none;
-    }
-    
-    /* Fullscreen image view */
-    .fullscreen-image {
-        max-width: 95%;
-        max-height: 85vh;
-    }
-    
-    .fullscreen-close {
-        top: 15px;
-        right: 15px;
-        font-size: 28px;
-    }
-    
-    /* Add better tap target sizes for mobile */
-    .nav-links a, #randomize-btn, .back-to-gallery {
-        padding: 8px 0;
-    }
-    
-    /* Add a fixed bottom navigation bar for mobile */
+    /* Mobile footer navigation */
     .mobile-footer-nav {
-        display: none; /* Hidden by default, shown in JS for mobile */
+        display: flex;
         position: fixed;
         bottom: 0;
         left: 0;
         width: 100%;
-        background-color: rgba(255, 255, 255, 0.98);
+        background-color: rgba(248, 248, 248, 0.95);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        padding: 14px 0;
+        padding: 12px 0;
         border-top: 1px solid #eee;
         justify-content: space-around;
         z-index: 999;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.03);
     }
     
     .mobile-footer-nav a {
-        font-size: 14px;
-        color: #777;
+        font-size: 16px;
+        color: #888;
         text-align: center;
         padding: 10px 0;
         position: relative;
@@ -1155,25 +942,35 @@ header {
     .mobile-footer-nav a.active::after {
         content: '';
         position: absolute;
-        bottom: 0;
+        bottom: -1px;
         left: 50%;
         transform: translateX(-50%);
         width: 20px;
         height: 2px;
         background-color: #333;
         border-radius: 1px;
-    }
-}
-
-/* Smaller phones */
-@media (max-width: 480px) {
-    .logo {
-        font-size: 14px;
+        display: none; /* Hide the underline indicator to match the image */
     }
     
-    .nav-links a {
-        margin-right: 15px;
-        font-size: 12px;
+    /* Hide cursor on touch devices */
+    .cursor-dot {
+        display: none;
+    }
+    
+    /* Reset cursor styles for touch */
+    a, .project-index-row, #randomize-btn, .back-to-gallery {
+        cursor: auto;
+    }
+    
+    /* Gallery adjustments */
+    .gallery-container {
+        margin-top: 60px;
+        padding: 15px;
+        padding-bottom: 70px; /* Space for mobile footer */
+        overflow-y: auto;
+        height: auto;
+        position: relative;
+        -webkit-overflow-scrolling: touch;
     }
     
     #gallery {
