@@ -66,6 +66,11 @@
             createGridLines();
             initCustomCursor();
             
+            // Initialize mobile About icon
+            if (typeof initMobileAboutIcon === 'function') {
+                initMobileAboutIcon();
+            }
+            
             // Direct navigation from the intro page
             document.getElementById('works-link-intro').addEventListener('click', function(e) {
                 e.preventDefault();
@@ -93,8 +98,6 @@
         // Global function to fix all links when on GitHub Pages
         function fixGitHubPagesLinks() {
             if (window.location.hostname === 'jjk2256.github.io') {
-                console.log('Fixing links for GitHub Pages');
-                
                 document.querySelectorAll('a[href]').forEach(link => {
                     const href = link.getAttribute('href');
                     
@@ -110,7 +113,6 @@
                             
                             // Use getNavigationPath to ensure consistent path formatting
                             link.href = getNavigationPath(href);
-                            console.log('Updated link:', href, 'to', link.href);
                         }
                     }
                 });

@@ -1,42 +1,5 @@
 // Base URL handling for GitHub Pages
 const baseUrl = window.location.hostname === 'jjk2256.github.io' ? '/portfolio/' : '/';
-const baseUrlNoSlash = window.location.hostname === 'jjk2256.github.io' ? '/portfolio' : '';
-
-// Enhanced touch device detection
-const isTouchDevice = () => {
-  return (('ontouchstart' in window) ||
-     (navigator.maxTouchPoints > 0) ||
-     (navigator.msMaxTouchPoints > 0) ||
-     (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ||
-     window.innerWidth <= 768);
-}
-
-// Fix mobile viewport issues, especially for iOS Safari
-function fixMobileViewport() {
-  // Fix for 100vh in iOS Safari
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-  
-  // Remove overscroll behavior restrictions for better native scrolling
-  document.body.style.overscrollBehavior = 'auto';
-  
-  // Force hardware acceleration for smoother animations
-  document.body.style.webkitBackfaceVisibility = 'hidden';
-  document.body.style.backfaceVisibility = 'hidden';
-}
-
-// Call the function initially and on resize
-window.addEventListener('load', fixMobileViewport);
-window.addEventListener('resize', fixMobileViewport);
-
-// Remove the pull-to-refresh prevention to enable natural scrolling
-// window.addEventListener('touchmove', function(e) {
-//   if (isTouchDevice() && window.pageYOffset === 0 && e.touches.length === 1) {
-//     if (e.touches[0].clientY > 5) {
-//       e.preventDefault();
-//     }
-//   }
-// }, { passive: false });
 
 // Use this baseUrl when referencing resources
 function getResourcePath(path) {
@@ -69,14 +32,6 @@ function shuffleArray(array) {
   }
   return shuffled;
 }
-
-// Debug information
-console.log("Website running from: " + window.location.hostname);
-console.log("Base URL set to: " + baseUrl);
-console.log("Example resource path: " + getResourcePath('CAPSTONE_grow/hero.webp'));
-
-// Add a SAVED_POSITIONS_KEY constant (even though we're not using manual positioning anymore)
-const SAVED_POSITIONS_KEY = 'galleryItemPositions';
 
 // Final updated images array with proper path handling
 const images = [
@@ -354,21 +309,20 @@ function createGridLines() {
 // Function to position images in a grid without overlapping
 function positionImages(shuffle = true) {
     const gallery = document.getElementById('gallery');
-    const isMobile = window.innerWidth <= 768 || isTouchDevice();
     
-    // Set gallery container styles to ensure full-width grid layout
+    // Set gallery container styles
     gallery.style.display = 'grid';
-    gallery.style.gridTemplateColumns = isMobile ? (window.innerWidth <= 480 ? '1fr' : 'repeat(2, 1fr)') : 'repeat(4, 1fr)';
-    gallery.style.gap = isMobile ? '15px' : '30px';
+    gallery.style.gridTemplateColumns = 'repeat(4, 1fr)';
+    gallery.style.gap = '30px';
     gallery.style.width = '100%';
     gallery.style.maxWidth = '100%';
     gallery.style.margin = '0';
-    gallery.style.padding = isMobile ? '15px' : '40px';
+    gallery.style.padding = '40px';
     
     // Clear gallery
     gallery.innerHTML = '';
     
-    // Shuffle images if requested
+    // Get images to display
     const displayImages = shuffle ? shuffleArray(images) : images;
     
     // Process all images
@@ -377,73 +331,47 @@ function positionImages(shuffle = true) {
         item.className = 'gallery-item';
         item.dataset.index = index;
         
+        // Create image element
         const img = document.createElement('img');
-        // Use GitHub specific path if available and if on GitHub Pages
-        if (window.location.hostname === 'jjk2256.github.io' && image.githubSrc) {
-            console.log('Using GitHub specific path for gallery image:', image.githubSrc);
-            img.src = image.githubSrc;
-        } else {
-            img.src = image.src;
-        }
+        img.src = window.location.hostname === 'jjk2256.github.io' && image.githubSrc 
+            ? image.githubSrc 
+            : image.src;
         img.alt = image.title;
+        img.loading = 'lazy'; // Add lazy loading for better performance
         
-        // Add title overlay
+        // Create title overlay
         const titleOverlay = document.createElement('div');
         titleOverlay.className = 'title-overlay';
         titleOverlay.textContent = image.title;
         
-        if (isMobile) {
-            // Hide title overlay on mobile
-            titleOverlay.style.display = 'none';
-        }
+        // Calculate image dimensions
+        const scaleFactor = (image.title === 'Zine' || image.title === 'EchoPULSE') ? 0.6 : 0.5;
+        img.width = Math.floor(image.width * scaleFactor);
+        img.height = Math.floor(image.height * scaleFactor);
         
-        // Calculate dimensions with project-specific scaling
-        const aspectRatio = image.width / image.height;
-        
-        // Make Zine and EchoPULSE 20% larger than other images
-        let scaleFactor = 0.5; // Default: 1/2 of original size
-        if (image.title === 'Zine' || image.title === 'EchoPULSE') {
-            scaleFactor = 0.6; // 60% of original size (20% larger than other images)
-        }
-        
-        // Adjust scale factor for mobile
-        if (isMobile) {
-            scaleFactor = scaleFactor * 0.8; // Slightly smaller on mobile
-        }
-        
-        const newWidth = Math.floor(image.width * scaleFactor);
-        const newHeight = Math.floor(image.height * scaleFactor);
-        
-        img.width = newWidth;
-        img.height = newHeight;
-        
-        // Add click for project detail
+        // Add click handler
         item.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             showProjectDetail(image);
         });
         
-        // Add error handling for the image
+        // Add error handling
         img.onerror = function() {
             console.error(`Failed to load image: ${img.src}`);
-            console.log('Current working directory:', window.location.href);
-            item.style.opacity = '0.2'; // Make failed images semi-transparent instead of removing them
+            item.style.opacity = '0.2';
         };
         
-        // Add load event handler
+        // Add load handler
         img.onload = function() {
-            console.log('Successfully loaded image:', image.title);
             item.style.opacity = '1';
         };
         
-        // Add item to gallery
+        // Assemble and add to gallery
         item.appendChild(img);
         item.appendChild(titleOverlay);
         gallery.appendChild(item);
-        
-        // Set cursor style for project detail
-        item.style.cursor = isMobile ? 'pointer' : 'none';
+        item.style.cursor = 'none';
     });
 }
 
@@ -487,7 +415,6 @@ function showProjectDetail(imageData) {
         const heroImage = document.createElement('img');
         // Use GitHub specific path if available and if on GitHub Pages
         if (window.location.hostname === 'jjk2256.github.io' && imageData.githubSrc) {
-            console.log('Using GitHub specific path for hero:', imageData.githubSrc);
             heroImage.src = imageData.githubSrc;
         } else {
             heroImage.src = imageData.src;
@@ -668,18 +595,19 @@ function showProjectDetail(imageData) {
 
 // Function to show gallery
 function showGallery() {
+    // Hide other views and show gallery
     document.getElementById('project-detail').style.display = 'none';
     document.getElementById('projects-page').style.display = 'none';
     document.getElementById('gallery').style.display = 'block';
     
-    // Position images with shuffling by default
+    // Position images with shuffling
     positionImages(true);
     
     // Update navigation
     document.getElementById('works-link').classList.add('active');
     document.getElementById('projects-link').classList.remove('active');
     
-    // Update URL accounting for GitHub Pages path
+    // Update URL
     history.pushState({}, 'Gallery', getNavigationPath(window.location.pathname));
 }
 
@@ -699,21 +627,17 @@ function showProjectsPage() {
     
     // Add click events to project rows if not already added
     const projectRows = document.querySelectorAll('.project-index-row');
-    console.log('Found project rows:', projectRows.length);
     
     projectRows.forEach(row => {
         if (!row.hasAttribute('data-initialized')) {
             row.setAttribute('data-initialized', 'true');
             const projectTitle = row.querySelector('.project-title').textContent;
-            console.log('Setting up click handler for project:', projectTitle);
             
             // Find matching project data
             const projectData = images.find(img => img.title === projectTitle);
-            console.log('Found project data:', projectData ? 'yes' : 'no');
             
             if (projectData) {
                 row.addEventListener('click', function() {
-                    console.log('Project row clicked:', projectTitle);
                     showProjectDetail(projectData);
                     
                     // Use getNavigationPath for consistent URL handling
@@ -892,45 +816,31 @@ function showImageFullscreen(imageSrc) {
     }
 }
 
-// Initialize shuffle button
-function initShuffleButton() {
-    const shuffleButton = document.getElementById('shuffle-button');
-    if (shuffleButton) {
-        shuffleButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (document.getElementById('gallery').style.display !== 'none') {
-                positionImages(true); // Shuffle and reposition
-                console.log('Images shuffled');
-            }
-        });
-    } else {
-        console.error('Shuffle button not found!');
-    }
-}
-
 // Initialize custom cursor
 function initCustomCursor() {
     const cursor = document.getElementById('cursor-dot');
-    if (!cursor) {
-        console.error('Cursor dot element not found!');
-        return;
-    }
+    if (!cursor) return;
+
+    // Get all interactive elements
+    const interactiveElements = document.querySelectorAll('a, .project-index-row, .back-to-gallery');
     
-    // Show cursor on mouse movement
-    document.addEventListener('mousemove', function(e) {
+    // Show cursor on mouse enter
+    document.addEventListener('mouseenter', function() {
         cursor.classList.add('active');
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
     });
     
-    // Hide cursor when mouse leaves window
+    // Hide cursor on mouse leave
     document.addEventListener('mouseleave', function() {
         cursor.classList.remove('active');
     });
     
-    // Make cursor larger when hovering over links and clickable elements
-    const interactiveElements = document.querySelectorAll('a, .project-index-row, #randomize-btn, .back-to-gallery');
+    // Update cursor position
+    document.addEventListener('mousemove', function(e) {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
     
+    // Add hover effects for interactive elements
     interactiveElements.forEach(element => {
         element.addEventListener('mouseenter', function() {
             cursor.classList.add('link-hover');
@@ -941,32 +851,30 @@ function initCustomCursor() {
         });
     });
     
-    // Create a mutation observer for tracking new interactive elements
+    // Handle dynamically added elements
     const observer = new MutationObserver(function(mutations) {
-        const newInteractiveElements = document.querySelectorAll('a, .project-index-row, #randomize-btn, .back-to-gallery');
-        
-        newInteractiveElements.forEach(element => {
-            if (!element.hasAttribute('data-cursor-initialized')) {
-                element.setAttribute('data-cursor-initialized', 'true');
-                
-                element.addEventListener('mouseenter', function() {
-                    cursor.classList.add('link-hover');
-                });
-                
-                element.addEventListener('mouseleave', function() {
-                    cursor.classList.remove('link-hover');
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                const newInteractiveElements = document.querySelectorAll('a, .project-index-row, .back-to-gallery');
+                newInteractiveElements.forEach(element => {
+                    element.addEventListener('mouseenter', function() {
+                        cursor.classList.add('link-hover');
+                    });
+                    
+                    element.addEventListener('mouseleave', function() {
+                        cursor.classList.remove('link-hover');
+                    });
                 });
             }
         });
     });
     
-    // Start observing document changes
-    observer.observe(document.body, { 
-        childList: true, 
-        subtree: true 
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
     });
     
-    // Store the observer instance for later cleanup
+    // Store observer for cleanup
     window.cursorObserver = observer;
 }
 
@@ -977,9 +885,6 @@ window.addEventListener('load', function() {
     
     // Initialize custom cursor
     initCustomCursor();
-    
-    // Create mobile footer navigation
-    createMobileFooter();
     
     // Check if on GitHub Pages and fix current URL if needed
     if (window.location.hostname === 'jjk2256.github.io' && window.location.pathname.includes('/portfolio/portfolio/')) {
@@ -1018,12 +923,16 @@ window.addEventListener('resize', function() {
 
 // Make sure the document is fully loaded before attaching event handlers
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the gallery
+    createGridLines();
+    positionImages(true);
+    initCustomCursor();
+    
     // Setup navigation events with explicit error handling
     const projectsLink = document.getElementById('projects-link');
     if (projectsLink) {
         projectsLink.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('Projects link clicked'); // Debugging log
             showProjectsPage();
         });
     } else {
@@ -1034,7 +943,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (worksLink) {
         worksLink.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('Works link clicked'); // Debugging log
             showGallery();
         });
     } else {
@@ -1052,7 +960,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 e.preventDefault();
-                console.log('Logo link clicked'); // Debugging log
                 // Account for GitHub Pages path
                 window.location.href = getNavigationPath('/intro.html');
             });
@@ -1065,7 +972,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (backButton) {
         backButton.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('Back button clicked'); // Debugging log
             showGallery();
         });
     } else {
@@ -1086,16 +992,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 else {
                     link.href = '/portfolio/' + href;
                 }
-                console.log('Updated link:', href, 'to', link.href);
             }
         });
+    }
+    
+    // Handle initial page load based on URL hash
+    if (window.location.hash.startsWith('#project-')) {
+        const projectName = decodeURIComponent(window.location.hash.replace('#project-', '').replace(/-/g, ' '));
+        const projectData = images.find(img => img.title.toLowerCase() === projectName.toLowerCase());
+        if (projectData) {
+            showProjectDetail(projectData);
+        } else {
+            showGallery();
+        }
+    } else if (window.location.hash === '#projects') {
+        showProjectsPage();
+    } else {
+        showGallery();
     }
 });
 
 // Also update the hash change listener to properly handle direct URL navigation
 window.addEventListener('hashchange', function() {
-    console.log('Hash changed to: ' + window.location.hash); // Debugging log
-    
     if (window.location.hash.startsWith('#project-')) {
         const projectName = decodeURIComponent(window.location.hash.replace('#project-', '').replace(/-/g, ' '));
         const projectData = images.find(img => img.title.toLowerCase() === projectName.toLowerCase());
@@ -1541,7 +1459,6 @@ function loadUnhamperingImages(container, additionalImages) {
         const imageWrapper = document.createElement('div');
         imageWrapper.className = 'photo-item';
         imageWrapper.setAttribute('data-image-index', index);
-        imageWrapper.style.width = '100%';
         imageWrapper.style.maxWidth = '100%';
         imageWrapper.style.overflow = 'visible';
         
@@ -1562,14 +1479,10 @@ function loadUnhamperingImages(container, additionalImages) {
         // Add detailed error handling for the image
         image.onerror = function() {
             console.error(`Failed to load Unhampering image: ${image.src}`);
-            console.log('Current hostname:', window.location.hostname);
-            console.log('Current baseUrl:', baseUrl);
-            console.log('Attempted full path:', image.src);
             
             // Try with lowercase path as fallback for GitHub Pages
             if (window.location.hostname === 'jjk2256.github.io' && !imageDetail.githubSrc) {
                 const lowercasePath = image.src.toLowerCase();
-                console.log('Attempting with lowercase path:', lowercasePath);
                 image.src = lowercasePath;
             } else {
                 imageWrapper.style.border = '2px dashed red';
@@ -1584,7 +1497,6 @@ function loadUnhamperingImages(container, additionalImages) {
         
         // Add load event handler
         image.onload = function() {
-            console.log('Successfully loaded Unhampering image:', image.src);
             imageWrapper.style.opacity = '1';
         };
         
@@ -1742,57 +1654,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // Append style to head
     document.head.appendChild(style);
 });
-
-// Function to create mobile footer navigation
-function createMobileFooter() {
-    if (window.innerWidth <= 768 || isTouchDevice()) {
-        // Create the footer element
-        const footer = document.createElement('div');
-        footer.className = 'mobile-footer-nav';
-        
-        // Create links - updated order to match the image: Works, Projects, Info, Design
-        const links = [
-            { text: 'Works', href: getNavigationPath('/'), id: 'mobile-works-link', active: !window.location.hash.includes('#project-') && !window.location.hash.includes('#projects') },
-            { text: 'Projects', href: getNavigationPath('/#projects'), id: 'mobile-projects-link', active: window.location.hash.includes('#projects') },
-            { text: 'Info', href: getNavigationPath('/info.html'), id: 'mobile-info-link', active: window.location.pathname.includes('info.html') },
-            { text: 'Design', href: getNavigationPath('/#design'), id: 'mobile-design-link', active: window.location.hash.includes('#design') }
-        ];
-        
-        // Add links to footer
-        links.forEach(link => {
-            const a = document.createElement('a');
-            a.textContent = link.text;
-            a.href = link.href;
-            a.id = link.id;
-            if (link.active) a.classList.add('active');
-            
-            // Add click handlers
-            if (link.text === 'Works') {
-                a.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    showGallery();
-                    updateMobileNavActive(this);
-                });
-            } else if (link.text === 'Projects') {
-                a.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    showProjectsPage();
-                    updateMobileNavActive(this);
-                });
-            }
-            
-            footer.appendChild(a);
-        });
-        
-        // Add to document
-        document.body.appendChild(footer);
-    }
-}
-
-// Update active state in mobile navigation
-function updateMobileNavActive(activeLink) {
-    document.querySelectorAll('.mobile-footer-nav a').forEach(link => {
-        link.classList.remove('active');
-    });
-    activeLink.classList.add('active');
-}

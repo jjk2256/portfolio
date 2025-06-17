@@ -1,13 +1,12 @@
-/* Custom Cursor */
-:root {
-    --vh: 1vh;
-}
+/* ===== PORTFOLIO WEBSITE STYLES ===== */
+/* Desktop styles only. All @media queries and mobile-specific CSS have been removed. */
 
+/* ===== CUSTOM CURSOR ===== */
 .cursor-dot {
     position: fixed;
     width: 12px;
     height: 12px;
-    background-color: #4CAF50; /* Green color */
+    background-color: #4CAF50;
     border-radius: 50%;
     pointer-events: none;
     transform: translate(-50%, -50%);
@@ -25,17 +24,16 @@
     height: 18px;
 }
 
-/* Hide default cursor on interactive elements */
-a, .project-index-row, #randomize-btn, .back-to-gallery {
+/* Cursor interactions */
+a, .project-index-row, .back-to-gallery {
     cursor: none;
 }
 
-/* Use default cursor for gallery items */
 .gallery-item {
     cursor: pointer;
 }
 
-/* Base Styles */
+/* ===== GLOBAL STYLES ===== */
 * {
     margin: 0;
     padding: 0;
@@ -48,16 +46,15 @@ body {
     background-color: #fff;
     line-height: 1.5;
     overflow-x: hidden;
-    overflow-y: auto; /* Ensure vertical scrolling is enabled */
+    overflow-y: auto;
     position: relative;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     height: auto;
     min-height: 100%;
-    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
 }
 
-/* Vertical Grid Lines */
+/* Grid background */
 .grid-lines {
     position: fixed;
     top: 0;
@@ -76,6 +73,7 @@ body {
     background-color: rgba(200, 200, 200, 0.2);
 }
 
+/* ===== TYPOGRAPHY & LINKS ===== */
 a {
     text-decoration: none;
     color: #333;
@@ -92,7 +90,7 @@ img {
     display: block;
 }
 
-/* Header Styles */
+/* ===== HEADER & NAVIGATION ===== */
 header {
     position: fixed;
     top: 0;
@@ -142,18 +140,16 @@ header {
     color: #000;
 }
 
-/* Gallery Layout */
+/* ===== GALLERY LAYOUT ===== */
 .gallery-container {
-    margin-top: 60px;
+    margin-top: 80px;
     padding: 20px;
-    min-height: calc(100vh - 60px);
-    min-height: calc(var(--vh, 1vh) * 100 - 60px);
+    min-height: calc(100vh - 80px);
     width: 100%;
     position: relative;
     display: flex;
     justify-content: center;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
 }
 
 #gallery {
@@ -171,14 +167,12 @@ header {
 .gallery-item {
     position: relative;
     width: 100%;
-    margin-bottom: 0;
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease;
     cursor: pointer;
     z-index: 1;
     display: flex;
     justify-content: center;
-    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
 }
 
 .gallery-item:hover {
@@ -193,7 +187,6 @@ header {
     height: auto;
 }
 
-/* Title overlay styling */
 .title-overlay {
     position: absolute;
     top: 50%;
@@ -219,20 +212,19 @@ header {
     visibility: visible;
 }
 
-/* Project Detail Page */
+/* ===== PROJECT DETAIL PAGES ===== */
 .project-container {
     margin-top: 60px;
     padding: 40px 20px;
-    min-height: 100vh; /* Added for scrollable layout */
+    min-height: 100vh;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
 }
 
 .project-header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 60px;
-    position: relative; /* Add position relative for grid alignment */
+    position: relative;
 }
 
 .project-title {
@@ -245,23 +237,14 @@ header {
     color: #aaa;
 }
 
-/* Common grid alignment for project descriptions */
+/* Project info sidebar */
 .project-info,
 .photo-description {
-    width: calc(25% - 20px); /* 3 columns minus the grid line width */
+    width: calc(25% - 20px);
     position: absolute;
-    left: calc(75% + 40px); /* Increased offset from grid line */
+    left: calc(74% + 40px);
 }
 
-/* Info section specific positioning (starting from 4th column) */
-.info-section {
-    width: calc(83.33% - 20px); /* Full width from 3rd column to end */
-    position: relative;
-    left: 16.67%; /* Position exactly at 3rd column (after 2 columns = 16.67%) */
-    margin-bottom: 40px;
-}
-
-/* Specific adjustments for photo description */
 .photo-description {
     max-width: calc(25% - 20px);
     margin-bottom: 40px;
@@ -279,7 +262,6 @@ header {
     margin-bottom: 15px;
 }
 
-/* Style links in project descriptions with grey and bold text */
 .project-info p a {
     color: #777;
     font-weight: bold;
@@ -290,6 +272,7 @@ header {
     color: #555;
 }
 
+/* Project images */
 .project-image-wrapper {
     width: 100%;
     margin-bottom: 100px;
@@ -303,11 +286,11 @@ header {
     margin-bottom: 15px;
 }
 
-/* Image scaling rules */
+/* Hero image variations */
 .project-image-wrapper img.hero-image {
-    width: 50%; /* Display at 50% scale */
+    width: 50%;
     height: auto;
-    margin: 0; /* Remove auto margins */
+    margin: 0;
     display: block;
 }
 
@@ -315,22 +298,20 @@ header {
     width: 50%;
 }
 
-/* Additional 50% reduction (25% total) for CAPSTONE project hero images */
 .project-image-wrapper img.capstone-hero-image {
-    width: 56.25%; /* Increased by another 50% (from 37.5% to 56.25%) */
-    margin: 0; /* Remove auto margins */
+    width: 56.25%;
+    margin: 0;
 }
 
 .project-image-wrapper img.capstone-hero-image + .image-caption {
-    width: 56.25%; /* Match the image width */
-    transform: translateY(-43.75%); /* Adjust for new size */
+    width: 56.25%;
+    transform: translateY(-43.75%);
 }
 
-/* Scale down hero images for CAPSTONE_make, CAPSTONE_grow, and CAPSTONE_test by 50% */
 #project-detail[data-project="capstone_make"] .project-image-wrapper img.hero-image,
 #project-detail[data-project="capstone_grow"] .project-image-wrapper img.hero-image,
 #project-detail[data-project="capstone_test"] .project-image-wrapper img.hero-image {
-    width: 25%; /* 50% reduction from the standard 50% width = 25% */
+    width: 25%;
     margin: 0;
 }
 
@@ -338,83 +319,80 @@ header {
 #project-detail[data-project="capstone_grow"] .project-image-wrapper img.hero-image + .image-caption,
 #project-detail[data-project="capstone_test"] .project-image-wrapper img.hero-image + .image-caption {
     width: 25%;
-    transform: translateY(-75%); /* Adjust for new size */
+    transform: translateY(-75%);
 }
 
-/* Additional scaling for DataViz hero image (30% reduction from 50% base) */
 .project-image-wrapper img.dataviz-hero-image {
-    width: 35%; /* 70% of 50% = 35% of original size */
-    margin: 0; /* Remove auto margins */
+    width: 35%;
+    margin: 0;
 }
 
 .project-image-wrapper img.dataviz-hero-image + .image-caption {
     width: 35%;
 }
 
-/* Additional scaling for LumenBeat hero image (30% reduction from 50% base) */
 .project-image-wrapper img.lumenbeat-hero-image {
-    width: 35%; /* 70% of 50% = 35% of original size */
-    margin: 0; /* Remove auto margins */
+    width: 35%;
+    margin: 0;
 }
 
 .project-image-wrapper img.lumenbeat-hero-image + .image-caption {
     width: 35%;
 }
 
+/* Image captions */
 .image-caption {
     display: flex;
     font-size: 12px;
-    color: #333; /* Reverted back to original color */
+    color: #333;
     margin-top: 10px;
-    font-weight: normal; /* Reverted back to normal weight */
+    font-weight: normal;
 }
 
-/* Create a container for the right-justified elements */
 .image-caption span:first-child {
-    margin-right: auto; /* Push subsequent elements to the right */
+    margin-right: auto;
 }
 
 .image-caption span:not(:first-child) {
-    margin-left: 20px; /* Space between right-justified elements */
+    margin-left: 20px;
 }
 
-/* Photo grid captions */
 .caption-text {
     display: flex;
     width: 100%;
 }
 
 .caption-text span:first-child {
-    margin-right: auto; /* Push subsequent elements to the right */
+    margin-right: auto;
 }
 
 .caption-text span:not(:first-child) {
-    margin-left: 20px; /* Space between right-justified elements */
+    margin-left: 20px;
 }
 
 .back-to-gallery {
     display: inline-block;
     margin-top: 40px;
     font-size: 14px;
-    color: inherit; /* Reverted to default color */
-    font-weight: normal; /* Reverted to normal weight */
+    color: inherit;
+    font-weight: normal;
 }
 
-/* Projects Index Page */
+/* ===== PROJECTS INDEX PAGE ===== */
 .projects-index {
     margin-top: 40px;
     width: 100%;
-    padding: 0 10px;
+    padding: 0 20px;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-gap: 0;
 }
 
 .project-index-row {
-    grid-column: 1 / span 12; /* Span all 12 columns */
+    grid-column: 1 / span 12;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    padding: 12px 0;
+    padding: 7px 0;
     cursor: pointer;
     transition: color 0.2s ease, background-color 0.2s ease;
     position: relative;
@@ -434,13 +412,13 @@ header {
 }
 
 .project-year {
-    grid-column: 1 / span 2; /* Spans columns 1-2 */
-    color: #999; /* Lightened from #777 to #999 */
+    grid-column: 2 / span 2;
+    color: #999;
     font-size: 18.75px;
 }
 
 .project-index-row .project-title {
-    grid-column: 3 / span 6; /* Spans columns 3-8 */
+    grid-column: 4 / span 6;
     font-size: 18.75px;
     font-weight: bold;
     pointer-events: none;
@@ -448,15 +426,15 @@ header {
 }
 
 .project-category {
-    grid-column: 9 / span 1; /* Position in the 9th column only */
-    text-align: left; /* Changed to left alignment since it's now in a specific column */
+    grid-column: 9 / span 1;
+    text-align: left;
     color: #999;
     font-size: 18.75px;
     pointer-events: none;
-    padding-left: 10%; /* Add 10% offset to the right */
+    padding-left: 10%;
 }
 
-/* Info Page Styles */
+/* ===== ABOUT/INFO PAGES ===== */
 .info-container {
     margin-top: 80px;
     padding: 20px;
@@ -466,13 +444,13 @@ header {
 
 .info-content {
     position: relative;
-    padding-left: calc(8.33% + 15px); /* Start content at 2nd column with 15px offset */
+    padding-left: calc(8.33% + 15px);
 }
 
 .info-section {
-    width: calc(91.67% - 35px); /* Adjusted width to account for smaller offset */
+    width: calc(91.67% - 35px);
     position: relative;
-    left: calc(8.33% + 15px); /* Position at 2nd column with 15px offset */
+    left: calc(8.33% + 15px);
     margin-bottom: 40px;
 }
 
@@ -498,7 +476,6 @@ header {
     max-width: 800px;
 }
 
-/* Bio contact section */
 .bio-contact {
     margin-top: 20px;
     margin-bottom: 30px;
@@ -520,7 +497,7 @@ header {
     border-color: #999;
 }
 
-/* CV Styles */
+/* CV/Resume sections */
 .cv-section {
     margin-bottom: 50px;
     padding-bottom: 10px;
@@ -559,7 +536,6 @@ header {
     margin-bottom: 8px;
 }
 
-/* Project lists in work experience */
 .cv-projects {
     margin-top: 8px;
     font-size: 15px;
@@ -584,7 +560,6 @@ header {
     margin-top: 5px;
 }
 
-/* Italics for award distinctions */
 .cv-details em {
     font-style: italic;
 }
@@ -624,7 +599,6 @@ header {
     margin-bottom: 15px;
 }
 
-/* Contact section */
 .contact-info {
     font-size: 15px;
     line-height: 1.6;
@@ -640,7 +614,7 @@ header {
     border-bottom: 1px solid #999;
 }
 
-/* Photo grid container */
+/* ===== PHOTOGRAPHY PAGE ===== */
 .photo-grid-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -649,7 +623,6 @@ header {
     margin: 60px 0;
 }
 
-/* Photography grid styles */
 .photo-section-title {
     font-size: 18px;
     font-weight: 500;
@@ -665,7 +638,6 @@ header {
     line-height: 1.6;
 }
 
-/* Individual photo items */
 .photo-item {
     position: relative;
     transition: opacity 0.3s ease;
@@ -682,16 +654,16 @@ header {
 }
 
 .photo-item img {
-    width: 50%; /* Set consistent width for all detail images */
+    width: 75%;
     height: auto;
     display: block;
-    object-fit: none;
+    object-fit: contain;
+    max-width: 100%;
 }
 
-/* Image captions */
-.image-caption {
+.photo-item .image-caption {
+    width: 75%;
     margin-top: 20px;
-    width: 100%;
     display: flex;
     justify-content: space-between;
 }
@@ -700,17 +672,16 @@ header {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    flex-wrap: nowrap; /* Prevent wrapping */
+    flex-wrap: nowrap;
 }
 
-/* Fullscreen viewer */
+/* ===== FULLSCREEN IMAGE VIEWER ===== */
 .fullscreen-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    height: calc(var(--vh, 1vh) * 100);
     background-color: rgba(255, 255, 255, 0.98);
     display: flex;
     justify-content: center;
@@ -722,9 +693,8 @@ header {
 .fullscreen-image {
     max-width: 85%;
     max-height: 85vh;
-    max-height: calc(var(--vh, 1vh) * 85);
     object-fit: contain;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .fullscreen-close {
@@ -740,7 +710,7 @@ header {
     color: #000;
 }
 
-/* Project Detail Page */
+/* ===== VIDEO COMPONENTS ===== */
 .project-video-wrapper {
     width: 100%;
     margin-bottom: 100px;
@@ -748,17 +718,14 @@ header {
     flex-direction: column;
 }
 
-/* Default alignment for non-hero videos */
 #project-videos-container .project-video-wrapper {
     align-items: flex-end;
 }
 
-/* Hero video alignment */
 #project-images-container .project-video-wrapper {
     align-items: flex-start;
 }
 
-/* Right-aligned video for MetaTool */
 .right-aligned-video {
     align-items: flex-end !important;
     margin-bottom: 60px;
@@ -781,417 +748,15 @@ header {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
-    color: #666; /* Reverted back to original color */
+    color: #666;
     margin-top: 10px;
-    font-weight: normal; /* Reverted back to normal weight */
+    font-weight: normal;
 }
 
-/* Hero video specific styles */
 .project-video.youtube-video.hero-video {
     width: 50%;
 }
 
 .project-video.hero-video + .video-caption {
     width: 50%;
-}
-
-/* Responsive video container */
-@media screen and (max-width: 768px) {
-    .project-video-wrapper,
-    #project-videos-container .project-video-wrapper,
-    #project-images-container .project-video-wrapper {
-        margin-bottom: 60px;
-        align-items: center; /* Center all videos on mobile */
-    }
-    
-    .project-video.youtube-video,
-    .project-video-wrapper .video-caption {
-        width: 100%;
-    }
-    
-    .video-caption {
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    .video-caption span {
-        text-align: left !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-}
-
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-    #gallery {
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 25px;
-        padding: 30px;
-    }
-    
-    .project-image-wrapper img.hero-image,
-    .project-image-wrapper img.capstone-hero-image,
-    .project-image-wrapper img.dataviz-hero-image,
-    .project-image-wrapper img.lumenbeat-hero-image {
-        width: 70%; /* Larger on medium screens */
-    }
-    
-    .project-image-wrapper img.hero-image + .image-caption,
-    .project-image-wrapper img.capstone-hero-image + .image-caption,
-    .project-image-wrapper img.dataviz-hero-image + .image-caption,
-    .project-image-wrapper img.lumenbeat-hero-image + .image-caption {
-        width: 70%;
-    }
-    
-    .project-video.youtube-video {
-        width: 70%;
-    }
-    
-    .project-video-wrapper .video-caption {
-        width: 70%;
-    }
-}
-
-@media (max-width: 768px) {
-    /* Remove these mobile scrolling fixes */
-    /* Mobile styles */
-    body, html {
-        height: auto;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior-y: auto;
-    }
-    
-    .gallery-container, .project-container, .info-container {
-        height: auto;
-        min-height: 100%;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        position: relative;
-    }
-    
-    /* Project image wrappers */
-    .project-image-wrapper {
-        margin-bottom: 40px;
-        align-items: center !important;
-    }
-    
-    .project-image-wrapper img.hero-image,
-    .project-image-wrapper img.capstone-hero-image,
-    .project-image-wrapper img.dataviz-hero-image,
-    .project-image-wrapper img.lumenbeat-hero-image {
-        width: 100% !important;
-        transform: none !important;
-        height: auto !important;
-        max-height: none !important;
-    }
-    
-    header {
-        padding: 12px 15px;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-    }
-    
-    .logo {
-        font-size: 16px;
-        margin-right: 0;
-        font-weight: 700;
-    }
-    
-    /* Hide navigation in header on mobile */
-    .nav-container {
-        display: none;
-    }
-    
-    /* Mobile footer navigation */
-    .mobile-footer-nav {
-        display: flex;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: rgba(248, 248, 248, 0.95);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        padding: 12px 0;
-        border-top: 1px solid #eee;
-        justify-content: space-around;
-        z-index: 999;
-        box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.03);
-    }
-    
-    .mobile-footer-nav a {
-        font-size: 16px;
-        color: #888;
-        text-align: center;
-        padding: 10px 0;
-        position: relative;
-        font-weight: normal;
-        transition: color 0.2s ease;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .mobile-footer-nav a.active {
-        color: #333;
-        font-weight: 500;
-    }
-    
-    .mobile-footer-nav a.active::after {
-        content: '';
-        position: absolute;
-        bottom: -1px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 20px;
-        height: 2px;
-        background-color: #333;
-        border-radius: 1px;
-        display: none; /* Hide the underline indicator to match the image */
-    }
-    
-    /* Hide cursor on touch devices */
-    .cursor-dot {
-        display: none;
-    }
-    
-    /* Reset cursor styles for touch */
-    a, .project-index-row, #randomize-btn, .back-to-gallery {
-        cursor: auto;
-    }
-    
-    /* Gallery adjustments */
-    .gallery-container {
-        margin-top: 60px;
-        padding: 15px;
-        padding-bottom: 70px; /* Space for mobile footer */
-        overflow-y: auto;
-        height: auto;
-        position: relative;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    #gallery {
-        grid-template-columns: 1fr;
-        gap: 25px;
-        padding: 15px 10px;
-    }
-    
-    .gallery-item {
-        max-width: 280px;
-        margin: 0 auto;
-    }
-    
-    .project-header {
-        margin-bottom: 25px;
-    }
-    
-    .project-title {
-        font-size: 20px;
-    }
-    
-    .project-info h2 {
-        font-size: 15px;
-    }
-    
-    .project-info p {
-        font-size: 13px;
-    }
-    
-    /* Tighter spacing for project details */
-    .project-image-wrapper {
-        margin-bottom: 30px;
-    }
-    
-    /* Fix for project videos */
-    .project-video.youtube-video {
-        height: auto;
-        aspect-ratio: 16 / 9;
-    }
-    
-    /* Adjust spacing in project details */
-    #project-images-container, #project-videos-container {
-        padding: 0 5px;
-    }
-    
-    /* Back button positioning */
-    .back-to-gallery {
-        margin: 20px 5px;
-        font-size: 14px;
-    }
-    
-    /* Project index page */
-    .project-index-row {
-        grid-template-columns: 35% 65%;
-    }
-    
-    .project-year {
-        font-size: 12px;
-    }
-    
-    .project-index-row .project-title {
-        font-size: 13px;
-    }
-    
-    .project-category {
-        font-size: 11px;
-    }
-    
-    /* Info page */
-    .info-section h2 {
-        font-size: 18px;
-    }
-    
-    .info-section h3 {
-        font-size: 15px;
-    }
-    
-    .cv-title {
-        font-size: 14px;
-    }
-    
-    .cv-institution, .cv-location {
-        font-size: 13px;
-    }
-    
-    .cv-description li {
-        font-size: 12px;
-    }
-    
-    /* Photography project */
-    #project-detail[data-project="photography"] .photo-grid-container {
-        flex-direction: column;
-    }
-    
-    #project-detail[data-project="photography"] .photo-item {
-        width: 100%;
-    }
-}
-
-/* Add styles for larger tablets and small desktops */
-@media (min-width: 769px) and (max-width: 1024px) {
-    #gallery {
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 25px;
-        padding: 25px;
-    }
-    
-    .project-image-wrapper img.hero-image,
-    .project-image-wrapper img.capstone-hero-image,
-    .project-image-wrapper img.dataviz-hero-image,
-    .project-image-wrapper img.lumenbeat-hero-image {
-        width: 80%;
-    }
-    
-    .project-image-wrapper img.hero-image + .image-caption,
-    .project-image-wrapper img.capstone-hero-image + .image-caption,
-    .project-image-wrapper img.dataviz-hero-image + .image-caption,
-    .project-image-wrapper img.lumenbeat-hero-image + .image-caption {
-        width: 80%;
-    }
-    
-    .project-video.youtube-video {
-        width: 80%;
-    }
-    
-    .project-video-wrapper .video-caption {
-        width: 80%;
-    }
-}
-
-/* Portrait phone orientation specific */
-@media (max-width: 768px) and (orientation: portrait) {
-    .cursor-dot {
-        display: none;
-    }
-    
-    a, .project-index-row, #randomize-btn, .back-to-gallery {
-        cursor: auto;
-    }
-    
-    .gallery-item {
-        cursor: pointer;
-    }
-    
-    /* Adjust spacing for portrait orientation */
-    .gallery-container {
-        margin-top: 90px;
-    }
-    
-    .project-container, .info-container {
-        margin-top: 90px;
-        padding-bottom: 60px; /* Space for mobile footer */
-    }
-}
-
-/* Landscape phone orientation specific */
-@media (max-width: 900px) and (orientation: landscape) {
-    /* Adjust header to be more compact in landscape */
-    header {
-        padding: 8px 15px;
-    }
-    
-    .logo {
-        font-size: 14px;
-    }
-    
-    .nav-container {
-        flex-direction: row;
-        width: auto;
-        margin-top: 0;
-    }
-    
-    .nav-left {
-        margin-left: 20px;
-    }
-    
-    .nav-links a {
-        margin-left: 15px;
-        font-size: 12px;
-    }
-    
-    /* Adjust gallery to show more items in landscape */
-    #gallery {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 15px;
-    }
-    
-    /* Keep project images from being too tall */
-    .project-image-wrapper img.hero-image,
-    .project-image-wrapper img.capstone-hero-image,
-    .project-image-wrapper img.dataviz-hero-image,
-    .project-image-wrapper img.lumenbeat-hero-image {
-        max-height: 70vh;
-        width: auto;
-        object-fit: contain;
-    }
-    
-    /* Ensure content doesn't get hidden behind fixed header */
-    .gallery-container,
-    .project-container,
-    .info-container {
-        margin-top: 60px;
-    }
-}
-
-/* Add support for dark mode preference */
-@media (prefers-color-scheme: dark) {
-    body {
-        /* Let's create a dark mode toggle instead of automatic switching */
-        /* This commented code could be used for an actual dark mode
-        background-color: #121212;
-        color: #eee;
-        */
-    }
-}
-
-/* Fix for mobile Safari 100vh issue */
-@supports (-webkit-touch-callout: none) {
-    .gallery-container,
-    .fullscreen-container {
-        /* Use fallback for iOS Safari */
-        height: -webkit-fill-available;
-    }
 }
